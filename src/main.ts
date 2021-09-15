@@ -108,19 +108,47 @@ class Benchmark extends utils.Adapter {
 				this.log.info(`Epoch ${j}: Objects deletion took ${objectsDeletionTime} s`);
 			}
 
-			// set mean states
+			// set mean states - TIME
 			await this.setStateAsync('states.deletionTimeMean', this.calcMean(statesDeletionTimes), true);
 			await this.setStateAsync('states.creationTimeMean', this.calcMean(statesCreationTimes), true);
 
 			await this.setStateAsync('objects.deletionTimeMean', this.calcMean(objectsDeletionTimes), true);
 			await this.setStateAsync('objects.creationTimeMean', this.calcMean(objectsCreationTimes), true);
 
-			// set std states
+			// set std states - TIME
 			await this.setStateAsync('states.deletionTimeStd', this.calcStd(statesDeletionTimes), true);
 			await this.setStateAsync('states.creationTimeStd', this.calcStd(statesCreationTimes), true);
 
 			await this.setStateAsync('objects.deletionTimeStd', this.calcStd(objectsDeletionTimes), true);
 			await this.setStateAsync('objects.creationTimeStd', this.calcStd(objectsCreationTimes), true);
+
+			// set mean states - CPU
+			await this.setStateAsync('states.deletionCpuMean', this.calcMean(this.cpuStateDeletion), true);
+			await this.setStateAsync('states.creationCpuMean', this.calcMean(this.cpuStateCreation), true);
+
+			await this.setStateAsync('objects.deletionCpuMean', this.calcMean(this.cpuObjectDeletion), true);
+			await this.setStateAsync('objects.creationCpuMean', this.calcMean(this.cpuObjectCreation), true);
+
+			// set std states - CPU
+			await this.setStateAsync('states.deletionCpuStd', this.calcStd(this.cpuStateDeletion), true);
+			await this.setStateAsync('states.creationCpuStd', this.calcStd(this.cpuStateCreation), true);
+
+			await this.setStateAsync('objects.deletionCpuStd', this.calcStd(this.cpuObjectDeletion), true);
+			await this.setStateAsync('objects.creationCpuStd', this.calcStd(this.cpuObjectCreation), true);
+
+			// set mean states - MEM
+			await this.setStateAsync('states.deletionMemMean', this.calcMean(this.memStateDeletion), true);
+			await this.setStateAsync('states.creationMemMean', this.calcMean(this.memStateCreation), true);
+
+			await this.setStateAsync('objects.deletionMemMean', this.calcMean(this.memObjectDeletion), true);
+			await this.setStateAsync('objects.creationMemMean', this.calcMean(this.memObjectCreation), true);
+
+			// set std states - MEM
+			await this.setStateAsync('states.deletionMemStd', this.calcStd(this.memStateDeletion), true);
+			await this.setStateAsync('states.creationMemStd', this.calcStd(this.memStateCreation), true);
+
+			await this.setStateAsync('objects.deletionMemStd', this.calcStd(this.memObjectDeletion), true);
+			await this.setStateAsync('objects.creationMemStd', this.calcStd(this.memObjectCreation), true);
 
 			this.log.info('Finished benchmark... terminating');
 			this.terminate();
@@ -185,15 +213,22 @@ class Benchmark extends utils.Adapter {
 	private async monitorStats():Promise<void> {
 		while (true) {
 			const stats = await pidusage(process.pid);
-			this.log.warn(JSON.stringify(stats));
 			switch (this.activeTest) {
 				case 'stateDeletion':
+					this.memStateDeletion.push(stats.memory);
+					this.cpuStateDeletion.push(stats.cpu);
 					break;
 				case 'objectDeletion':
+					this.memObjectDeletion.push(stats.memory);
+					this.cpuObjectDeletion.push(stats.cpu);
 					break;
 				case 'stateCreation':
+					this.memStateCreation.push(stats.memory);
+					this.cpuStateCreation.push(stats.cpu);
 					break;
 				case 'objectCreation':
+					this.memObjectCreation.push(stats.memory);
+					this.cpuObjectCreation.push(stats.cpu);
 					break;
 				default:
 					break;
