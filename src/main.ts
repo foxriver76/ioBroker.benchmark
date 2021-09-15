@@ -22,47 +22,52 @@ class Benchmark extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	private async onReady(): Promise<void> {
-		// set objects
-		const objectsStartTime = process.hrtime()
-		for (let i = 0; i <= this.config.iterations; i++) {
-			await this.setObjectAsync(`states.${i}`, {
-				'type': 'state',
-				'common': {
-					name: i.toString(),
-					read: true,
-					write: true,
-					role: 'state',
-					type: 'number'
-				},
-				native: {}
-			});
+		try {
+			// set objects
+			const objectsStartTime = process.hrtime()
+			for (let i = 0; i <= this.config.iterations; i++) {
+				await this.setObjectAsync(`states.${i}`, {
+					'type': 'state',
+					'common': {
+						name: i.toString(),
+						read: true,
+						write: true,
+						role: 'state',
+						type: 'number'
+					},
+					native: {}
+				});
+			}
+
+			this.log.warn(process.hrtime(objectsStartTime).toString());
+
+			// set states
+			const statesStartTime = process.hrtime()
+			for (let i = 0; i <= this.config.iterations; i++) {
+				await this.setStateAsync(`states.${i}`, i, true);
+			}
+
+			this.log.warn(process.hrtime(statesStartTime).toString());
+
+			// delete states
+			const statesDeletionStartTime = process.hrtime();
+			for (let i = 0; i <= this.config.iterations; i++) {
+				await this.delStateAsync(`states.${i}`);
+			}
+
+			this.log.warn(process.hrtime(statesDeletionStartTime).toString());
+
+			// delete objects
+			const objectsDeletionStartTime = process.hrtime();
+			for (let i = 0; i <= this.config.iterations; i++) {
+				await this.delObjectAsync(`states.${i}`);
+			}
+
+			this.log.warn(process.hrtime(objectsDeletionStartTime).toString());
+		} catch (e: any) {
+			this.log.error(`Benchmark failed ${e.message}`);
+			this.terminate();
 		}
-
-		this.log.warn(process.hrtime(objectsStartTime).toString());
-
-		// set states
-		const statesStartTime = process.hrtime()
-		for (let i = 0; i <= this.config.iterations; i++) {
-			await this.setStateAsync(`states.${i}`, i, true);
-		}
-
-		this.log.warn(process.hrtime(statesStartTime).toString());
-
-		// delete states
-		const statesDeletionStartTime = process.hrtime();
-		for (let i = 0; i <= this.config.iterations; i++) {
-			await this.delStateAsync(`states.${i}`);
-		}
-
-		this.log.warn(process.hrtime(statesDeletionStartTime).toString());
-
-		// delete objects
-		const objectsDeletionStartTime = process.hrtime();
-		for (let i = 0; i <= this.config.iterations; i++) {
-			await this.delObjectAsync(`states.${i}`);
-		}
-
-		this.log.warn(process.hrtime(objectsDeletionStartTime).toString());
 	}
 
 	/**
