@@ -15,13 +15,14 @@ class Benchmark extends utils.Adapter {
 		// this.on('objectChange', this.onObjectChange.bind(this));
 		// this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
-		this.config.iterations = this.config.iterations || 10000;
 	}
 
 	/**
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	private async onReady(): Promise<void> {
+		this.config.iterations = this.config.iterations || 10000;
+
 		this.log.info('Starting benchmark test...')
 		try {
 			// set objects
@@ -40,7 +41,9 @@ class Benchmark extends utils.Adapter {
 				});
 			}
 
-			this.log.warn(process.hrtime(objectsStartTime).toString());
+			const objectsCreationTime = parseFloat(process.hrtime(objectsStartTime).join('.'));
+			await this.setStateAsync('objects.creationTime', objectsCreationTime, true);
+			this.log.info(`Objects creation took ${objectsCreationTime} s`);
 
 			// set states
 			const statesStartTime = process.hrtime()
@@ -48,7 +51,9 @@ class Benchmark extends utils.Adapter {
 				await this.setStateAsync(`test.${i}`, i, true);
 			}
 
-			this.log.warn(process.hrtime(statesStartTime).toString());
+			const statesCreationTime = parseFloat(process.hrtime(statesStartTime).join('.'));
+			await this.setStateAsync('states.creationTime', statesCreationTime, true);
+			this.log.info(`States creation took ${statesCreationTime} s`);
 
 			// delete states
 			const statesDeletionStartTime = process.hrtime();
@@ -56,7 +61,9 @@ class Benchmark extends utils.Adapter {
 				await this.delStateAsync(`test.${i}`);
 			}
 
-			this.log.warn(process.hrtime(statesDeletionStartTime).toString());
+			const statesDeletionTime = parseFloat(process.hrtime(statesDeletionStartTime).join('.'));
+			await this.setStateAsync('states.deletionTime', statesDeletionTime, true);
+			this.log.info(`States deletion took ${statesDeletionTime} s`);
 
 			// delete objects
 			const objectsDeletionStartTime = process.hrtime();
@@ -64,11 +71,14 @@ class Benchmark extends utils.Adapter {
 				await this.delObjectAsync(`test.${i}`);
 			}
 
-			this.log.warn(process.hrtime(objectsDeletionStartTime).toString());
+			const objectsDeletionTime = parseFloat(process.hrtime(objectsDeletionStartTime).join('.'));
+			await this.setStateAsync('objects.deletionTime', objectsDeletionTime, true);
+			this.log.info(`Objects deletion took ${objectsDeletionTime} s`);
+
 			this.log.info('Finished benchmark... terminating');
 			this.terminate();
 		} catch (e: any) {
-			this.log.error(`Benchmark failed ${e.message}`);
+			this.log.error(`Benchmark failed: ${e.message}`);
 			this.terminate();
 		}
 	}
