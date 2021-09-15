@@ -1,9 +1,17 @@
 import * as utils from '@iobroker/adapter-core';
-
-// Load your modules here, e.g.:
-// import * as fs from "fs";
+import pidusage from 'pidusage';
 
 class Benchmark extends utils.Adapter {
+	private activeTest: string;
+	private memStateCreation: number[];
+	private memObjectCreation: number[];
+	private memStateDeletion: number[];
+	private memObjectDeletion: number[];
+
+	private cpuStateCreation: number[];
+	private cpuObjectCreation: number[];
+	private cpuStateDeletion: number[];
+	private cpuObjectDeletion: number[];
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -15,6 +23,17 @@ class Benchmark extends utils.Adapter {
 		// this.on('objectChange', this.onObjectChange.bind(this));
 		// this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
+		this.activeTest = 'none';
+
+		this.memStateCreation = [];
+		this.memObjectCreation = [];
+		this.memStateDeletion = [];
+		this.memObjectDeletion = [];
+
+		this.cpuStateCreation = [];
+		this.cpuObjectCreation = [];
+		this.cpuStateDeletion = [];
+		this.cpuObjectDeletion = [];
 	}
 
 	/**
@@ -29,11 +48,14 @@ class Benchmark extends utils.Adapter {
 		const objectsCreationTimes = [];
 		const statesCreationTimes = [];
 
-		this.log.info('Starting benchmark test...')
+		this.monitorStats();
+
+		this.log.info('Starting benchmark test...');
 		try {
 			for (let j = 1; j <= this.config.epochs; j++) {
 				// set objects
-				const objectsStartTime = process.hrtime()
+				const objectsStartTime = process.hrtime();
+				this.activeTest = 'objectCreation';
 				for (let i = 0; i < this.config.iterations; i++) {
 					await this.setObjectAsync(`test.${i}`, {
 						'type': 'state',
@@ -53,7 +75,8 @@ class Benchmark extends utils.Adapter {
 				this.log.info(`Epoch ${j}: Objects creation took ${objectsCreationTime} s`);
 
 				// set states
-				const statesStartTime = process.hrtime()
+				const statesStartTime = process.hrtime();
+				this.activeTest = 'stateCreation';
 				for (let i = 0; i < this.config.iterations; i++) {
 					await this.setStateAsync(`test.${i}`, i, true);
 				}
@@ -64,6 +87,7 @@ class Benchmark extends utils.Adapter {
 
 				// delete states
 				const statesDeletionStartTime = process.hrtime();
+				this.activeTest = 'stateDeletion';
 				for (let i = 0; i < this.config.iterations; i++) {
 					await this.delStateAsync(`test.${i}`);
 				}
@@ -74,6 +98,7 @@ class Benchmark extends utils.Adapter {
 
 				// delete objects
 				const objectsDeletionStartTime = process.hrtime();
+				this.activeTest = 'objectDeletion';
 				for (let i = 0; i < this.config.iterations; i++) {
 					await this.delObjectAsync(`test.${i}`);
 				}
@@ -111,7 +136,7 @@ class Benchmark extends utils.Adapter {
 	private onUnload(callback: () => void): void {
 		try {
 			callback();
-		} catch (e) {
+		} catch {
 			callback();
 		}
 	}
@@ -152,6 +177,41 @@ class Benchmark extends utils.Adapter {
 		const avgSqDiff = this.calcMean(sqDiffs);
 
 		return Math.sqrt(avgSqDiff);
+	}
+
+	/**
+	 * Get memory and cpu statistics
+	 */
+	private async monitorStats():Promise<void> {
+		while (true) {
+			const stats = await pidusage(process.pid);
+			this.log.warn(JSON.stringify(stats));
+			switch (this.activeTest) {
+				case 'stateDeletion':
+					break;
+				case 'objectDeletion':
+					break;
+				case 'stateCreation':
+					break;
+				case 'objectCreation':
+					break;
+				default:
+					break;
+			}
+
+			await this.wait(100);
+		}
+	}
+
+	/**
+	 *	Time to wait in ms
+	 */
+	private async wait(ms: number): Promise<void> {
+		return new Promise(resolve => {
+			setTimeout(() => {
+				resolve();
+			}, ms);
+		});
 	}
 }
 

@@ -18,10 +18,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils = __importStar(require("@iobroker/adapter-core"));
-// Load your modules here, e.g.:
-// import * as fs from "fs";
+const pidusage_1 = __importDefault(require("pidusage"));
 class Benchmark extends utils.Adapter {
     constructor(options = {}) {
         super({
@@ -33,6 +35,15 @@ class Benchmark extends utils.Adapter {
         // this.on('objectChange', this.onObjectChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
+        this.activeTest = 'none';
+        this.memStateCreation = [];
+        this.memObjectCreation = [];
+        this.memStateDeletion = [];
+        this.memObjectDeletion = [];
+        this.cpuStateCreation = [];
+        this.cpuObjectCreation = [];
+        this.cpuStateDeletion = [];
+        this.cpuObjectDeletion = [];
     }
     /**
      * Is called when databases are connected and adapter received configuration.
@@ -44,11 +55,13 @@ class Benchmark extends utils.Adapter {
         const statesDeletionTimes = [];
         const objectsCreationTimes = [];
         const statesCreationTimes = [];
+        this.monitorStats();
         this.log.info('Starting benchmark test...');
         try {
             for (let j = 1; j <= this.config.epochs; j++) {
                 // set objects
                 const objectsStartTime = process.hrtime();
+                this.activeTest = 'objectCreation';
                 for (let i = 0; i < this.config.iterations; i++) {
                     await this.setObjectAsync(`test.${i}`, {
                         'type': 'state',
@@ -67,6 +80,7 @@ class Benchmark extends utils.Adapter {
                 this.log.info(`Epoch ${j}: Objects creation took ${objectsCreationTime} s`);
                 // set states
                 const statesStartTime = process.hrtime();
+                this.activeTest = 'stateCreation';
                 for (let i = 0; i < this.config.iterations; i++) {
                     await this.setStateAsync(`test.${i}`, i, true);
                 }
@@ -75,6 +89,7 @@ class Benchmark extends utils.Adapter {
                 this.log.info(`Epoch ${j}: States creation took ${statesCreationTime} s`);
                 // delete states
                 const statesDeletionStartTime = process.hrtime();
+                this.activeTest = 'stateDeletion';
                 for (let i = 0; i < this.config.iterations; i++) {
                     await this.delStateAsync(`test.${i}`);
                 }
@@ -83,6 +98,7 @@ class Benchmark extends utils.Adapter {
                 this.log.info(`Epoch ${j}: States deletion took ${statesDeletionTime} s`);
                 // delete objects
                 const objectsDeletionStartTime = process.hrtime();
+                this.activeTest = 'objectDeletion';
                 for (let i = 0; i < this.config.iterations; i++) {
                     await this.delObjectAsync(`test.${i}`);
                 }
@@ -115,7 +131,7 @@ class Benchmark extends utils.Adapter {
         try {
             callback();
         }
-        catch (e) {
+        catch (_a) {
             callback();
         }
     }
@@ -151,6 +167,38 @@ class Benchmark extends utils.Adapter {
         });
         const avgSqDiff = this.calcMean(sqDiffs);
         return Math.sqrt(avgSqDiff);
+    }
+    /**
+     * Get memory and cpu statistics
+     */
+    async monitorStats() {
+        while (true) {
+            const stats = await (0, pidusage_1.default)(process.pid);
+            this.log.warn(JSON.stringify(stats));
+            switch (this.activeTest) {
+                case 'stateDeletion':
+                    break;
+                case 'objectDeletion':
+                    break;
+                case 'stateCreation':
+                    break;
+                case 'objectCreation':
+                    break;
+                default:
+                    break;
+            }
+            await this.wait(100);
+        }
+    }
+    /**
+     *	Time to wait in ms
+     */
+    async wait(ms) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, ms);
+        });
     }
 }
 if (require.main !== module) {
