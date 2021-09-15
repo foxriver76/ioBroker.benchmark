@@ -39,11 +39,12 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
+        this.log.info('Starting benchmark test...');
         try {
             // set objects
             const objectsStartTime = process.hrtime();
             for (let i = 0; i <= this.config.iterations; i++) {
-                await this.setObjectAsync(`states.${i}`, {
+                await this.setObjectAsync(`test.${i}`, {
                     'type': 'state',
                     'common': {
                         name: i.toString(),
@@ -59,21 +60,23 @@ class Benchmark extends utils.Adapter {
             // set states
             const statesStartTime = process.hrtime();
             for (let i = 0; i <= this.config.iterations; i++) {
-                await this.setStateAsync(`states.${i}`, i, true);
+                await this.setStateAsync(`test.${i}`, i, true);
             }
             this.log.warn(process.hrtime(statesStartTime).toString());
             // delete states
             const statesDeletionStartTime = process.hrtime();
             for (let i = 0; i <= this.config.iterations; i++) {
-                await this.delStateAsync(`states.${i}`);
+                await this.delStateAsync(`test.${i}`);
             }
             this.log.warn(process.hrtime(statesDeletionStartTime).toString());
             // delete objects
             const objectsDeletionStartTime = process.hrtime();
             for (let i = 0; i <= this.config.iterations; i++) {
-                await this.delObjectAsync(`states.${i}`);
+                await this.delObjectAsync(`test.${i}`);
             }
             this.log.warn(process.hrtime(objectsDeletionStartTime).toString());
+            this.log.info('Finished benchmark... terminating');
+            this.terminate();
         }
         catch (e) {
             this.log.error(`Benchmark failed ${e.message}`);

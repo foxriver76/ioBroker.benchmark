@@ -56,7 +56,7 @@
     "extIcon": "https://raw.githubusercontent.com/foxriver76/ioBroker.benchmark/main/admin/benchmark.png",
     "readme": "https://github.com/foxriver76/ioBroker.benchmark/blob/main/README.md",
     "loglevel": "info",
-    "mode": "subscribe",
+    "mode": "once",
     "type": "hardware",
     "compact": true,
     "connectionType": "local",
