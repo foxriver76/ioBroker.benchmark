@@ -91,6 +91,11 @@ class Benchmark extends utils.Adapter {
 			await this.setStateAsync('objects.creationTimeMean', this.calcMean(objectsCreationTimes), true);
 
 			// set std states
+			await this.setStateAsync('states.deletionTimeStd', this.calcStd(statesDeletionTimes), true);
+			await this.setStateAsync('states.creationTimeStd', this.calcStd(statesCreationTimes), true);
+
+			await this.setStateAsync('objects.deletionTimeStd', this.calcStd(objectsDeletionTimes), true);
+			await this.setStateAsync('objects.creationTimeStd', this.calcStd(objectsCreationTimes), true);
 
 			this.log.info('Finished benchmark... terminating');
 			this.terminate();
@@ -130,6 +135,23 @@ class Benchmark extends utils.Adapter {
 	private calcMean(arr: number[]): number {
 		const sum = arr.reduce((partialSum, x) => partialSum + x, 0);
 		return sum / arr.length;
+	}
+
+	/**
+     * Calculates the standard deviation of an array
+     */
+	private calcStd(arr: number[]) : number {
+		const mean = this.calcMean(arr);
+
+		// get squared diff from mean
+		const sqDiffs = arr.map(value => {
+			const diff = value - mean;
+			return diff * diff;
+		});
+
+		const avgSqDiff = this.calcMean(sqDiffs);
+
+		return Math.sqrt(avgSqDiff);
 	}
 }
 

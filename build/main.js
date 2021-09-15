@@ -67,7 +67,7 @@ class Benchmark extends utils.Adapter {
                 this.log.info(`Epoch ${j}: Objects creation took ${objectsCreationTime} s`);
                 // set states
                 const statesStartTime = process.hrtime();
-                for (let i = 0; i <= this.config.iterations; i++) {
+                for (let i = 0; i < this.config.iterations; i++) {
                     await this.setStateAsync(`test.${i}`, i, true);
                 }
                 const statesCreationTime = parseFloat(process.hrtime(statesStartTime).join('.'));
@@ -75,7 +75,7 @@ class Benchmark extends utils.Adapter {
                 this.log.info(`Epoch ${j}: States creation took ${statesCreationTime} s`);
                 // delete states
                 const statesDeletionStartTime = process.hrtime();
-                for (let i = 0; i <= this.config.iterations; i++) {
+                for (let i = 0; i < this.config.iterations; i++) {
                     await this.delStateAsync(`test.${i}`);
                 }
                 const statesDeletionTime = parseFloat(process.hrtime(statesDeletionStartTime).join('.'));
@@ -83,7 +83,7 @@ class Benchmark extends utils.Adapter {
                 this.log.info(`Epoch ${j}: States deletion took ${statesDeletionTime} s`);
                 // delete objects
                 const objectsDeletionStartTime = process.hrtime();
-                for (let i = 0; i <= this.config.iterations; i++) {
+                for (let i = 0; i < this.config.iterations; i++) {
                     await this.delObjectAsync(`test.${i}`);
                 }
                 const objectsDeletionTime = parseFloat(process.hrtime(objectsDeletionStartTime).join('.'));
@@ -96,6 +96,10 @@ class Benchmark extends utils.Adapter {
             await this.setStateAsync('objects.deletionTimeMean', this.calcMean(objectsDeletionTimes), true);
             await this.setStateAsync('objects.creationTimeMean', this.calcMean(objectsCreationTimes), true);
             // set std states
+            await this.setStateAsync('states.deletionTimeStd', this.calcStd(statesDeletionTimes), true);
+            await this.setStateAsync('states.creationTimeStd', this.calcStd(statesCreationTimes), true);
+            await this.setStateAsync('objects.deletionTimeStd', this.calcStd(objectsDeletionTimes), true);
+            await this.setStateAsync('objects.creationTimeStd', this.calcStd(objectsCreationTimes), true);
             this.log.info('Finished benchmark... terminating');
             this.terminate();
         }
@@ -134,6 +138,19 @@ class Benchmark extends utils.Adapter {
     calcMean(arr) {
         const sum = arr.reduce((partialSum, x) => partialSum + x, 0);
         return sum / arr.length;
+    }
+    /**
+     * Calculates the standard deviation of an array
+     */
+    calcStd(arr) {
+        const mean = this.calcMean(arr);
+        // get squared diff from mean
+        const sqDiffs = arr.map(value => {
+            const diff = value - mean;
+            return diff * diff;
+        });
+        const avgSqDiff = this.calcMean(sqDiffs);
+        return Math.sqrt(avgSqDiff);
     }
 }
 if (require.main !== module) {
