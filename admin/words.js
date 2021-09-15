@@ -25,5 +25,17 @@ systemDictionary = {
 		"es": "Numero de iteraciones",
 		"pl": "Liczba iteracji",
 		"zh-cn": "迭代次数"
+	},
+	'epochs': {
+		"en": "Number of epochs",
+		"de": "Anzahl der Epochen",
+		"ru": "Количество эпох",
+		"pt": "Número de épocas",
+		"nl": "Aantal tijdperken",
+		"fr": "Nombre d'époques",
+		"it": "Numero di epoche",
+		"es": "Número de épocas",
+		"pl": "Liczba epok",
+		"zh-cn": "时代数"
 	}
 };

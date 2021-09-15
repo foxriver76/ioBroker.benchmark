@@ -4,7 +4,8 @@
 declare global {
 	namespace ioBroker {
 		interface AdapterConfig {
-			iterations: number;
+			iterations: number,
+			epochs: number;
 		}
 	}
 }

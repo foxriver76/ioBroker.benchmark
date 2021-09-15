@@ -69,7 +69,8 @@
     ]
   },
   "native": {
-    "iterations": 10000
+    "iterations": 10000,
+    "epochs": 5
   },
   "objects": [],
   "instanceObjects": [
@@ -82,10 +83,10 @@
       "native": {}
     },
     {
-      "_id": "states.creationTime",
+      "_id": "states.creationTimeMean",
       "type": "state",
       "common": {
-        "name": "Creation Time",
+        "name": "Creation Time Mean",
         "role": "state",
         "type": "number",
         "write": true,
@@ -95,10 +96,36 @@
       "native": {}
     },
     {
-      "_id": "states.deletionTime",
+      "_id": "states.deletionTimeMean",
       "type": "state",
       "common": {
-        "name": "Deletion Time",
+        "name": "Deletion Time Mean",
+        "role": "state",
+        "type": "number",
+        "write": true,
+        "read": true,
+        "unit": "s"
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.creationTimeStd",
+      "type": "state",
+      "common": {
+        "name": "Creation Time Standard Deviation",
+        "role": "state",
+        "type": "number",
+        "write": true,
+        "read": true,
+        "unit": "s"
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.deletionTimeStd",
+      "type": "state",
+      "common": {
+        "name": "Deletion Time Standard Deviation",
         "role": "state",
         "type": "number",
         "write": true,
@@ -116,10 +143,10 @@
       "native": {}
     },
     {
-      "_id": "objects.creationTime",
+      "_id": "objects.creationTimeMean",
       "type": "state",
       "common": {
-        "name": "Creation Time",
+        "name": "Creation Time Mean",
         "role": "state",
         "type": "number",
         "write": true,
@@ -129,10 +156,36 @@
       "native": {}
     },
     {
-      "_id": "objects.deletionTime",
+      "_id": "objects.deletionTimeMean",
       "type": "state",
       "common": {
-        "name": "Deletion Time",
+        "name": "Deletion Time Mean",
+        "role": "state",
+        "type": "number",
+        "write": true,
+        "read": true,
+        "unit": "s"
+      },
+      "native": {}
+    },
+    {
+      "_id": "objects.creationTimeStd",
+      "type": "state",
+      "common": {
+        "name": "Creation Time Standard Deviation",
+        "role": "state",
+        "type": "number",
+        "write": true,
+        "read": true,
+        "unit": "s"
+      },
+      "native": {}
+    },
+    {
+      "_id": "objects.deletionTimeStd",
+      "type": "state",
+      "common": {
+        "name": "Deletion Time Standard Deviation",
         "role": "state",
         "type": "number",
         "write": true,
