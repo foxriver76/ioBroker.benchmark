@@ -139,8 +139,8 @@ class Benchmark extends utils.Adapter {
         while (true) {
             const stats = await (0, pidusage_1.default)(process.pid);
             if (this.activeTest !== 'none') {
-                this.cpuStats[this.activeTest] = stats.cpu;
-                this.memStats[this.activeTest] = stats.memory;
+                this.cpuStats[this.activeTest].push(stats.cpu);
+                this.memStats[this.activeTest].push(stats.memory);
             }
             await this.wait(100);
         }

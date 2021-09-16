@@ -5,8 +5,8 @@ import {tests as allTests} from './lib/allTests';
 
 class Benchmark extends utils.Adapter {
 	private activeTest: string;
-	private memStats: any;
-	private cpuStats: any;
+	private readonly memStats: any;
+	private readonly cpuStats: any;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -147,8 +147,8 @@ class Benchmark extends utils.Adapter {
 			const stats = await pidusage(process.pid);
 
 			if (this.activeTest !== 'none') {
-				this.cpuStats[this.activeTest] = stats.cpu;
-				this.memStats[this.activeTest] = stats.memory;
+				this.cpuStats[this.activeTest].push(stats.cpu);
+				this.memStats[this.activeTest].push(stats.memory);
 			}
 
 			await this.wait(100);
