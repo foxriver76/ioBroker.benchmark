@@ -1,17 +1,12 @@
 import * as utils from '@iobroker/adapter-core';
 import pidusage from 'pidusage';
+import {testObjects} from './lib/helper';
+import {tests as allTests} from './lib/allTests';
 
 class Benchmark extends utils.Adapter {
 	private activeTest: string;
-	private memStateCreation: number[];
-	private memObjectCreation: number[];
-	private memStateDeletion: number[];
-	private memObjectDeletion: number[];
-
-	private cpuStateCreation: number[];
-	private cpuObjectCreation: number[];
-	private cpuStateDeletion: number[];
-	private cpuObjectDeletion: number[];
+	private memStats: any;
+	private cpuStats: any;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -25,15 +20,8 @@ class Benchmark extends utils.Adapter {
 		this.on('unload', this.onUnload.bind(this));
 		this.activeTest = 'none';
 
-		this.memStateCreation = [];
-		this.memObjectCreation = [];
-		this.memStateDeletion = [];
-		this.memObjectDeletion = [];
-
-		this.cpuStateCreation = [];
-		this.cpuObjectCreation = [];
-		this.cpuStateDeletion = [];
-		this.cpuObjectDeletion = [];
+		this.memStats = {};
+		this.cpuStats = {};
 	}
 
 	/**
@@ -43,119 +31,67 @@ class Benchmark extends utils.Adapter {
 		this.config.iterations = this.config.iterations || 10000;
 		this.config.epochs = this.config.epochs || 5;
 
-		const objectsDeletionTimes = [];
-		const statesDeletionTimes = [];
-		const objectsCreationTimes = [];
-		const statesCreationTimes = [];
+		interface timeObj {
+			[x: string]: any // allow anonymous properties of type any
+		}
 
+		const times: timeObj = {};
+
+		// monitor stats up from the beginning
 		this.monitorStats();
-
 		this.log.info('Starting benchmark test...');
-		try {
-			for (let j = 1; j <= this.config.epochs; j++) {
-				// set objects
-				const objectsStartTime = process.hrtime();
-				this.activeTest = 'objectCreation';
-				for (let i = 0; i < this.config.iterations; i++) {
-					await this.setObjectAsync(`test.${i}`, {
-						'type': 'state',
-						'common': {
-							name: i.toString(),
-							read: true,
-							write: true,
-							role: 'state',
-							type: 'number'
-						},
-						native: {}
-					});
-				}
 
-				const objectsCreationTime = parseFloat(process.hrtime(objectsStartTime).join('.'));
-				objectsCreationTimes.push(objectsCreationTime);
-				this.log.info(`Epoch ${j}: Objects creation took ${objectsCreationTime} s`);
+		for (const activeTestName of Object.keys(allTests)) {
+			times[activeTestName] = [];
+			this.cpuStats[activeTestName] = [];
+			this.memStats[activeTestName] = [];
 
-				// set states
-				const statesStartTime = process.hrtime();
-				this.activeTest = 'stateCreation';
-				for (let i = 0; i < this.config.iterations; i++) {
-					await this.setStateAsync(`test.${i}`, i, true);
-				}
-
-				const statesCreationTime = parseFloat(process.hrtime(statesStartTime).join('.'));
-				statesCreationTimes.push(statesCreationTime);
-				this.log.info(`Epoch ${j}: States creation took ${statesCreationTime} s`);
-
-				// delete states
-				const statesDeletionStartTime = process.hrtime();
-				this.activeTest = 'stateDeletion';
-				for (let i = 0; i < this.config.iterations; i++) {
-					await this.delStateAsync(`test.${i}`);
-				}
-
-				const statesDeletionTime = parseFloat(process.hrtime(statesDeletionStartTime).join('.'));
-				statesDeletionTimes.push(statesDeletionTime);
-				this.log.info(`Epoch ${j}: States deletion took ${statesDeletionTime} s`);
-
-				// delete objects
-				const objectsDeletionStartTime = process.hrtime();
-				this.activeTest = 'objectDeletion';
-				for (let i = 0; i < this.config.iterations; i++) {
-					await this.delObjectAsync(`test.${i}`);
-				}
-
-				const objectsDeletionTime = parseFloat(process.hrtime(objectsDeletionStartTime).join('.'));
-				objectsDeletionTimes.push(objectsDeletionTime);
-				this.log.info(`Epoch ${j}: Objects deletion took ${objectsDeletionTime} s`);
+			// create objects for this test
+			for (const obj of testObjects) {
+				obj._id = `${this.namespace}.${activeTestName}.${obj._id}`;
+				await this.setForeignObjectNotExistsAsync(obj._id, obj);
 			}
 
-			// set mean states - TIME
-			await this.setStateAsync('states.deletionTimeMean', this.calcMean(statesDeletionTimes), true);
-			await this.setStateAsync('states.creationTimeMean', this.calcMean(statesCreationTimes), true);
+			// execute each test epochs time
+			for (let j = 1; j <= this.config.epochs; j++) {
 
-			await this.setStateAsync('objects.deletionTimeMean', this.calcMean(objectsDeletionTimes), true);
-			await this.setStateAsync('objects.creationTimeMean', this.calcMean(objectsCreationTimes), true);
+				const activeTestConstructor = allTests[activeTestName];
+				const activeTest = new activeTestConstructor(this);
 
-			// set std states - TIME
-			await this.setStateAsync('states.deletionTimeStd', this.calcStd(statesDeletionTimes), true);
-			await this.setStateAsync('states.creationTimeStd', this.calcStd(statesCreationTimes), true);
+				// prepare the test
+				await activeTest.prepare()
 
-			await this.setStateAsync('objects.deletionTimeStd', this.calcStd(objectsDeletionTimes), true);
-			await this.setStateAsync('objects.creationTimeStd', this.calcStd(objectsCreationTimes), true);
+				// only measure real execution
+				this.activeTest = activeTestName;
 
-			// set mean states - CPU
-			await this.setStateAsync('states.deletionCpuMean', this.calcMean(this.cpuStateDeletion), true);
-			await this.setStateAsync('states.creationCpuMean', this.calcMean(this.cpuStateCreation), true);
+				const timeStart = process.hrtime();
 
-			await this.setStateAsync('objects.deletionCpuMean', this.calcMean(this.cpuObjectDeletion), true);
-			await this.setStateAsync('objects.creationCpuMean', this.calcMean(this.cpuObjectCreation), true);
+				await activeTest.execute();
 
-			// set std states - CPU
-			await this.setStateAsync('states.deletionCpuStd', this.calcStd(this.cpuStateDeletion), true);
-			await this.setStateAsync('states.creationCpuStd', this.calcStd(this.cpuStateCreation), true);
+				const timeEnd = parseFloat(process.hrtime(timeStart).join('.'));
 
-			await this.setStateAsync('objects.deletionCpuStd', this.calcStd(this.cpuObjectDeletion), true);
-			await this.setStateAsync('objects.creationCpuStd', this.calcStd(this.cpuObjectCreation), true);
+				this.activeTest = 'none';
 
-			// set mean states - MEM
-			await this.setStateAsync('states.deletionMemMean', this.calcMean(this.memStateDeletion), true);
-			await this.setStateAsync('states.creationMemMean', this.calcMean(this.memStateCreation), true);
+				times[activeTestName].push(timeEnd);
 
-			await this.setStateAsync('objects.deletionMemMean', this.calcMean(this.memObjectDeletion), true);
-			await this.setStateAsync('objects.creationMemMean', this.calcMean(this.memObjectCreation), true);
+				await activeTest.cleanUp();
+			}
 
-			// set std states - MEM
-			await this.setStateAsync('states.deletionMemStd', this.calcStd(this.memStateDeletion), true);
-			await this.setStateAsync('states.creationMemStd', this.calcStd(this.memStateCreation), true);
+			// set states - TIME
+			await this.setStateAsync(activeTestName + '.timeMean', this.calcMean(times[activeTestName]), true);
+			await this.setStateAsync(activeTestName + '.timeStd', this.calcStd(times[activeTestName]), true);
 
-			await this.setStateAsync('objects.deletionMemStd', this.calcStd(this.memObjectDeletion), true);
-			await this.setStateAsync('objects.creationMemStd', this.calcStd(this.memObjectCreation), true);
+			// set states - CPU
+			await this.setStateAsync(activeTestName + '.cpuMean', this.calcMean(this.cpuStats[activeTestName]), true);
+			await this.setStateAsync(activeTestName + '.cpuStd', this.calcStd(this.cpuStats[activeTestName]), true);
 
-			this.log.info('Finished benchmark... terminating');
-			this.terminate();
-		} catch (e: any) {
-			this.log.error(`Benchmark failed: ${e.message}`);
-			this.terminate();
+			// set states - MEM
+			await this.setStateAsync(activeTestName + '.memMean', this.calcMean(this.memStats[activeTestName]), true);
+			await this.setStateAsync(activeTestName + '.memStd', this.calcStd(this.memStats[activeTestName]), true);
 		}
+
+		this.log.info('Finished benchmark... terminating');
+		this.terminate();
 	}
 
 	/**
@@ -193,7 +129,7 @@ class Benchmark extends utils.Adapter {
 	/**
      * Calculates the standard deviation of an array
      */
-	private calcStd(arr: number[]) : number {
+	private calcStd(arr: number[]): number {
 		const mean = this.calcMean(arr);
 
 		// get squared diff from mean
@@ -208,30 +144,15 @@ class Benchmark extends utils.Adapter {
 	}
 
 	/**
-	 * Get memory and cpu statistics
-	 */
-	private async monitorStats():Promise<void> {
+     * Get memory and cpu statistics
+     */
+	private async monitorStats(): Promise<void> {
 		while (true) {
 			const stats = await pidusage(process.pid);
-			switch (this.activeTest) {
-				case 'stateDeletion':
-					this.memStateDeletion.push(stats.memory);
-					this.cpuStateDeletion.push(stats.cpu);
-					break;
-				case 'objectDeletion':
-					this.memObjectDeletion.push(stats.memory);
-					this.cpuObjectDeletion.push(stats.cpu);
-					break;
-				case 'stateCreation':
-					this.memStateCreation.push(stats.memory);
-					this.cpuStateCreation.push(stats.cpu);
-					break;
-				case 'objectCreation':
-					this.memObjectCreation.push(stats.memory);
-					this.cpuObjectCreation.push(stats.cpu);
-					break;
-				default:
-					break;
+
+			if (this.activeTest !== 'none') {
+				this.cpuStats[this.activeTest] = stats.cpu;
+				this.memStats[this.activeTest] = stats.memory;
 			}
 
 			await this.wait(100);
@@ -239,8 +160,8 @@ class Benchmark extends utils.Adapter {
 	}
 
 	/**
-	 *	Time to wait in ms
-	 */
+     *    Time to wait in ms
+     */
 	private async wait(ms: number): Promise<void> {
 		return new Promise(resolve => {
 			setTimeout(() => {
