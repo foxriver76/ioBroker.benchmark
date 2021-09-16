@@ -16,7 +16,7 @@ class Benchmark extends utils.Adapter {
 		this.on('ready', this.onReady.bind(this));
 		// this.on('stateChange', this.onStateChange.bind(this));
 		// this.on('objectChange', this.onObjectChange.bind(this));
-		// this.on('message', this.onMessage.bind(this));
+		this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 		this.activeTest = 'none';
 
@@ -28,6 +28,16 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
 	private async onReady(): Promise<void> {
+		if (!this.config.secondaryMode) {
+			this.runActiveTests();
+		}
+	}
+
+	/**
+	 * Execute the tests for a non secondary adapter
+	 * @private
+	 */
+	private async runActiveTests() {
 		this.config.iterations = this.config.iterations || 10000;
 		this.config.epochs = this.config.epochs || 5;
 
@@ -88,6 +98,13 @@ class Benchmark extends utils.Adapter {
 
 		this.log.info('Finished benchmark... terminating');
 		this.terminate();
+	}
+
+	/**
+	 * As secondary we want to listen to messages for tests
+	 */
+	private onMessage(obj: ioBroker.Message): void {
+		this.log.info(JSON.stringify(obj));
 	}
 
 	/**

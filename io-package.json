@@ -62,6 +62,7 @@
     "connectionType": "local",
     "dataSource": "push",
     "materialize": true,
+    "messagebox": true,
     "dependencies": [
       {
         "js-controller": ">=2.0.0"
@@ -70,7 +71,8 @@
   },
   "native": {
     "iterations": 10000,
-    "epochs": 5
+    "epochs": 5,
+    "secondaryMode": false
   },
   "objects": [],
   "instanceObjects": [

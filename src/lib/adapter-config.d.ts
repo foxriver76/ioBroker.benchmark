@@ -6,6 +6,7 @@ declare global {
 		interface AdapterConfig {
 			iterations: number,
 			epochs: number;
+			secondaryMode: boolean;
 		}
 	}
 }
