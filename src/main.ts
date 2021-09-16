@@ -31,11 +31,7 @@ class Benchmark extends utils.Adapter {
 		this.config.iterations = this.config.iterations || 10000;
 		this.config.epochs = this.config.epochs || 5;
 
-		interface timeObj {
-			[x: string]: any // allow anonymous properties of type any
-		}
-
-		const times: timeObj = {};
+		const times: Record<string, any> = {};
 
 		// monitor stats up from the beginning
 		this.monitorStats();

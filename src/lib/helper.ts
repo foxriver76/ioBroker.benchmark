@@ -1,4 +1,4 @@
-const testObjects = [
+export const testObjects: ioBroker.Object[] = [
 	{
 		'_id': 'timeMean',
 		'type': 'state',
@@ -77,5 +77,3 @@ const testObjects = [
 		},
 		'native': {}
 	}];
-
-export { testObjects };
