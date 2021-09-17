@@ -66,8 +66,11 @@ class Benchmark extends utils.Adapter {
             this.memStats[activeTestName] = [];
             // create objects for this test
             for (const obj of helper_1.testObjects) {
+                const origId = obj._id;
                 obj._id = `${this.namespace}.${activeTestName}.${obj._id}`;
                 await this.setForeignObjectNotExistsAsync(obj._id, obj);
+                // reset id
+                obj._id = origId;
             }
             // execute each test epochs time
             for (let j = 1; j <= this.config.epochs; j++) {
