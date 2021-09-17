@@ -1,10 +1,10 @@
 import {exec as execAsync} from 'promisify-child-process';
 import {AdapterInstance} from '@iobroker/adapter-core';
 
-export class TestUtils {
+export abstract class TestUtils {
 	public adapter: AdapterInstance;
 
-	public constructor(adapter: AdapterInstance) {
+	protected constructor(adapter: AdapterInstance) {
 		this.adapter = adapter;
 	}
 
@@ -35,4 +35,19 @@ export class TestUtils {
 			await execAsync(`iobroker del benchmark.${i}`)
 		}
 	}
+
+	/**
+	 * Prepare steps which are needed for tests to be executed
+	 */
+	abstract prepare(): Promise<void>;
+
+	/**
+	 * The tests itself
+	 */
+	abstract execute(): Promise<void>;
+
+	/**
+	 * Clean up everything which has been created
+	 */
+	abstract cleanUp():Promise<void>;
 }

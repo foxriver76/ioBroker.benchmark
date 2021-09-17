@@ -108,6 +108,9 @@ class Benchmark extends utils.Adapter {
 	 */
 	private onMessage(obj: ioBroker.Message): void {
 		this.log.info(JSON.stringify(obj));
+
+		// answer to resolve the senders promise
+		this.sendTo(obj.from, obj.command, obj.callback);
 	}
 
 	/**

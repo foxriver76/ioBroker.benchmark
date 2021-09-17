@@ -105,6 +105,8 @@ class Benchmark extends utils.Adapter {
      */
     onMessage(obj) {
         this.log.info(JSON.stringify(obj));
+        // answer to resolve the senders promise
+        this.sendTo(obj.from, obj.command, obj.callback);
     }
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
