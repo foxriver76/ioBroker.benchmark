@@ -1,16 +1,16 @@
 import {AdapterInstance} from '@iobroker/adapter-core';
+import {TestUtils} from '../testClass';
 
-export class Test {
-	private adapter: AdapterInstance;
+export class Test extends TestUtils {
 
 	public constructor(adapter: AdapterInstance) {
-		this.adapter = adapter;
+		super(adapter);
 	}
 
 	/**
      * Everything to setup the test but does not need to be measured
      */
-	public async prepare() {
+	public async prepare(): Promise<void> {
 		// set objects
 		for (let i = 0; i < this.adapter.config.iterations; i++) {
 			await this.adapter.setObjectAsync(`test.${i}`, {
@@ -30,7 +30,7 @@ export class Test {
 	/**
      * The test itself
      */
-	public async execute() {
+	public async execute(): Promise<void> {
 		// set states
 		for (let i = 0; i < this.adapter.config.iterations; i++) {
 			await this.adapter.setStateAsync(`test.${i}`, i, true);
@@ -40,7 +40,7 @@ export class Test {
 	/**
      * Clean up the db, remove insatnces, etc.
      */
-	public async cleanUp() {
+	public async cleanUp(): Promise<void> {
 		// delete states
 		for (let i = 0; i < this.adapter.config.iterations; i++) {
 			await this.adapter.delStateAsync(`test.${i}`);

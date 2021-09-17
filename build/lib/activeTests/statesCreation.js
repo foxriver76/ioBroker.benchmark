@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Test = void 0;
-class Test {
+const testClass_1 = require("../testClass");
+class Test extends testClass_1.TestUtils {
     constructor(adapter) {
-        this.adapter = adapter;
+        super(adapter);
     }
     /**
      * Everything to setup the test but does not need to be measured
