@@ -16,6 +16,8 @@ class TestUtils {
             if (!instObj) {
                 throw new Error(`Invalid instance object for system.adapter.benchmark.${i}`);
             }
+            instObj.common.enabled = true;
+            instObj.native.secondaryMode = true;
             await this.adapter.setForeignObjectAsync(`system.adapter.benchmark.${i}`, instObj);
         }
     }
