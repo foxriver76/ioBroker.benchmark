@@ -19,6 +19,8 @@ class TestUtils {
             instObj.common.enabled = true;
             instObj.native.secondaryMode = true;
             await this.adapter.setForeignObjectAsync(`system.adapter.benchmark.${i}`, instObj);
+            // give controller some time to actually start the instance
+            await this.wait(500);
         }
     }
     /**
@@ -28,6 +30,16 @@ class TestUtils {
         for (let i = 1; i <= nInstances; i++) {
             await (0, promisify_child_process_1.exec)(`iobroker del benchmark.${i}`);
         }
+    }
+    /**
+     *    Time to wait in ms
+     */
+    async wait(ms) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, ms);
+        });
     }
 }
 exports.TestUtils = TestUtils;

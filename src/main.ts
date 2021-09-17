@@ -14,9 +14,9 @@ class Benchmark extends utils.Adapter {
 			name: 'benchmark',
 		});
 		this.on('ready', this.onReady.bind(this));
-		// this.on('stateChange', this.onStateChange.bind(this));
 		// this.on('objectChange', this.onObjectChange.bind(this));
 		this.on('message', this.onMessage.bind(this));
+
 		this.on('unload', this.onUnload.bind(this));
 		this.activeTest = 'none';
 
@@ -107,10 +107,15 @@ class Benchmark extends utils.Adapter {
 	 * As secondary we want to listen to messages for tests
 	 */
 	private onMessage(obj: ioBroker.Message): void {
+		// only secondary mode instances need to response to messages
+		if (!this.config.secondaryMode) {
+			return;
+		}
+
 		this.log.info(JSON.stringify(obj));
 
 		// answer to resolve the senders promise
-		this.sendTo(obj.from, obj.command, obj.callback);
+		this.sendTo(obj.from, obj.command, {}, obj.callback);
 	}
 
 	/**

@@ -24,6 +24,8 @@ export abstract class TestUtils {
 			instObj.native.secondaryMode = true;
 
 			await this.adapter.setForeignObjectAsync(`system.adapter.benchmark.${i}`, instObj);
+			// give controller some time to actually start the instance
+			await this.wait(500);
 		}
 	}
 
@@ -50,4 +52,15 @@ export abstract class TestUtils {
 	 * Clean up everything which has been created
 	 */
 	abstract cleanUp():Promise<void>;
+
+	/**
+	 *    Time to wait in ms
+	 */
+	private async wait(ms: number): Promise<void> {
+		return new Promise(resolve => {
+			setTimeout(() => {
+				resolve();
+			}, ms);
+		});
+	}
 }
