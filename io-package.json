@@ -52,7 +52,7 @@
     "platform": "Javascript/Node.js",
     "main": "build/main.js",
     "icon": "benchmark.png",
-    "enabled": true,
+    "enabled": false,
     "extIcon": "https://raw.githubusercontent.com/foxriver76/ioBroker.benchmark/main/admin/benchmark.png",
     "readme": "https://github.com/foxriver76/ioBroker.benchmark/blob/main/README.md",
     "loglevel": "info",
@@ -72,7 +72,8 @@
   "native": {
     "iterations": 10000,
     "epochs": 5,
-    "secondaryMode": false
+    "secondaryMode": false,
+    "isolatedRun": true
   },
   "objects": [],
   "instanceObjects": [

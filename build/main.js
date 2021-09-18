@@ -39,12 +39,26 @@ class Benchmark extends utils.Adapter {
         this.activeTest = 'none';
         this.memStats = {};
         this.cpuStats = {};
+        this.restartInstances = [];
     }
     /**
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
+        var _a, _b;
         if (!this.config.secondaryMode) {
+            if (this.config.isolatedRun) {
+                this.log.info('Isolated run, stopping all instances');
+                const instancesObj = await this.getObjectViewAsync('system', 'instance', { startkey: '', endkey: '\u9999' });
+                for (const instance of instancesObj.rows) {
+                    if (instance.id !== `system.adapter.${this.namespace}` && ((_b = (_a = instance.value) === null || _a === void 0 ? void 0 : _a.common) === null || _b === void 0 ? void 0 : _b.enabled)) {
+                        // stop instances except own
+                        instance.value.common.enabled = false;
+                        await this.setForeignObjectAsync(instance.id, instance.value);
+                        this.restartInstances.push(instance.id);
+                    }
+                }
+            }
             this.runActiveTests();
         }
     }
@@ -87,14 +101,24 @@ class Benchmark extends utils.Adapter {
                 await activeTest.cleanUp();
             }
             // set states - TIME
-            await this.setStateAsync(activeTestName + '.timeMean', this.calcMean(times[activeTestName]), true);
-            await this.setStateAsync(activeTestName + '.timeStd', this.calcStd(times[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.timeMean`, this.calcMean(times[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.timeStd`, this.calcStd(times[activeTestName]), true);
             // set states - CPU
-            await this.setStateAsync(activeTestName + '.cpuMean', this.calcMean(this.cpuStats[activeTestName]), true);
-            await this.setStateAsync(activeTestName + '.cpuStd', this.calcStd(this.cpuStats[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.cpuMean`, this.calcMean(this.cpuStats[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.cpuStd`, this.calcStd(this.cpuStats[activeTestName]), true);
             // set states - MEM
-            await this.setStateAsync(activeTestName + '.memMean', this.calcMean(this.memStats[activeTestName]), true);
-            await this.setStateAsync(activeTestName + '.memStd', this.calcStd(this.memStats[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.memMean`, this.calcMean(this.memStats[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.memStd`, this.calcStd(this.memStats[activeTestName]), true);
+        }
+        if (this.config.isolatedRun) {
+            this.log.info('Restarting instances ...');
+            for (const id of this.restartInstances) {
+                const obj = await this.getForeignObjectAsync(id);
+                if (obj && obj.common) {
+                    obj.common.enabled = true;
+                    await this.setForeignObjectAsync(id, obj);
+                }
+            }
         }
         this.log.info('Finished benchmark... terminating');
         this.terminate();

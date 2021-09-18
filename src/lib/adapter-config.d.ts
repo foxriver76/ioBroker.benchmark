@@ -7,6 +7,7 @@ declare global {
 			iterations: number,
 			epochs: number;
 			secondaryMode: boolean;
+			isolatedRun: boolean;
 		}
 	}
 }

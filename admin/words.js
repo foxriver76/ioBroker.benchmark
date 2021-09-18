@@ -37,5 +37,17 @@ systemDictionary = {
 		"es": "Número de épocas",
 		"pl": "Liczba epok",
 		"zh-cn": "时代数"
+	},
+	'isolatedRun': {
+		"en": "Isolated execution",
+		"de": "Isolierte Ausführung",
+		"ru": "Изолированное исполнение",
+		"pt": "Execução isolada",
+		"nl": "geïsoleerde uitvoering",
+		"fr": "Exécution isolée",
+		"it": "Esecuzione isolata",
+		"es": "Ejecución aislada",
+		"pl": "Izolowana egzekucja",
+		"zh-cn": "隔离执行"
 	}
 };
