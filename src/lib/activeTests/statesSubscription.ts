@@ -15,9 +15,8 @@ export class Test extends TestUtils {
 		this.adapter.log.info('Adding 4 instances');
 		await this.addInstances(4);
 
-		// TODO: send message to each instance to create the objects for the states
-		for (let i=1; i <= 4; i++) {
-			await this.adapter.sendToAsync(`benchmark.${i}`, 'objects', {cmd: 'set', n: this.adapter.config.iterations});
+		for (let i = 1; i <= 4; i++) {
+			await this.addObjects(this.adapter.config.iterations, i);
 		}
 	}
 
@@ -26,10 +25,21 @@ export class Test extends TestUtils {
      */
 	public async execute(): Promise<void> {
 		this.adapter.subscribeForeignStates('benchmark.*');
-		for (let i=1; i <= 4; i++) {
-			await this.adapter.sendToAsync(`benchmark.${i}`, 'states', {cmd: 'set', n: this.adapter.config.iterations});
-		}
-		// TODO: subsribe and send messages to all instances
+
+		let counter = 0;
+		return new Promise(resolve => {
+			this.adapter.on('stateChange', () => {
+				counter++;
+				if (counter === 40000) {
+					resolve();
+				}
+			});
+
+			for (let i = 1; i <= 4; i++) {
+				// let it run in parallel
+				this.addStates(this.adapter.config.iterations, i);
+			}
+		});
 	}
 
 	/**

@@ -12,19 +12,7 @@ export class Test extends TestUtils {
      */
 	public async prepare(): Promise<void> {
 		// set objects
-		for (let i = 0; i < this.adapter.config.iterations; i++) {
-			await this.adapter.setObjectAsync(`test.${i}`, {
-				'type': 'state',
-				'common': {
-					name: i.toString(),
-					read: true,
-					write: true,
-					role: 'state',
-					type: 'number'
-				},
-				native: {}
-			});
-		}
+		await this.addObjects(this.adapter.config.iterations, 0);
 	}
 
 	/**
@@ -32,9 +20,7 @@ export class Test extends TestUtils {
      */
 	public async execute(): Promise<void> {
 		// set states
-		for (let i = 0; i < this.adapter.config.iterations; i++) {
-			await this.adapter.setStateAsync(`test.${i}`, i, true);
-		}
+		await this.addStates(this.adapter.config.iterations, 0);
 	}
 
 	/**

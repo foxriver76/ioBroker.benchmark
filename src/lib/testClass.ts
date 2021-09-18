@@ -39,6 +39,49 @@ export abstract class TestUtils {
 	}
 
 	/**
+     * Add Objects at given instance
+     *
+     * @param n - number of objects to be added
+     * @param instanceNumber - number of the benchmark instance to add objects at
+     */
+	public async addObjects(n: number, instanceNumber: number): Promise<void> {
+		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
+			// set objects locally
+			for (let i = 0; i < n; i++) {
+				await this.adapter.setObjectAsync(`test.${i}`, {
+					'type': 'state',
+					'common': {
+						name: i.toString(),
+						read: true,
+						write: true,
+						role: 'state',
+						type: 'number'
+					},
+					native: {}
+				});
+			}
+		} else {
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'set', n: n});
+		}
+	}
+
+	/**
+     * Add States at given instance
+     *
+     * @param n - number of states to be added
+     * @param instanceNumber - number of the benchmark instance to add states at
+     */
+	public async addStates(n: number, instanceNumber: number): Promise<void> {
+		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
+			for (let i = 0; i < n; i++) {
+				await this.adapter.setStateAsync(`test.${i}`, i, true);
+			}
+		} else {
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'set', n: n});
+		}
+	}
+
+	/**
      * Prepare steps which are needed for tests to be executed
      */
 	abstract prepare(): Promise<void>;

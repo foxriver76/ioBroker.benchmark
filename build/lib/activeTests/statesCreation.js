@@ -11,28 +11,14 @@ class Test extends testClass_1.TestUtils {
      */
     async prepare() {
         // set objects
-        for (let i = 0; i < this.adapter.config.iterations; i++) {
-            await this.adapter.setObjectAsync(`test.${i}`, {
-                'type': 'state',
-                'common': {
-                    name: i.toString(),
-                    read: true,
-                    write: true,
-                    role: 'state',
-                    type: 'number'
-                },
-                native: {}
-            });
-        }
+        await this.addObjects(this.adapter.config.iterations, 0);
     }
     /**
      * The test itself
      */
     async execute() {
         // set states
-        for (let i = 0; i < this.adapter.config.iterations; i++) {
-            await this.adapter.setStateAsync(`test.${i}`, i, true);
-        }
+        await this.addStates(this.adapter.config.iterations, 0);
     }
     /**
      * Clean up the db, remove insatnces, etc.
