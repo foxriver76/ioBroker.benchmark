@@ -22,8 +22,9 @@ exports.isObject = isObject;
  * @param it The variable to test
  */
 function isArray(it) {
-    if (Array.isArray != null)
+    if (Array.isArray) {
         return Array.isArray(it);
+    }
     return Object.prototype.toString.call(it) === '[object Array]';
 }
 exports.isArray = isArray;

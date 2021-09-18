@@ -16,7 +16,8 @@ export class Test extends TestUtils {
 		await this.addInstances(4);
 
 		for (let i = 1; i <= 4; i++) {
-			await this.addObjects(this.adapter.config.iterations, i);
+			// we need at least adapter.config.iterations states to fullfil our subscription
+			await this.addObjects(Math.ceil(this.adapter.config.iterations / 4), i);
 		}
 	}
 
@@ -24,21 +25,22 @@ export class Test extends TestUtils {
      * The test itself
      */
 	public async execute(): Promise<void> {
-		this.adapter.subscribeForeignStates('benchmark.*');
+		await this.adapter.subscribeForeignStatesAsync('benchmark.*');
 
 		let counter = 0;
-		return new Promise(resolve => {
-			this.adapter.on('stateChange', () => {
+		return new Promise(async resolve => {
+			const onStateChange: () => void = () => {
 				counter++;
-				this.adapter.log.warn(counter.toString());
-				if (counter === 40000) {
+				if (counter === this.adapter.config.iterations) {
 					resolve();
+					this.adapter.removeListener('stateChange', onStateChange);
 				}
-			});
+			};
+
+			this.adapter.on('stateChange', onStateChange);
 
 			for (let i = 1; i <= 4; i++) {
-				// let it run in parallel
-				this.addStates(this.adapter.config.iterations, i);
+				await this.addStates(Math.ceil(this.adapter.config.iterations / 4), i);
 			}
 		});
 	}
