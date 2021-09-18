@@ -34,9 +34,9 @@ class Benchmark extends utils.Adapter {
 	}
 
 	/**
-	 * Execute the tests for a non secondary adapter
-	 * @private
-	 */
+     * Execute the tests for a non secondary adapter
+     * @private
+     */
 	private async runActiveTests() {
 		this.config.iterations = this.config.iterations || 10000;
 		this.config.epochs = this.config.epochs || 5;
@@ -104,15 +104,42 @@ class Benchmark extends utils.Adapter {
 	}
 
 	/**
-	 * As secondary we want to listen to messages for tests
-	 */
-	private onMessage(obj: ioBroker.Message): void {
+     * As secondary we want to listen to messages for tests
+     */
+	private async onMessage(obj: ioBroker.Message): Promise<void> {
 		// only secondary mode instances need to response to messages
 		if (!this.config.secondaryMode) {
 			return;
 		}
 
-		this.log.info(JSON.stringify(obj));
+		switch (obj.command) {
+			case 'objects':
+				if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
+					for (let i = 0; i < obj.message.n; i++) {
+						await this.setObjectAsync(`test.${i}`, {
+							'type': 'state',
+							'common': {
+								name: i.toString(),
+								read: true,
+								write: true,
+								role: 'state',
+								type: 'number'
+							},
+							native: {}
+						});
+					}
+				}
+				break;
+			case 'states':
+				if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
+					// set states
+					for (let i = 0; i < obj.message.n; i++) {
+						await this.setStateAsync(`test.${i}`, i, true);
+					}
+				}
+				break;
+		}
+
 
 		// answer to resolve the senders promise
 		this.sendTo(obj.from, obj.command, {}, obj.callback);
