@@ -30,21 +30,7 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
 	private async onReady(): Promise<void> {
-		if (!this.config.secondaryMode) {
-			if (this.config.isolatedRun) {
-				this.log.info('Isolated run, stopping all instances');
-				const instancesObj = await this.getObjectViewAsync('system', 'instance', {startkey: '', endkey: '\u9999'});
-				for (const instance of instancesObj.rows) {
-					if (instance.id !== `system.adapter.${this.namespace}` && instance.value?.common?.enabled) {
-						// stop instances except own
-						instance.value.common.enabled = false;
-						await this.setForeignObjectAsync(instance.id, instance.value);
-						this.restartInstances.push(instance.id);
- 					}
-				}
-			}
-			this.runActiveTests();
-		}
+		// everything message based right now
 	}
 
 	/**
@@ -124,8 +110,7 @@ class Benchmark extends utils.Adapter {
 			}
 		}
 
-		this.log.info('Finished benchmark... terminating');
-		this.terminate();
+		this.log.info('Finished benchmark...');
 	}
 
 	/**
@@ -134,35 +119,52 @@ class Benchmark extends utils.Adapter {
 	private async onMessage(obj: ioBroker.Message): Promise<void> {
 		// only secondary mode instances need to response to messages
 		if (!this.config.secondaryMode) {
-			return;
-		}
+			if (obj.command === 'test') {
+				if (this.config.isolatedRun) {
+					this.log.info('Isolated run, stopping all instances');
+					const instancesObj = await this.getObjectViewAsync('system', 'instance', {startkey: '', endkey: '\u9999'});
+					for (const instance of instancesObj.rows) {
+						if (instance.id !== `system.adapter.${this.namespace}` && instance.value?.common?.enabled) {
+							// stop instances except own
+							instance.value.common.enabled = false;
+							await this.setForeignObjectAsync(instance.id, instance.value);
+							this.restartInstances.push(instance.id);
+						}
+					}
+				}
 
-		switch (obj.command) {
-			case 'objects':
-				if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
-					for (let i = 0; i < obj.message.n; i++) {
-						await this.setObjectAsync(`test.${i}`, {
-							'type': 'state',
-							'common': {
-								name: i.toString(),
-								read: true,
-								write: true,
-								role: 'state',
-								type: 'number'
-							},
-							native: {}
-						});
+				this.runActiveTests();
+			} else {
+				this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
+			}
+		} else {
+			switch (obj.command) {
+				case 'objects':
+					if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
+						for (let i = 0; i < obj.message.n; i++) {
+							await this.setObjectAsync(`test.${i}`, {
+								'type': 'state',
+								'common': {
+									name: i.toString(),
+									read: true,
+									write: true,
+									role: 'state',
+									type: 'number'
+								},
+								native: {}
+							});
+						}
 					}
-				}
-				break;
-			case 'states':
-				if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
-					// set states
-					for (let i = 0; i < obj.message.n; i++) {
-						await this.setStateAsync(`test.${i}`, i, true);
+					break;
+				case 'states':
+					if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
+						// set states
+						for (let i = 0; i < obj.message.n; i++) {
+							await this.setStateAsync(`test.${i}`, i, true);
+						}
 					}
-				}
-				break;
+					break;
+			}
 		}
 
 		// answer to resolve the senders promise

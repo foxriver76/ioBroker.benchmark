@@ -36,6 +36,18 @@
       "es": "Ejecución aislada",
       "pl": "Izolowana egzekucja",
       "zh-cn": "隔离执行"
+    },
+    "runAllTests": {
+      "en": "Execute all tests",
+      "de": "Alle Tests ausführen",
+      "ru": "Выполнить все тесты",
+      "pt": "Execute todos os testes",
+      "nl": "Voer alle tests uit",
+      "fr": "Exécuter tous les tests",
+      "it": "Esegui tutti i test",
+      "es": "Ejecuta todas las pruebas",
+      "pl": "Wykonaj wszystkie testy",
+      "zh-cn": "执行所有测试"
     }
   },
   "items": {
@@ -52,6 +64,11 @@
     "isolatedRun": {
       "type": "checkbox",
       "label": "isolatedRun"
+    },
+    "runAllTests": {
+      "type": "sendTo",
+      "command": "test",
+      "label": "runAllTests"
     }
   }
 }

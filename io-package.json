@@ -52,7 +52,7 @@
     "platform": "Javascript/Node.js",
     "main": "build/main.js",
     "icon": "benchmark.png",
-    "enabled": false,
+    "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/foxriver76/ioBroker.benchmark/main/admin/benchmark.png",
     "readme": "https://github.com/foxriver76/ioBroker.benchmark/blob/main/README.md",
     "loglevel": "info",
