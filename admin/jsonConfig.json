@@ -1,0 +1,57 @@
+{
+  "type": "panel",
+  "i18n": {
+    "iterations": {
+      "en": "Number of iterations",
+      "de": "Anzahl der Iterationen",
+      "ru": "Количество итераций",
+      "pt": "Número de iterações",
+      "nl": "Aantal iteraties",
+      "fr": "Nombre d\"itérations",
+      "it": "Numero di iterazioni",
+      "es": "Numero de iteraciones",
+      "pl": "Liczba iteracji",
+      "zh-cn": "迭代次数"
+    },
+    "epochs": {
+      "en": "Number of epochs",
+      "de": "Anzahl der Epochen",
+      "ru": "Количество эпох",
+      "pt": "Número de épocas",
+      "nl": "Aantal tijdperken",
+      "fr": "Nombre d\"époques",
+      "it": "Numero di epoche",
+      "es": "Número de épocas",
+      "pl": "Liczba epok",
+      "zh-cn": "时代数"
+    },
+    "isolatedRun": {
+      "en": "Isolated execution",
+      "de": "Isolierte Ausführung",
+      "ru": "Изолированное исполнение",
+      "pt": "Execução isolada",
+      "nl": "geïsoleerde uitvoering",
+      "fr": "Exécution isolée",
+      "it": "Esecuzione isolata",
+      "es": "Ejecución aislada",
+      "pl": "Izolowana egzekucja",
+      "zh-cn": "隔离执行"
+    }
+  },
+  "items": {
+    "iterations": {
+      "type": "number",
+      "label": "iterations",
+      "min": 0
+    },
+    "epochs": {
+      "type": "number",
+      "label": "epochs",
+      "min": 0
+    },
+    "isolatedRun": {
+      "type": "checkbox",
+      "label": "isolatedRun"
+    }
+  }
+}

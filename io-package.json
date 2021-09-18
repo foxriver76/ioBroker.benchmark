@@ -60,12 +60,14 @@
     "type": "hardware",
     "compact": true,
     "connectionType": "local",
-    "dataSource": "push",
-    "materialize": true,
     "messagebox": true,
+    "adminUI": {
+      "config": "json"
+    },
     "dependencies": [
       {
-        "js-controller": ">=2.0.0"
+        "admin": ">=5.0.0",
+        "js-controller": ">=3.3.0"
       }
     ]
   },
