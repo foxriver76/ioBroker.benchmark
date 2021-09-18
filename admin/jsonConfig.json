@@ -48,6 +48,30 @@
       "es": "Ejecuta todas las pruebas",
       "pl": "Wykonaj wszystkie testy",
       "zh-cn": "执行所有测试"
+    },
+    "statesCreation": {
+      "en": "Set states",
+      "de": "Zustände festlegen",
+      "ru": "Установить состояния",
+      "pt": "Definir estados",
+      "nl": "Statussen instellen",
+      "fr": "Définir les états",
+      "it": "Imposta stati",
+      "es": "Establecer estados",
+      "pl": "Ustaw stany",
+      "zh-cn": "设置状态"
+    },
+    "statesSubscription": {
+      "en": "Subscribe states",
+      "de": "Zustände abonnieren",
+      "ru": "Подписка состояния",
+      "pt": "Estados de inscrição",
+      "nl": "Abonneer staten",
+      "fr": "États d'abonnement",
+      "it": "Stati di iscrizione",
+      "es": "Suscribir estados",
+      "pl": "Subskrybuj stany",
+      "zh-cn": "订阅状态"
     }
   },
   "items": {
@@ -69,6 +93,16 @@
       "type": "sendTo",
       "command": "test",
       "label": "runAllTests"
+    },
+    "statesCreation": {
+      "type": "sendTo",
+      "command": "statesCreation",
+      "label": "statesCreation"
+    },
+    "statesSubscription": {
+      "type": "sendTo",
+      "command": "statesSubscription",
+      "label": "statesSubscription"
     }
   }
 }

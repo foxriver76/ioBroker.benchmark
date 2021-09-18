@@ -37,9 +37,9 @@ class Benchmark extends utils.Adapter {
         this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
         this.activeTest = 'none';
+        this.monitoringActive = false;
         this.memStats = {};
         this.cpuStats = {};
-        this.restartInstances = [];
     }
     /**
      * Is called when databases are connected and adapter received configuration.
@@ -51,14 +51,32 @@ class Benchmark extends utils.Adapter {
      * Execute the tests for a non secondary adapter
      * @private
      */
-    async runActiveTests() {
+    async runTests(selectedTests) {
+        var _a, _b;
+        // stop all instances if isolated run
+        if (this.config.isolatedRun) {
+            this.restartInstances = [];
+            this.log.info('Isolated run, stopping all instances');
+            const instancesObj = await this.getObjectViewAsync('system', 'instance', { startkey: '', endkey: '\u9999' });
+            for (const instance of instancesObj.rows) {
+                if (instance.id !== `system.adapter.${this.namespace}` && ((_b = (_a = instance.value) === null || _a === void 0 ? void 0 : _a.common) === null || _b === void 0 ? void 0 : _b.enabled)) {
+                    // stop instances except own
+                    instance.value.common.enabled = false;
+                    await this.setForeignObjectAsync(instance.id, instance.value);
+                    this.restartInstances.push(instance.id);
+                }
+            }
+        }
         this.config.iterations = this.config.iterations || 10000;
         this.config.epochs = this.config.epochs || 5;
+        this.memStats = {};
+        this.cpuStats = {};
         const times = {};
         // monitor stats up from the beginning
+        this.monitoringActive = true;
         this.monitorStats();
         this.log.info('Starting benchmark test...');
-        for (const activeTestName of Object.keys(allTests_1.tests)) {
+        for (const activeTestName of Object.keys(selectedTests)) {
             times[activeTestName] = [];
             this.cpuStats[activeTestName] = [];
             this.memStats[activeTestName] = [];
@@ -95,7 +113,9 @@ class Benchmark extends utils.Adapter {
             await this.setStateAsync(`${activeTestName}.memMean`, this.calcMean(this.memStats[activeTestName]), true);
             await this.setStateAsync(`${activeTestName}.memStd`, this.calcStd(this.memStats[activeTestName]), true);
         }
-        if (this.config.isolatedRun) {
+        // we can stop the monitoring procedure
+        this.monitoringActive = false;
+        if (this.config.isolatedRun && this.restartInstances) {
             this.log.info('Restarting instances ...');
             for (const id of this.restartInstances) {
                 const obj = await this.getForeignObjectAsync(id);
@@ -111,23 +131,16 @@ class Benchmark extends utils.Adapter {
      * As secondary we want to listen to messages for tests
      */
     async onMessage(obj) {
-        var _a, _b;
         // only secondary mode instances need to response to messages
         if (!this.config.secondaryMode) {
             if (obj.command === 'test') {
-                if (this.config.isolatedRun) {
-                    this.log.info('Isolated run, stopping all instances');
-                    const instancesObj = await this.getObjectViewAsync('system', 'instance', { startkey: '', endkey: '\u9999' });
-                    for (const instance of instancesObj.rows) {
-                        if (instance.id !== `system.adapter.${this.namespace}` && ((_b = (_a = instance.value) === null || _a === void 0 ? void 0 : _a.common) === null || _b === void 0 ? void 0 : _b.enabled)) {
-                            // stop instances except own
-                            instance.value.common.enabled = false;
-                            await this.setForeignObjectAsync(instance.id, instance.value);
-                            this.restartInstances.push(instance.id);
-                        }
-                    }
-                }
-                this.runActiveTests();
+                // run all tests on test command
+                await this.runTests(allTests_1.tests);
+            }
+            else if (allTests_1.tests[obj.command]) {
+                const selectedTests = {};
+                selectedTests[obj.command] = allTests_1.tests[obj.command];
+                await this.runTests(selectedTests);
             }
             else {
                 this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
@@ -213,7 +226,7 @@ class Benchmark extends utils.Adapter {
      * Get memory and cpu statistics
      */
     async monitorStats() {
-        while (true) {
+        while (this.monitoringActive) {
             const stats = await (0, pidusage_1.default)(process.pid);
             if (this.activeTest !== 'none') {
                 this.cpuStats[this.activeTest].push(stats.cpu);

@@ -5,9 +5,10 @@ import {tests as allTests} from './lib/allTests';
 
 class Benchmark extends utils.Adapter {
 	private activeTest: string;
-	private readonly memStats: any;
-	private readonly cpuStats: any;
-	private readonly restartInstances: string[];
+	private memStats: Record<string, number[]>;
+	private cpuStats: Record<string, number[]>;
+	private restartInstances: string[] | undefined;
+	private monitoringActive: boolean;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -20,10 +21,9 @@ class Benchmark extends utils.Adapter {
 
 		this.on('unload', this.onUnload.bind(this));
 		this.activeTest = 'none';
-
+		this.monitoringActive = false;
 		this.memStats = {};
 		this.cpuStats = {};
-		this.restartInstances = [];
 	}
 
 	/**
@@ -37,17 +37,36 @@ class Benchmark extends utils.Adapter {
      * Execute the tests for a non secondary adapter
      * @private
      */
-	private async runActiveTests(): Promise<void> {
+	private async runTests(selectedTests:Record<string, any>): Promise<void> {
+		// stop all instances if isolated run
+		if (this.config.isolatedRun) {
+			this.restartInstances = [];
+			this.log.info('Isolated run, stopping all instances');
+			const instancesObj = await this.getObjectViewAsync('system', 'instance', {startkey: '', endkey: '\u9999'});
+			for (const instance of instancesObj.rows) {
+				if (instance.id !== `system.adapter.${this.namespace}` && instance.value?.common?.enabled) {
+					// stop instances except own
+					instance.value.common.enabled = false;
+					await this.setForeignObjectAsync(instance.id, instance.value);
+					this.restartInstances.push(instance.id);
+				}
+			}
+		}
+
 		this.config.iterations = this.config.iterations || 10000;
 		this.config.epochs = this.config.epochs || 5;
 
-		const times: Record<string, any> = {};
+		this.memStats = {};
+		this.cpuStats = {};
+
+		const times: Record<string, number[]> = {};
 
 		// monitor stats up from the beginning
+		this.monitoringActive = true;
 		this.monitorStats();
 		this.log.info('Starting benchmark test...');
 
-		for (const activeTestName of Object.keys(allTests)) {
+		for (const activeTestName of Object.keys(selectedTests)) {
 			times[activeTestName] = [];
 			this.cpuStats[activeTestName] = [];
 			this.memStats[activeTestName] = [];
@@ -99,7 +118,10 @@ class Benchmark extends utils.Adapter {
 			await this.setStateAsync(`${activeTestName}.memStd`, this.calcStd(this.memStats[activeTestName]), true);
 		}
 
-		if (this.config.isolatedRun) {
+		// we can stop the monitoring procedure
+		this.monitoringActive = false;
+
+		if (this.config.isolatedRun && this.restartInstances) {
 			this.log.info('Restarting instances ...');
 			for (const id of this.restartInstances) {
 				const obj = await this.getForeignObjectAsync(id);
@@ -120,20 +142,12 @@ class Benchmark extends utils.Adapter {
 		// only secondary mode instances need to response to messages
 		if (!this.config.secondaryMode) {
 			if (obj.command === 'test') {
-				if (this.config.isolatedRun) {
-					this.log.info('Isolated run, stopping all instances');
-					const instancesObj = await this.getObjectViewAsync('system', 'instance', {startkey: '', endkey: '\u9999'});
-					for (const instance of instancesObj.rows) {
-						if (instance.id !== `system.adapter.${this.namespace}` && instance.value?.common?.enabled) {
-							// stop instances except own
-							instance.value.common.enabled = false;
-							await this.setForeignObjectAsync(instance.id, instance.value);
-							this.restartInstances.push(instance.id);
-						}
-					}
-				}
-
-				this.runActiveTests();
+				// run all tests on test command
+				await this.runTests(allTests);
+			} else if (allTests[obj.command]) {
+				const selectedTests:Record<string, any> = {};
+				selectedTests[obj.command] = allTests[obj.command];
+				await this.runTests(selectedTests);
 			} else {
 				this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
 			}
@@ -224,7 +238,7 @@ class Benchmark extends utils.Adapter {
      * Get memory and cpu statistics
      */
 	private async monitorStats(): Promise<void> {
-		while (true) {
+		while (this.monitoringActive) {
 			const stats = await pidusage(process.pid);
 
 			if (this.activeTest !== 'none') {
