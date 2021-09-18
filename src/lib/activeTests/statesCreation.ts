@@ -32,7 +32,6 @@ export class Test extends TestUtils {
 			await this.adapter.delStateAsync(`test.${i}`);
 		}
 
-
 		// delete objects
 		for (let i = 0; i < this.adapter.config.iterations; i++) {
 			await this.adapter.delObjectAsync(`test.${i}`);

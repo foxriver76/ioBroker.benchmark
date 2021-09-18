@@ -13,7 +13,7 @@ export abstract class TestUtils {
      */
 	public async addInstances(nInstances: number, host?: string): Promise<void> {
 		for (let i = 1; i <= nInstances; i++) {
-			await execAsync(`iobroker add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`)
+			await execAsync(`iobroker add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
 			const instObj = await this.adapter.getForeignObjectAsync(`system.adapter.benchmark.${i}`);
 
 			if (!instObj) {
@@ -34,7 +34,7 @@ export abstract class TestUtils {
      */
 	public async removeInstances(nInstances: number): Promise<void> {
 		for (let i = 1; i <= nInstances; i++) {
-			await execAsync(`iobroker del benchmark.${i}`)
+			await execAsync(`iobroker del benchmark.${i}`);
 		}
 	}
 

@@ -30,6 +30,7 @@ export class Test extends TestUtils {
 		return new Promise(resolve => {
 			this.adapter.on('stateChange', () => {
 				counter++;
+				this.adapter.log.warn(counter.toString());
 				if (counter === 40000) {
 					resolve();
 				}

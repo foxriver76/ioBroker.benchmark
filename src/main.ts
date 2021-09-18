@@ -11,7 +11,7 @@ class Benchmark extends utils.Adapter {
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
-			name: 'benchmark',
+			name: 'benchmark'
 		});
 		this.on('ready', this.onReady.bind(this));
 		// this.on('objectChange', this.onObjectChange.bind(this));
@@ -37,7 +37,7 @@ class Benchmark extends utils.Adapter {
      * Execute the tests for a non secondary adapter
      * @private
      */
-	private async runActiveTests() {
+	private async runActiveTests(): Promise<void> {
 		this.config.iterations = this.config.iterations || 10000;
 		this.config.epochs = this.config.epochs || 5;
 
@@ -68,7 +68,7 @@ class Benchmark extends utils.Adapter {
 				const activeTest = new activeTestConstructor(this);
 
 				// prepare the test
-				await activeTest.prepare()
+				await activeTest.prepare();
 
 				// only measure real execution
 				this.activeTest = activeTestName;
@@ -139,7 +139,6 @@ class Benchmark extends utils.Adapter {
 				}
 				break;
 		}
-
 
 		// answer to resolve the senders promise
 		this.sendTo(obj.from, obj.command, {}, obj.callback);

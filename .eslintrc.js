@@ -57,6 +57,30 @@ module.exports = {
 		'no-var': 'error',
 		'prefer-const': 'error',
 		'no-trailing-spaces': 'error',
+		"curly": "error",
+		"brace-style": "error",
+		"arrow-parens": ["error", "as-needed"],
+		"no-console": "off",
+		"no-unused-vars": ["error", { "argsIgnorePattern": "^_", "caughtErrors": "all" }],
+		"no-useless-escape": "warn",
+		"no-constant-condition": "off",
+		"no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+		"no-throw-literal": "error",
+		"prefer-promise-reject-errors": "error",
+		//"require-await": "error",
+		"no-return-await": "error",
+		"eqeqeq": ["error", "always"],
+		"semi": [
+			"error",
+			"always"
+		],
+		"comma-dangle": ["error", {
+			"arrays": "never",
+			"objects": "never",
+			"imports": "never",
+			"exports": "never",
+			"functions": "ignore"
+		}],
 	},
 	overrides: [
 		{

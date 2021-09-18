@@ -17,7 +17,9 @@ export function isObject(it: unknown): it is Record<string, any> {
  * @param it The variable to test
  */
 export function isArray(it: unknown): it is any[] {
-	if (Array.isArray != null) return Array.isArray(it);
+	if (Array.isArray) {
+		return Array.isArray(it);
+	}
 	return Object.prototype.toString.call(it) === '[object Array]';
 }
 
