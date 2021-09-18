@@ -11,9 +11,9 @@ export abstract class TestUtils {
 	/**
      * Adds the desired number of instances in secondaryMode
      */
-	public async addInstances(nInstances: number): Promise<void> {
+	public async addInstances(nInstances: number, host?: string): Promise<void> {
 		for (let i = 1; i <= nInstances; i++) {
-			await execAsync(`iobroker add benchmark ${i} --enabled false`)
+			await execAsync(`iobroker add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`)
 			const instObj = await this.adapter.getForeignObjectAsync(`system.adapter.benchmark.${i}`);
 
 			if (!instObj) {
@@ -39,23 +39,23 @@ export abstract class TestUtils {
 	}
 
 	/**
-	 * Prepare steps which are needed for tests to be executed
-	 */
+     * Prepare steps which are needed for tests to be executed
+     */
 	abstract prepare(): Promise<void>;
 
 	/**
-	 * The tests itself
-	 */
+     * The tests itself
+     */
 	abstract execute(): Promise<void>;
 
 	/**
-	 * Clean up everything which has been created
-	 */
-	abstract cleanUp():Promise<void>;
+     * Clean up everything which has been created
+     */
+	abstract cleanUp(): Promise<void>;
 
 	/**
-	 *    Time to wait in ms
-	 */
+     *    Time to wait in ms
+     */
 	private async wait(ms: number): Promise<void> {
 		return new Promise(resolve => {
 			setTimeout(() => {
