@@ -2,6 +2,13 @@ import * as utils from '@iobroker/adapter-core';
 import pidusage from 'pidusage';
 import {testObjects} from './lib/helper';
 import {tests as allTests} from './lib/allTests';
+import Timeout = NodeJS.Timeout;
+
+interface RequestedMonitoringEntry {
+	cpuStats: number[],
+	memStats: number[],
+	eventLoopLags: number[]
+}
 
 class Benchmark extends utils.Adapter {
 	private activeTest: string;
@@ -9,7 +16,8 @@ class Benchmark extends utils.Adapter {
 	private cpuStats: Record<string, number[]>;
 	private restartInstances: string[] | undefined;
 	private monitoringActive: boolean;
-	private internalEventLoopLags: Record<string, any>;
+	private internalEventLoopLags: Record<string, number[]>;
+	private requestedMonitoring: Record<string, RequestedMonitoringEntry>;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -26,6 +34,7 @@ class Benchmark extends utils.Adapter {
 		this.memStats = {};
 		this.cpuStats = {};
 		this.internalEventLoopLags = {};
+		this.requestedMonitoring = {};
 	}
 
 	/**
@@ -61,6 +70,7 @@ class Benchmark extends utils.Adapter {
 		this.memStats = {};
 		this.cpuStats = {};
 		this.internalEventLoopLags = {};
+		this.requestedMonitoring = {};
 
 		const times: Record<string, number[]> = {};
 
@@ -123,26 +133,63 @@ class Benchmark extends utils.Adapter {
 				await activeTest.cleanUp();
 			}
 
+			const summaryState: Record<string, any> = {};
+
+			// check all requested monitoring
+			for (const instance of Object.keys(this.requestedMonitoring)) {
+				summaryState.secondaries = summaryState.secondaries || {};
+				summaryState.secondaries[instance] = {};
+				summaryState.secondaries[instance].cpuMean = this.round(this.calcMean(this.requestedMonitoring[instance].cpuStats));
+				summaryState.secondaries[instance].cpuStd = this.round(this.calcStd(this.requestedMonitoring[instance].cpuStats));
+				summaryState.secondaries[instance].memMean = this.round(this.calcMean(this.requestedMonitoring[instance].memStats));
+				summaryState.secondaries[instance].memStd = this.round(this.calcStd(this.requestedMonitoring[instance].memStats));
+				summaryState.secondaries[instance].eventLoopLagMean = this.round(this.calcMean(this.requestedMonitoring[instance].eventLoopLags));
+				summaryState.secondaries[instance].eventLoopLagStd = this.round(this.calcStd(this.requestedMonitoring[instance].eventLoopLags));
+			}
+
 			// set states - TIME
-			await this.setStateAsync(`${activeTestName}.timeMean`, this.round(this.calcMean(times[activeTestName])), true);
-			await this.setStateAsync(`${activeTestName}.timeStd`, this.round(this.calcStd(times[activeTestName])), true);
+			const timeMean = this.round(this.calcMean(times[activeTestName]));
+			const timeStd = this.round(this.calcStd(times[activeTestName]));
+
+			await this.setStateAsync(`${activeTestName}.timeMean`, timeMean, true);
+			await this.setStateAsync(`${activeTestName}.timeStd`, timeStd, true);
+			summaryState.timeMean = timeMean;
+			summaryState.timeStd = timeStd;
 
 			// set states - CPU
-			await this.setStateAsync(`${activeTestName}.cpuMean`, this.round(this.calcMean(this.cpuStats[activeTestName])), true);
-			await this.setStateAsync(`${activeTestName}.cpuStd`, this.round(this.calcStd(this.cpuStats[activeTestName])), true);
+			const cpuMean = this.round(this.calcMean(this.cpuStats[activeTestName]));
+			const cpuStd = this.round(this.calcStd(this.cpuStats[activeTestName]));
+
+			await this.setStateAsync(`${activeTestName}.cpuMean`, cpuMean, true);
+			await this.setStateAsync(`${activeTestName}.cpuStd`, cpuStd, true);
+			summaryState.cpuMean = cpuMean;
+			summaryState.cpuStd = cpuStd;
 
 			// set states - MEM
-			await this.setStateAsync(`${activeTestName}.memMean`, this.round(this.calcMean(this.memStats[activeTestName])), true);
-			await this.setStateAsync(`${activeTestName}.memStd`, this.round(this.calcStd(this.memStats[activeTestName])), true);
+			const memMean = this.round(this.calcMean(this.memStats[activeTestName]));
+			const memStd = this.round(this.calcStd(this.memStats[activeTestName]));
+
+			await this.setStateAsync(`${activeTestName}.memMean`, memMean, true);
+			await this.setStateAsync(`${activeTestName}.memStd`, memStd, true);
+			summaryState.memMean = memMean;
+			summaryState.memStd = memStd;
 
 			// set states - event loop lag
-			await this.setStateAsync(`${activeTestName}.eventLoopLagMean`, this.round(this.calcMean(this.internalEventLoopLags[activeTestName])), true);
-			await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, this.round(this.calcStd(this.internalEventLoopLags[activeTestName])), true);
+			const eventLoopLagMean = this.round(this.calcMean(this.internalEventLoopLags[activeTestName]));
+			const eventLoopLagStd = this.round(this.calcStd(this.internalEventLoopLags[activeTestName]));
+
+			await this.setStateAsync(`${activeTestName}.eventLoopLagMean`, eventLoopLagMean, true);
+			await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, eventLoopLagStd, true);
+			summaryState.eventLoopLagMean = eventLoopLagMean;
+			summaryState.eventLoopLagStd = eventLoopLagStd;
+
+			await this.setStateAsync(`${activeTestName}.summary`, JSON.stringify(summaryState), true);
 
 			// clear RAM
 			delete this.cpuStats[activeTestName];
 			delete this.memStats[activeTestName];
 			delete this.internalEventLoopLags[activeTestName];
+			this.requestedMonitoring = {};
 		}
 
 		// we can stop the monitoring procedure
@@ -175,10 +222,28 @@ class Benchmark extends utils.Adapter {
 				const selectedTests:Record<string, any> = {};
 				selectedTests[obj.command] = allTests[obj.command];
 				await this.runTests(selectedTests);
+			} else if (obj.command === 'requestedMonitoring') {
+				// we have received a requested monitoring
+				if (!this.requestedMonitoring[obj.from]) {
+					this.requestedMonitoring[obj.from] = {cpuStats: [], memStats: [], eventLoopLags: []};
+				}
+
+				if (typeof obj.message === 'object' && Array.isArray(obj.message.cpuStats)) {
+					this.requestedMonitoring[obj.from].cpuStats = [...this.requestedMonitoring[obj.from].cpuStats, ...obj.message.cpuStats];
+				}
+
+				if (typeof obj.message === 'object' && Array.isArray(obj.message.memStats)) {
+					this.requestedMonitoring[obj.from].memStats = [...this.requestedMonitoring[obj.from].memStats, ...obj.message.memStats];
+				}
+
+				if (typeof obj.message === 'object' && Array.isArray(obj.message.eventLoopLags)) {
+					this.requestedMonitoring[obj.from].eventLoopLags = [...this.requestedMonitoring[obj.from].eventLoopLags, ...obj.message.eventLoopLags];
+				}
 			} else {
 				this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
 			}
 		} else {
+			// we run in secondary mode
 			switch (obj.command) {
 				case 'objects':
 					if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
@@ -204,6 +269,32 @@ class Benchmark extends utils.Adapter {
 							await this.setStateAsync(`test.${i}`, i, true);
 						}
 					}
+					break;
+				case 'startMeasuring':
+					this.activeTest = 'requestedMonitoring';
+					this.cpuStats.requestedMonitoring = [];
+					this.memStats.requestedMonitoring = [];
+					this.internalEventLoopLags.requestedMonitoring = [];
+
+					this.monitorStats();
+					this.measureEventLoopLag(50, lag => {
+						if (this.activeTest !== 'none') {
+							this.internalEventLoopLags[this.activeTest].push(lag);
+						}
+					});
+					break;
+				case 'stopMeasuring':
+					this.activeTest = 'none';
+					// send report to controlling instance
+					await this.sendToAsync('benchmark.0', 'requestedMonitoring', {
+						eventLoopLags: this.internalEventLoopLags.requestedMonitoring,
+						memStats: this.memStats.requestedMonitoring,
+						cpuStats: this.cpuStats.requestedMonitoring
+					});
+					// free ram
+					delete this.internalEventLoopLags.requestedMonitoring;
+					delete this.memStats.requestedMonitoring;
+					delete this.cpuStats.requestedMonitoring;
 					break;
 			}
 		}
@@ -283,13 +374,9 @@ class Benchmark extends utils.Adapter {
 	private measureEventLoopLag(ms:number, cb: (lag: number) => void): void {
 		let start = hrtime();
 
-		let timeout = setTimeout(check, ms);
-		timeout.unref();
+		let timeout: Timeout;
 
-		function check(): void {
-			// workaround for https://github.com/joyent/node/issues/8364
-			clearTimeout(timeout);
-
+		const check = () => {
 			// how much time has actually elapsed in the loop beyond what
 			// setTimeout says is supposed to happen. we use setTimeout to
 			// cover multiple iterations of the event loop, getting a larger
@@ -302,9 +389,15 @@ class Benchmark extends utils.Adapter {
 			cb && cb(Math.max(0, t - start - ms));
 			start = t;
 
-			timeout = setTimeout(check, ms);
-			timeout.unref();
-		}
+			// stop the process if no test active
+			if (this.activeTest !== 'none') {
+				timeout = setTimeout(check, ms);
+				timeout.unref();
+			}
+		};
+
+		timeout = setTimeout(check, ms);
+		timeout.unref();
 
 		function hrtime():number {
 			const t = process.hrtime();

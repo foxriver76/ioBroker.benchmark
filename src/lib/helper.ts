@@ -102,4 +102,16 @@ export const testObjects: ioBroker.Object[] = [
 			'unit': 'ms'
 		},
 		'native': {}
+	},
+	{
+		'_id': 'summary',
+		'type': 'state',
+		'common': {
+			'name': 'Summary',
+			'role': 'state',
+			'type': 'object',
+			'write': false,
+			'read': true
+		},
+		'native': {}
 	}];

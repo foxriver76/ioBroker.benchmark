@@ -40,7 +40,9 @@ export class Test extends TestUtils {
 			this.adapter.on('stateChange', onStateChange);
 
 			for (let i = 1; i <= 4; i++) {
+				await this.startMeasuringForeignInstance(i);
 				await this.addStates(Math.ceil(this.adapter.config.iterations / 4), i);
+				await this.stopMeasuringForeignInstance(i);
 			}
 		});
 	}

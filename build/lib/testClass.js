@@ -75,6 +75,22 @@ class TestUtils {
         }
     }
     /**
+     * Start measuring a foreign instance to (eventLoopLag, ram, cpu)
+     *
+     * @param instanceNumber - number of the benchmark instance to add states at
+     */
+    async startMeasuringForeignInstance(instanceNumber) {
+        await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'startMeasuring', {});
+    }
+    /**
+     * Stop measuring a foreign instance to (eventLoopLag, ram, cpu)
+     *
+     * @param instanceNumber - number of the benchmark instance to add states at
+     */
+    async stopMeasuringForeignInstance(instanceNumber) {
+        await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'stopMeasuring', {});
+    }
+    /**
      *    Time to wait in ms
      */
     async wait(ms) {

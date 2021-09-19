@@ -82,6 +82,24 @@ export abstract class TestUtils {
 	}
 
 	/**
+	 * Start measuring a foreign instance to (eventLoopLag, ram, cpu)
+	 *
+	 * @param instanceNumber - number of the benchmark instance to add states at
+	 */
+	public async startMeasuringForeignInstance(instanceNumber: number): Promise<void> {
+		await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'startMeasuring', {});
+	}
+
+	/**
+	 * Stop measuring a foreign instance to (eventLoopLag, ram, cpu)
+	 *
+	 * @param instanceNumber - number of the benchmark instance to add states at
+	 */
+	public async stopMeasuringForeignInstance(instanceNumber: number): Promise<void> {
+		await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'stopMeasuring', {});
+	}
+
+	/**
      * Prepare steps which are needed for tests to be executed
      */
 	abstract prepare(): Promise<void>;

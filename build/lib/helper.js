@@ -105,6 +105,18 @@ exports.testObjects = [
             'unit': 'ms'
         },
         'native': {}
+    },
+    {
+        '_id': 'summary',
+        'type': 'state',
+        'common': {
+            'name': 'Summary',
+            'role': 'state',
+            'type': 'object',
+            'write': false,
+            'read': true
+        },
+        'native': {}
     }
 ];
 //# sourceMappingURL=helper.js.map
