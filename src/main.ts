@@ -216,12 +216,12 @@ class Benchmark extends utils.Adapter {
 		// only secondary mode instances need to response to messages
 		if (!this.config.secondaryMode) {
 			if (obj.command === 'test') {
-				// run all tests on test command
-				await this.runTests(allTests);
+				// run all tests on test command - do not await, we want to respond to message
+				this.runTests(allTests);
 			} else if (allTests[obj.command]) {
 				const selectedTests:Record<string, any> = {};
 				selectedTests[obj.command] = allTests[obj.command];
-				await this.runTests(selectedTests);
+				this.runTests(selectedTests);
 			} else if (obj.command === 'requestedMonitoring') {
 				// we have received a requested monitoring
 				if (!this.requestedMonitoring[obj.from]) {
@@ -272,6 +272,7 @@ class Benchmark extends utils.Adapter {
 					break;
 				case 'startMeasuring':
 					this.activeTest = 'requestedMonitoring';
+					this.monitoringActive = true;
 					this.cpuStats.requestedMonitoring = [];
 					this.memStats.requestedMonitoring = [];
 					this.internalEventLoopLags.requestedMonitoring = [];
@@ -285,6 +286,7 @@ class Benchmark extends utils.Adapter {
 					break;
 				case 'stopMeasuring':
 					this.activeTest = 'none';
+					this.monitoringActive = false;
 					// send report to controlling instance
 					await this.sendToAsync('benchmark.0', 'requestedMonitoring', {
 						eventLoopLags: this.internalEventLoopLags.requestedMonitoring,
@@ -390,7 +392,7 @@ class Benchmark extends utils.Adapter {
 			start = t;
 
 			// stop the process if no test active
-			if (this.activeTest !== 'none') {
+			if (this.monitoringActive) {
 				timeout = setTimeout(check, ms);
 				timeout.unref();
 			}
