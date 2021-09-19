@@ -112,17 +112,17 @@ class Benchmark extends utils.Adapter {
                 await activeTest.cleanUp();
             }
             // set states - TIME
-            await this.setStateAsync(`${activeTestName}.timeMean`, this.calcMean(times[activeTestName]), true);
-            await this.setStateAsync(`${activeTestName}.timeStd`, this.calcStd(times[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.timeMean`, this.round(this.calcMean(times[activeTestName])), true);
+            await this.setStateAsync(`${activeTestName}.timeStd`, this.round(this.calcStd(times[activeTestName])), true);
             // set states - CPU
-            await this.setStateAsync(`${activeTestName}.cpuMean`, this.calcMean(this.cpuStats[activeTestName]), true);
-            await this.setStateAsync(`${activeTestName}.cpuStd`, this.calcStd(this.cpuStats[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.cpuMean`, this.round(this.calcMean(this.cpuStats[activeTestName])), true);
+            await this.setStateAsync(`${activeTestName}.cpuStd`, this.round(this.calcStd(this.cpuStats[activeTestName])), true);
             // set states - MEM
-            await this.setStateAsync(`${activeTestName}.memMean`, this.calcMean(this.memStats[activeTestName]), true);
-            await this.setStateAsync(`${activeTestName}.memStd`, this.calcStd(this.memStats[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.memMean`, this.round(this.calcMean(this.memStats[activeTestName])), true);
+            await this.setStateAsync(`${activeTestName}.memStd`, this.round(this.calcStd(this.memStats[activeTestName])), true);
             // set states - event loop lag
-            await this.setStateAsync(`${activeTestName}.eventLoopLagMean`, this.calcMean(this.internalEventLoopLags[activeTestName]), true);
-            await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, this.calcStd(this.internalEventLoopLags[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.eventLoopLagMean`, this.round(this.calcMean(this.internalEventLoopLags[activeTestName])), true);
+            await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, this.round(this.calcStd(this.internalEventLoopLags[activeTestName])), true);
             // clear RAM
             delete this.cpuStats[activeTestName];
             delete this.memStats[activeTestName];
@@ -205,19 +205,6 @@ class Benchmark extends utils.Adapter {
         }
     }
     /**
-     * Is called if a subscribed state changes
-     */
-    onStateChange(id, state) {
-        if (state) {
-            // The state was changed
-            this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
-        }
-        else {
-            // The state was deleted
-            this.log.info(`state ${id} deleted`);
-        }
-    }
-    /**
      *  Calculates the mean of an array
      */
     calcMean(arr) {
@@ -289,6 +276,13 @@ class Benchmark extends utils.Adapter {
             const t = process.hrtime();
             return (t[0] * 1e3) + (t[1] / 1e6);
         }
+    }
+    /**
+     * Round at two decimal places
+     * @private
+     */
+    round(number) {
+        return (Math.round(number * 100) / 100);
     }
 }
 if (require.main !== module) {
