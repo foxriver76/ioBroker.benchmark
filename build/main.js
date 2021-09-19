@@ -40,6 +40,7 @@ class Benchmark extends utils.Adapter {
         this.monitoringActive = false;
         this.memStats = {};
         this.cpuStats = {};
+        this.internalEventLoopLags = {};
     }
     /**
      * Is called when databases are connected and adapter received configuration.
@@ -71,15 +72,22 @@ class Benchmark extends utils.Adapter {
         this.config.epochs = this.config.epochs || 5;
         this.memStats = {};
         this.cpuStats = {};
+        this.internalEventLoopLags = {};
         const times = {};
         // monitor stats up from the beginning
         this.monitoringActive = true;
         this.monitorStats();
+        this.measureEventLoopLag(50, lag => {
+            if (this.activeTest !== 'none') {
+                this.internalEventLoopLags[this.activeTest].push(lag);
+            }
+        });
         this.log.info('Starting benchmark test...');
         for (const activeTestName of Object.keys(selectedTests)) {
             times[activeTestName] = [];
             this.cpuStats[activeTestName] = [];
             this.memStats[activeTestName] = [];
+            this.internalEventLoopLags[activeTestName] = [];
             // create objects for this test
             for (const obj of helper_1.testObjects) {
                 const origId = obj._id;
@@ -112,6 +120,13 @@ class Benchmark extends utils.Adapter {
             // set states - MEM
             await this.setStateAsync(`${activeTestName}.memMean`, this.calcMean(this.memStats[activeTestName]), true);
             await this.setStateAsync(`${activeTestName}.memStd`, this.calcStd(this.memStats[activeTestName]), true);
+            // set states - event loop lag
+            await this.setStateAsync(`${activeTestName}.eventLoopLagMean`, this.calcMean(this.internalEventLoopLags[activeTestName]), true);
+            await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, this.calcStd(this.internalEventLoopLags[activeTestName]), true);
+            // clear RAM
+            delete this.cpuStats[activeTestName];
+            delete this.memStats[activeTestName];
+            delete this.internalEventLoopLags[activeTestName];
         }
         // we can stop the monitoring procedure
         this.monitoringActive = false;
@@ -244,6 +259,36 @@ class Benchmark extends utils.Adapter {
                 resolve();
             }, ms);
         });
+    }
+    /**
+     * Measure the Node.js event loop lag and repeatedly call the provided callback function with the updated results
+     * @param {number} ms The number of milliseconds for monitoring
+     * @param {function} cb Callback function to call for each new value
+     */
+    measureEventLoopLag(ms, cb) {
+        let start = hrtime();
+        let timeout = setTimeout(check, ms);
+        timeout.unref();
+        function check() {
+            // workaround for https://github.com/joyent/node/issues/8364
+            clearTimeout(timeout);
+            // how much time has actually elapsed in the loop beyond what
+            // setTimeout says is supposed to happen. we use setTimeout to
+            // cover multiple iterations of the event loop, getting a larger
+            // sample of what the process is working on.
+            const t = hrtime();
+            // we use Math.max to handle case where timers are running efficiently
+            // and our callback executes earlier than `ms` due to how timers are
+            // implemented. this is ok. it means we're healthy.
+            cb && cb(Math.max(0, t - start - ms));
+            start = t;
+            timeout = setTimeout(check, ms);
+            timeout.unref();
+        }
+        function hrtime() {
+            const t = process.hrtime();
+            return (t[0] * 1e3) + (t[1] / 1e6);
+        }
     }
 }
 if (require.main !== module) {

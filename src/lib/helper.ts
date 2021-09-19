@@ -6,7 +6,7 @@ export const testObjects: ioBroker.Object[] = [
 			'name': 'Time Mean',
 			'role': 'state',
 			'type': 'number',
-			'write': true,
+			'write': false,
 			'read': true,
 			'unit': 's'
 		},
@@ -19,7 +19,7 @@ export const testObjects: ioBroker.Object[] = [
 			'name': 'Time Standard Deviation',
 			'role': 'state',
 			'type': 'number',
-			'write': true,
+			'write': false,
 			'read': true,
 			'unit': 's'
 		},
@@ -32,7 +32,7 @@ export const testObjects: ioBroker.Object[] = [
 			'name': 'CPU Mean',
 			'role': 'state',
 			'type': 'number',
-			'write': true,
+			'write': false,
 			'read': true,
 			'unit': '%'
 		},
@@ -45,7 +45,7 @@ export const testObjects: ioBroker.Object[] = [
 			'name': 'CPU Standard Deviation',
 			'role': 'state',
 			'type': 'number',
-			'write': true,
+			'write': false,
 			'read': true,
 			'unit': '%'
 		},
@@ -58,7 +58,7 @@ export const testObjects: ioBroker.Object[] = [
 			'name': 'MEM Mean',
 			'role': 'state',
 			'type': 'number',
-			'write': true,
+			'write': false,
 			'read': true,
 			'unit': 'bytes'
 		},
@@ -71,9 +71,35 @@ export const testObjects: ioBroker.Object[] = [
 			'name': 'MEM Standard Deviation',
 			'role': 'state',
 			'type': 'number',
-			'write': true,
+			'write': false,
 			'read': true,
 			'unit': 'bytes'
+		},
+		'native': {}
+	},
+	{
+		'_id': 'eventLoopLagMean',
+		'type': 'state',
+		'common': {
+			'name': 'Event Loop Lag Mean',
+			'role': 'state',
+			'type': 'number',
+			'write': false,
+			'read': true,
+			'unit': 'ms'
+		},
+		'native': {}
+	},
+	{
+		'_id': 'eventLoopLagStd',
+		'type': 'state',
+		'common': {
+			'name': 'Event Loop Lag Standard Deviation',
+			'role': 'state',
+			'type': 'number',
+			'write': false,
+			'read': true,
+			'unit': 'ms'
 		},
 		'native': {}
 	}];
