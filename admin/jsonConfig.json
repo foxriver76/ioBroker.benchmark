@@ -92,17 +92,22 @@
     "runAllTests": {
       "type": "sendTo",
       "command": "test",
-      "label": "runAllTests"
+      "label": "runAllTests",
+      "newLine": true,
+      "color": "primary"
     },
     "statesCreation": {
       "type": "sendTo",
       "command": "statesCreation",
-      "label": "statesCreation"
+      "label": "statesCreation",
+      "newLine": true,
+      "color": "primary"
     },
     "statesSubscription": {
       "type": "sendTo",
       "command": "statesSubscription",
-      "label": "statesSubscription"
+      "label": "statesSubscription",
+      "color": "primary"
     }
   }
 }

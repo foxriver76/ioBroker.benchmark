@@ -81,6 +81,14 @@ class Benchmark extends utils.Adapter {
 			this.memStats[activeTestName] = [];
 			this.internalEventLoopLags[activeTestName] = [];
 
+			await this.setForeignObjectNotExistsAsync(activeTestName, {
+				type: 'channel',
+				common: {
+					name: `Test ${activeTestName}`
+				},
+				native: {}
+			});
+
 			// create objects for this test
 			for (const obj of testObjects) {
 				const origId = obj._id;
