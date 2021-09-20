@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "news": {
+      "0.0.2": {
+        "en": "we fixed actionsPerSecondStd state",
+        "de": "Wir haben den ActionsPerSecondStd-Zustand behoben",
+        "ru": "мы исправили actionsPerSecondStd состояние",
+        "pt": "corrigimos o estado actionsPerSecondStd",
+        "nl": "we hebben acties opgelost PerSecondStd-status",
+        "fr": "nous avons corrigé l'état actionsPerSecondStd",
+        "it": "abbiamo corretto lo stato delle azioniPerSecondStd",
+        "es": "arreglamos el estado actionsPerSecondStd",
+        "pl": "naprawiliśmy stan actionsPerSecondStd",
+        "zh-cn": "我们修复了 actionsPerSecondStd 状态"
+      },
       "0.0.1": {
         "en": "initial release",
         "de": "Erstveröffentlichung",
