@@ -26,7 +26,7 @@ Benchmark your system.
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.2 (2021-09-20)
 * (foxriver76) initial release
 
 ## License
