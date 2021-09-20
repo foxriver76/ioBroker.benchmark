@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "news": {
+      "0.0.3": {
+        "en": "we fixed actionsPerSecondStd state if only one epoch",
+        "de": "Wir haben den ActionsPerSecondStd-Zustand behoben, wenn nur eine Epoche",
+        "ru": "мы исправили состояние actionsPerSecondStd, если только одна эпоха",
+        "pt": "corrigimos o estado actionsPerSecondStd se apenas uma época",
+        "nl": "we hebben de staat actiesPerSecondStd gerepareerd als er maar één tijdperk is",
+        "fr": "nous avons corrigé l'état actionsPerSecondStd si une seule époque",
+        "it": "abbiamo corretto lo stato delle azioniPerSecondStd se solo un'epoca",
+        "es": "arreglamos el estado actionsPerSecondStd si solo una época",
+        "pl": "naprawiliśmy stan actionsPerSecondStd jeśli tylko jedna epoka",
+        "zh-cn": "如果只有一个时期，我们修复了 actionsPerSecondStd 状态"
+      },
       "0.0.2": {
         "en": "we fixed actionsPerSecondStd state",
         "de": "Wir haben den ActionsPerSecondStd-Zustand behoben",
