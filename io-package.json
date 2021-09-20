@@ -1,70 +1,82 @@
 {
-    "common": {
-        "name": "benchmark",
-        "version": "0.0.2",
-        "news": {
-        },
-        "title": "Benchmark",
-        "titleLang": {
-            "en": "Benchmark",
-            "de": "Benchmark",
-            "ru": "Контрольный показатель",
-            "pt": "Benchmark",
-            "nl": "Benchmark",
-            "fr": "Référence",
-            "it": "Prova delle prestazioni",
-            "es": "Punto de referencia",
-            "pl": "Reper",
-            "zh-cn": "基准"
-        },
-        "desc": {
-            "en": "Benchmark your system",
-            "de": "Benchmarken Sie Ihr System",
-            "ru": "Оцените свою систему",
-            "pt": "Compare seu sistema",
-            "nl": "Benchmark uw systeem",
-            "fr": "Benchmarkez votre système",
-            "it": "Confronta il tuo sistema",
-            "es": "Evalúe su sistema",
-            "pl": "Porównaj swój system",
-            "zh-cn": "对您的系统进行基准测试"
-        },
-        "authors": [
-            "Moritz Heusinger <moritz.heusinger@gmail.com>"
-        ],
-        "keywords": [
-            "system",
-            "benchmark"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "build/main.js",
-        "icon": "benchmark.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/foxriver76/ioBroker.benchmark/main/admin/benchmark.png",
-        "readme": "https://github.com/foxriver76/ioBroker.benchmark/blob/main/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "hardware",
-        "compact": false,
-        "connectionType": "local",
-        "messagebox": true,
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "admin": ">=5.0.0",
-                "js-controller": ">=3.3.0"
-            }
-        ]
+  "common": {
+    "name": "benchmark",
+    "version": "0.0.4",
+    "news": {
+      "0.0.4": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Первый выпуск",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "zh-cn": "初始发行"
+      }
     },
-    "native": {
-        "iterations": 10000,
-        "epochs": 5,
-        "secondaryMode": false,
-        "isolatedRun": true
+    "title": "Benchmark",
+    "titleLang": {
+      "en": "Benchmark",
+      "de": "Benchmark",
+      "ru": "Контрольный показатель",
+      "pt": "Benchmark",
+      "nl": "Benchmark",
+      "fr": "Référence",
+      "it": "Prova delle prestazioni",
+      "es": "Punto de referencia",
+      "pl": "Reper",
+      "zh-cn": "基准"
     },
-    "objects": [],
-    "instanceObjects": []
+    "desc": {
+      "en": "Benchmark your system",
+      "de": "Benchmarken Sie Ihr System",
+      "ru": "Оцените свою систему",
+      "pt": "Compare seu sistema",
+      "nl": "Benchmark uw systeem",
+      "fr": "Benchmarkez votre système",
+      "it": "Confronta il tuo sistema",
+      "es": "Evalúe su sistema",
+      "pl": "Porównaj swój system",
+      "zh-cn": "对您的系统进行基准测试"
+    },
+    "authors": [
+      "Moritz Heusinger <moritz.heusinger@gmail.com>"
+    ],
+    "keywords": [
+      "system",
+      "benchmark"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "build/main.js",
+    "icon": "benchmark.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/foxriver76/ioBroker.benchmark/main/admin/benchmark.png",
+    "readme": "https://github.com/foxriver76/ioBroker.benchmark/blob/main/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "hardware",
+    "compact": false,
+    "connectionType": "local",
+    "messagebox": true,
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "admin": ">=5.0.0",
+        "js-controller": ">=3.3.0"
+      }
+    ]
+  },
+  "native": {
+    "iterations": 10000,
+    "epochs": 5,
+    "secondaryMode": false,
+    "isolatedRun": true
+  },
+  "objects": [],
+  "instanceObjects": []
 }
