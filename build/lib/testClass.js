@@ -75,6 +75,40 @@ class TestUtils {
         }
     }
     /**
+     * Delete staes at given instance
+     *
+     * @param n - number of states to be deleted
+     * @param instanceNumber - number of the benchmark instance to delete states from
+     */
+    async delStates(n, instanceNumber) {
+        if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
+            // local
+            for (let i = 0; i < n; i++) {
+                await this.adapter.delStateAsync(`test.${i}`);
+            }
+        }
+        else {
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', { cmd: 'del', n: n });
+        }
+    }
+    /**
+     * Delete objects at given instance
+     *
+     * @param n - number of objects to be deleted
+     * @param instanceNumber - number of the benchmark instance to delete objects from
+     */
+    async delObjects(n, instanceNumber) {
+        if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
+            // local
+            for (let i = 0; i < n; i++) {
+                await this.adapter.delObjectAsync(`test.${i}`);
+            }
+        }
+        else {
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', { cmd: 'del', n: n });
+        }
+    }
+    /**
      * Start measuring a foreign instance to (eventLoopLag, ram, cpu)
      *
      * @param instanceNumber - number of the benchmark instance to add states at

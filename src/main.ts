@@ -246,27 +246,39 @@ class Benchmark extends utils.Adapter {
 			// we run in secondary mode
 			switch (obj.command) {
 				case 'objects':
-					if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
-						for (let i = 0; i < obj.message.n; i++) {
-							await this.setObjectAsync(`test.${i}`, {
-								'type': 'state',
-								'common': {
-									name: i.toString(),
-									read: true,
-									write: true,
-									role: 'state',
-									type: 'number'
-								},
-								native: {}
-							});
+					if (typeof obj.message === 'object') {
+						if (obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
+							for (let i = 0; i < obj.message.n; i++) {
+								await this.setObjectAsync(`test.${i}`, {
+									'type': 'state',
+									'common': {
+										name: i.toString(),
+										read: true,
+										write: true,
+										role: 'state',
+										type: 'number'
+									},
+									native: {}
+								});
+							}
+						} else if (obj.message.cmd === 'del' && typeof obj.message.n === 'number') {
+							for (let i = 0; i < obj.message.n; i++) {
+								await this.delObjectAsync(`test.${i}`);
+							}
 						}
 					}
 					break;
 				case 'states':
-					if (typeof obj.message === 'object' && obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
-						// set states
-						for (let i = 0; i < obj.message.n; i++) {
-							await this.setStateAsync(`test.${i}`, i, true);
+					if (typeof obj.message === 'object') {
+						if (obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
+							// set states
+							for (let i = 0; i < obj.message.n; i++) {
+								await this.setStateAsync(`test.${i}`, i, true);
+							}
+						} else if (obj.message.cmd === 'del' && typeof obj.message.n === 'number') {
+							for (let i = 0; i < obj.message.n; i++) {
+								await this.delStateAsync(`test.${i}`);
+							}
 						}
 					}
 					break;

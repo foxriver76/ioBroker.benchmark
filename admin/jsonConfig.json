@@ -108,6 +108,12 @@
       "command": "statesSubscription",
       "label": "statesSubscription",
       "color": "primary"
+    },
+    "statesDeletion": {
+      "type": "sendTo",
+      "command": "statesDeletion",
+      "label": "statesDeletion",
+      "color": "primary"
     }
   }
 }
