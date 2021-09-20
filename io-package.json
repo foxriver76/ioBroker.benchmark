@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "news": {
+      "0.0.2": {
+        "en": "fix for actionsPerSecondStd state missing",
+        "de": "Fix für den Status \"actionsPerSecondStd\" fehlt",
+        "ru": "исправление отсутствия состояния actionsPerSecondStd",
+        "pt": "correção para o estado actionsPerSecondStd ausente",
+        "nl": "oplossing voor actiesPerSecondStd-status ontbreekt",
+        "fr": "correctif pour l'état actionsPerSecondStd manquant",
+        "it": "correzione per lo stato delle azioniPerSecondStd mancante",
+        "es": "corrección de la falta de estado actionsPerSecondStd",
+        "pl": "poprawka dla brakującego stanu actionsPerSecondStd",
+        "zh-cn": "修复 actionsPerSecondStd 状态丢失"
+      },
       "0.0.1": {
         "en": "initial release",
         "de": "Erstveröffentlichung",

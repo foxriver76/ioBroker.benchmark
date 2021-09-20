@@ -183,7 +183,7 @@ class Benchmark extends utils.Adapter {
 			await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, eventLoopLagStd, true);
 
 			const actionsPerSecondMean = this.round(this.config.iterations / timeMean);
-			const actionsPerSecondStd = this.round(this.config.iterations / timeMean);
+			const actionsPerSecondStd = this.round(this.config.iterations / timeStd) || 0;
 
 			await this.setStateAsync(`${activeTestName}.actionsPerSecondMean`, actionsPerSecondMean, true);
 			await this.setStateAsync(`${activeTestName}.actionsPerSecondStd`, actionsPerSecondStd, true);
@@ -217,7 +217,7 @@ class Benchmark extends utils.Adapter {
 					timeMean,
 					timeStd,
 					actionsPerSecondMean: this.round(this.config.iterations / timeMean / Object.keys(this.requestedMonitoring).length), // actions are split on all instances
-					actionsPerSecondStd: this.round(this.config.iterations / timeStd / Object.keys(this.requestedMonitoring).length)
+					actionsPerSecondStd: this.round(this.config.iterations / timeStd / Object.keys(this.requestedMonitoring).length) || 0
 				};
 			}
 
