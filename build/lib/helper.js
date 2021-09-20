@@ -122,7 +122,7 @@ exports.testObjects = [
         '_id': 'actionsPerSecondMean',
         'type': 'state',
         'common': {
-            'name': 'Actions per Second mean',
+            'name': 'Actions per Second Mean',
             'role': 'state',
             'type': 'number',
             'write': false,
@@ -131,10 +131,10 @@ exports.testObjects = [
         'native': {}
     },
     {
-        '_id': 'actionsPerSecondMean',
+        '_id': 'actionsPerSecondStd',
         'type': 'state',
         'common': {
-            'name': 'Actions per Second mean',
+            'name': 'Actions per Second Standard Deviation',
             'role': 'state',
             'type': 'number',
             'write': false,
