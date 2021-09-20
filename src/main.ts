@@ -73,8 +73,7 @@ class Benchmark extends utils.Adapter {
 			for (const instance of instancesObj.rows) {
 				if (instance.id !== `system.adapter.${this.namespace}` && instance.value?.common?.enabled) {
 					// stop instances except own
-					instance.value.common.enabled = false;
-					await this.setForeignObjectAsync(instance.id, instance.value);
+					await this.extendForeignObjectAsync(instance.id, {common: {enabled: false}});
 					this.restartInstances.push(instance.id);
 				}
 			}
