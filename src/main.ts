@@ -2,7 +2,8 @@ import * as utils from '@iobroker/adapter-core';
 import pidusage from 'pidusage';
 import {testObjects} from './lib/helper';
 import {tests as allTests} from './lib/allTests';
-import Timeout = NodeJS.Timeout;
+
+type Timeout = NodeJS.Timeout;
 
 interface RequestedMonitoringEntry {
 	time: number[];
@@ -12,22 +13,22 @@ interface RequestedMonitoringEntry {
 }
 
 interface SummaryState {
-	secondaries?: Record<string, SummaryState>,
-	timeMean: number,
-	timeStd: number,
-	memMean: number,
-	memStd: number,
-	cpuMean: number,
-	cpuStd: number,
-	eventLoopLagMean: number,
-	eventLoopLagStd: number,
-	actionsPerSecondMean: number,
-	actionsPerSecondStd: number
+	secondaries?: Record<string, SummaryState>;
+	timeMean: number;
+	timeStd: number;
+	memMean: number;
+	memStd: number;
+	cpuMean: number;
+	cpuStd: number;
+	eventLoopLagMean: number;
+	eventLoopLagStd: number;
+	actionsPerSecondMean: number;
+	actionsPerSecondStd: number;
 }
 
 class Benchmark extends utils.Adapter {
 	private activeTest: string;
-	private memStats: Record<string, number[]>;
+	private memStats: Record<string, number[]>; //
 	private cpuStats: Record<string, number[]>;
 	private restartInstances: string[] | undefined;
 	private monitoringActive: boolean;
