@@ -12,13 +12,9 @@ class TestUtils {
     async addInstances(nInstances, host) {
         for (let i = 1; i <= nInstances; i++) {
             await (0, promisify_child_process_1.exec)(`iobroker add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
-            const instObj = await this.adapter.getForeignObjectAsync(`system.adapter.benchmark.${i}`);
-            if (!instObj) {
-                throw new Error(`Invalid instance object for system.adapter.benchmark.${i}`);
-            }
-            instObj.common.enabled = true;
-            instObj.native.secondaryMode = true;
-            await this.adapter.setForeignObjectAsync(`system.adapter.benchmark.${i}`, instObj);
+            // enable instance in secondaryMode
+            const instObj = { common: { enabled: true }, native: { secondaryMode: true } };
+            await this.adapter.extendForeignObjectAsync(`system.adapter.benchmark.${i}`, instObj);
             // give controller some time to actually start the instance
             await this.wait(500);
         }

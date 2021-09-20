@@ -25,6 +25,10 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (foxriver76) added logging + restructuring code
+
 ### 0.0.3 (2021-09-20)
 * (foxriver76) we fixed actionsPerSecondStd state if only one epoch
 

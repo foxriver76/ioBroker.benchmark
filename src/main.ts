@@ -2,27 +2,28 @@ import * as utils from '@iobroker/adapter-core';
 import pidusage from 'pidusage';
 import {testObjects} from './lib/helper';
 import {tests as allTests} from './lib/allTests';
-import Timeout = NodeJS.Timeout;
+
+type Timeout = NodeJS.Timeout;
 
 interface RequestedMonitoringEntry {
 	time: number[];
-	cpuStats: number[],
-	memStats: number[],
-	eventLoopLags: number[]
+	cpuStats: number[];
+	memStats: number[];
+	eventLoopLags: number[];
 }
 
 interface SummaryState {
-	secondaries?: Record<string, SummaryState>,
-	timeMean: number,
-	timeStd: number,
-	memMean: number,
-	memStd: number,
-	cpuMean: number,
-	cpuStd: number,
-	eventLoopLagMean: number,
-	eventLoopLagStd: number,
-	actionsPerSecondMean: number,
-	actionsPerSecondStd: number
+	secondaries?: Record<string, SummaryState>;
+	timeMean: number;
+	timeStd: number;
+	memMean: number;
+	memStd: number;
+	cpuMean: number;
+	cpuStd: number;
+	eventLoopLagMean: number;
+	eventLoopLagStd: number;
+	actionsPerSecondMean: number;
+	actionsPerSecondStd: number;
 }
 
 class Benchmark extends utils.Adapter {
@@ -64,7 +65,7 @@ class Benchmark extends utils.Adapter {
      * Execute the tests for a non secondary adapter
      * @private
      */
-	private async runTests(selectedTests:Record<string, any>): Promise<void> {
+	private async runTests(selectedTests: Record<string, any>): Promise<void> {
 		// stop all instances if isolated run
 		if (this.config.isolatedRun) {
 			this.restartInstances = [];
@@ -73,8 +74,7 @@ class Benchmark extends utils.Adapter {
 			for (const instance of instancesObj.rows) {
 				if (instance.id !== `system.adapter.${this.namespace}` && instance.value?.common?.enabled) {
 					// stop instances except own
-					instance.value.common.enabled = false;
-					await this.setForeignObjectAsync(instance.id, instance.value);
+					await this.extendForeignObjectAsync(instance.id, {common: {enabled: false}});
 					this.restartInstances.push(instance.id);
 				}
 			}
@@ -132,6 +132,7 @@ class Benchmark extends utils.Adapter {
 				const activeTest = new activeTestConstructor(this);
 
 				// prepare the test
+				this.log.info('Prepare ...');
 				await activeTest.prepare();
 
 				// only measure real execution
@@ -139,6 +140,7 @@ class Benchmark extends utils.Adapter {
 
 				const timeStart = process.hrtime();
 
+				this.log.info('Execute ...');
 				await activeTest.execute();
 
 				const timeEnd = parseFloat(process.hrtime(timeStart).join('.'));
@@ -147,6 +149,7 @@ class Benchmark extends utils.Adapter {
 
 				times[activeTestName].push(timeEnd);
 
+				this.log.info('Clean ...');
 				await activeTest.cleanUp();
 
 				this.log.info(`Epoch ${j} finished in ${timeEnd} s - starting 30 s cooldown`);
@@ -202,18 +205,18 @@ class Benchmark extends utils.Adapter {
 			};
 
 			// check all requested monitoring
-			for (const instance of Object.keys(this.requestedMonitoring)) {
+			for (const [instance, result] of Object.entries(this.requestedMonitoring)) {
 				summaryState.secondaries = summaryState.secondaries || {};
-				const timeMean = this.round(this.calcMean(this.requestedMonitoring[instance].time));
-				const timeStd = this.round(this.calcStd(this.requestedMonitoring[instance].time));
+				const timeMean = this.round(this.calcMean(result.time));
+				const timeStd = this.round(this.calcStd(result.time));
 
 				summaryState.secondaries[instance] = {
-					cpuMean:this.round(this.calcMean(this.requestedMonitoring[instance].cpuStats)),
-					cpuStd: this.round(this.calcStd(this.requestedMonitoring[instance].cpuStats)),
-					memMean: this.round(this.calcMean(this.requestedMonitoring[instance].memStats)),
-					memStd: this.round(this.calcStd(this.requestedMonitoring[instance].memStats)),
-					eventLoopLagMean: this.round(this.calcMean(this.requestedMonitoring[instance].eventLoopLags)),
-					eventLoopLagStd: this.round(this.calcStd(this.requestedMonitoring[instance].eventLoopLags)),
+					cpuMean:this.round(this.calcMean(result.cpuStats)),
+					cpuStd: this.round(this.calcStd(result.cpuStats)),
+					memMean: this.round(this.calcMean(result.memStats)),
+					memStd: this.round(this.calcStd(result.memStats)),
+					eventLoopLagMean: this.round(this.calcMean(result.eventLoopLags)),
+					eventLoopLagStd: this.round(this.calcStd(result.eventLoopLags)),
 					timeMean,
 					timeStd,
 					actionsPerSecondMean: this.round(this.config.iterations / timeMean / Object.keys(this.requestedMonitoring).length), // actions are split on all instances
@@ -236,11 +239,7 @@ class Benchmark extends utils.Adapter {
 		if (this.config.isolatedRun && this.restartInstances) {
 			this.log.info('Restarting instances ...');
 			for (const id of this.restartInstances) {
-				const obj = await this.getForeignObjectAsync(id);
-				if (obj && obj.common) {
-					obj.common.enabled = true;
-					await this.setForeignObjectAsync(id, obj);
-				}
+				await this.extendForeignObjectAsync(id, {common: {enabled: true}});
 			}
 		}
 
@@ -266,20 +265,24 @@ class Benchmark extends utils.Adapter {
 					this.requestedMonitoring[obj.from] = {cpuStats: [], memStats: [], eventLoopLags: [], time: []};
 				}
 
-				if (typeof obj.message === 'object' && Array.isArray(obj.message.cpuStats)) {
-					this.requestedMonitoring[obj.from].cpuStats = [...this.requestedMonitoring[obj.from].cpuStats, ...obj.message.cpuStats];
-				}
+				const monitoring = this.requestedMonitoring[obj.from];
 
-				if (typeof obj.message === 'object' && Array.isArray(obj.message.memStats)) {
-					this.requestedMonitoring[obj.from].memStats = [...this.requestedMonitoring[obj.from].memStats, ...obj.message.memStats];
-				}
+				if (typeof obj.message === 'object') {
+					if (Array.isArray(obj.message.cpuStats)) {
+						monitoring.cpuStats = [...monitoring.cpuStats, ...obj.message.cpuStats];
+					}
 
-				if (typeof obj.message === 'object' && Array.isArray(obj.message.eventLoopLags)) {
-					this.requestedMonitoring[obj.from].eventLoopLags = [...this.requestedMonitoring[obj.from].eventLoopLags, ...obj.message.eventLoopLags];
-				}
+					if (Array.isArray(obj.message.memStats)) {
+						monitoring.memStats = [...monitoring.memStats, ...obj.message.memStats];
+					}
 
-				if (typeof obj.message === 'object' && Array.isArray(obj.message.time)) {
-					this.requestedMonitoring[obj.from].time = [...this.requestedMonitoring[obj.from].time, ...obj.message.time];
+					if (Array.isArray(obj.message.eventLoopLags)) {
+						monitoring.eventLoopLags = [...monitoring.eventLoopLags, ...obj.message.eventLoopLags];
+					}
+
+					if (Array.isArray(obj.message.time)) {
+						monitoring.time = [...monitoring.time, ...obj.message.time];
+					}
 				}
 			} else {
 				this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
@@ -450,7 +453,7 @@ class Benchmark extends utils.Adapter {
 			// we use Math.max to handle case where timers are running efficiently
 			// and our callback executes earlier than `ms` due to how timers are
 			// implemented. this is ok. it means we're healthy.
-			cb && cb(Math.max(0, t - start - ms));
+			cb(Math.max(0, t - start - ms));
 			start = t;
 
 			// stop the process if no test active
