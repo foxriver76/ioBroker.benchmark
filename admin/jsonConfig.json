@@ -84,6 +84,18 @@
       "es": "Eliminar estados",
       "pl": "Usuń stany",
       "zh-cn": "删除状态"
+    },
+    "idle": {
+      "en": "Idle",
+      "de": "Leerlauf",
+      "ru": "Праздный",
+      "pt": "Ocioso",
+      "nl": "Inactief",
+      "fr": "Inactif",
+      "it": "Oziare",
+      "es": "Inactivo",
+      "pl": "Bezczynny",
+      "zh-cn": "闲置的"
     }
   },
   "items": {
@@ -125,6 +137,12 @@
       "type": "sendTo",
       "command": "statesDeletion",
       "label": "statesDeletion",
+      "color": "primary"
+    },
+    "idle": {
+      "type": "sendTo",
+      "command": "idle",
+      "label": "idle",
       "color": "primary"
     }
   }

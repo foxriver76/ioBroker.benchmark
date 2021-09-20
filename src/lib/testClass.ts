@@ -149,9 +149,9 @@ export abstract class TestUtils {
 	abstract cleanUp(): Promise<void>;
 
 	/**
-     *    Time to wait in ms
+     * Time to wait in ms
      */
-	private async wait(ms: number): Promise<void> {
+	public async wait(ms: number): Promise<void> {
 		return new Promise(resolve => {
 			setTimeout(() => {
 				resolve();

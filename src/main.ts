@@ -5,9 +5,22 @@ import {tests as allTests} from './lib/allTests';
 import Timeout = NodeJS.Timeout;
 
 interface RequestedMonitoringEntry {
+	time: number[];
 	cpuStats: number[],
 	memStats: number[],
 	eventLoopLags: number[]
+}
+
+interface SummaryState {
+	secondaries?: Record<string, SummaryState>,
+	timeMean: number,
+	timeStd: number,
+	memMean: number,
+	memStd: number,
+	cpuMean: number,
+	cpuStd: number,
+	eventLoopLagMean: number,
+	eventLoopLagStd: number
 }
 
 class Benchmark extends utils.Adapter {
@@ -18,6 +31,7 @@ class Benchmark extends utils.Adapter {
 	private monitoringActive: boolean;
 	private internalEventLoopLags: Record<string, number[]>;
 	private requestedMonitoring: Record<string, RequestedMonitoringEntry>;
+	private requestedMonitoringStartTime: [number, number] | undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -133,28 +147,12 @@ class Benchmark extends utils.Adapter {
 				await activeTest.cleanUp();
 			}
 
-			const summaryState: Record<string, any> = {};
-
-			// check all requested monitoring
-			for (const instance of Object.keys(this.requestedMonitoring)) {
-				summaryState.secondaries = summaryState.secondaries || {};
-				summaryState.secondaries[instance] = {};
-				summaryState.secondaries[instance].cpuMean = this.round(this.calcMean(this.requestedMonitoring[instance].cpuStats));
-				summaryState.secondaries[instance].cpuStd = this.round(this.calcStd(this.requestedMonitoring[instance].cpuStats));
-				summaryState.secondaries[instance].memMean = this.round(this.calcMean(this.requestedMonitoring[instance].memStats));
-				summaryState.secondaries[instance].memStd = this.round(this.calcStd(this.requestedMonitoring[instance].memStats));
-				summaryState.secondaries[instance].eventLoopLagMean = this.round(this.calcMean(this.requestedMonitoring[instance].eventLoopLags));
-				summaryState.secondaries[instance].eventLoopLagStd = this.round(this.calcStd(this.requestedMonitoring[instance].eventLoopLags));
-			}
-
 			// set states - TIME
 			const timeMean = this.round(this.calcMean(times[activeTestName]));
 			const timeStd = this.round(this.calcStd(times[activeTestName]));
 
 			await this.setStateAsync(`${activeTestName}.timeMean`, timeMean, true);
 			await this.setStateAsync(`${activeTestName}.timeStd`, timeStd, true);
-			summaryState.timeMean = timeMean;
-			summaryState.timeStd = timeStd;
 
 			// set states - CPU
 			const cpuMean = this.round(this.calcMean(this.cpuStats[activeTestName]));
@@ -162,8 +160,6 @@ class Benchmark extends utils.Adapter {
 
 			await this.setStateAsync(`${activeTestName}.cpuMean`, cpuMean, true);
 			await this.setStateAsync(`${activeTestName}.cpuStd`, cpuStd, true);
-			summaryState.cpuMean = cpuMean;
-			summaryState.cpuStd = cpuStd;
 
 			// set states - MEM
 			const memMean = this.round(this.calcMean(this.memStats[activeTestName]));
@@ -171,8 +167,6 @@ class Benchmark extends utils.Adapter {
 
 			await this.setStateAsync(`${activeTestName}.memMean`, memMean, true);
 			await this.setStateAsync(`${activeTestName}.memStd`, memStd, true);
-			summaryState.memMean = memMean;
-			summaryState.memStd = memStd;
 
 			// set states - event loop lag
 			const eventLoopLagMean = this.round(this.calcMean(this.internalEventLoopLags[activeTestName]));
@@ -180,8 +174,32 @@ class Benchmark extends utils.Adapter {
 
 			await this.setStateAsync(`${activeTestName}.eventLoopLagMean`, eventLoopLagMean, true);
 			await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, eventLoopLagStd, true);
-			summaryState.eventLoopLagMean = eventLoopLagMean;
-			summaryState.eventLoopLagStd = eventLoopLagStd;
+
+			const summaryState: SummaryState = {
+				timeMean,
+				timeStd,
+				cpuMean,
+				cpuStd,
+				memMean,
+				memStd,
+				eventLoopLagMean,
+				eventLoopLagStd
+			};
+
+			// check all requested monitoring
+			for (const instance of Object.keys(this.requestedMonitoring)) {
+				summaryState.secondaries = summaryState.secondaries || {};
+				summaryState.secondaries[instance] = {
+					cpuMean:this.round(this.calcMean(this.requestedMonitoring[instance].cpuStats)),
+					cpuStd: this.round(this.calcStd(this.requestedMonitoring[instance].cpuStats)),
+					memMean: this.round(this.calcMean(this.requestedMonitoring[instance].memStats)),
+					memStd: this.round(this.calcStd(this.requestedMonitoring[instance].memStats)),
+					eventLoopLagMean: this.round(this.calcMean(this.requestedMonitoring[instance].eventLoopLags)),
+					eventLoopLagStd: this.round(this.calcStd(this.requestedMonitoring[instance].eventLoopLags)),
+					timeMean: this.round(this.calcMean(this.requestedMonitoring[instance].time)),
+					timeStd: this.round(this.calcStd(this.requestedMonitoring[instance].time))
+				};
+			}
 
 			await this.setStateAsync(`${activeTestName}.summary`, JSON.stringify(summaryState), true);
 
@@ -225,7 +243,7 @@ class Benchmark extends utils.Adapter {
 			} else if (obj.command === 'requestedMonitoring') {
 				// we have received a requested monitoring
 				if (!this.requestedMonitoring[obj.from]) {
-					this.requestedMonitoring[obj.from] = {cpuStats: [], memStats: [], eventLoopLags: []};
+					this.requestedMonitoring[obj.from] = {cpuStats: [], memStats: [], eventLoopLags: [], time: []};
 				}
 
 				if (typeof obj.message === 'object' && Array.isArray(obj.message.cpuStats)) {
@@ -238,6 +256,10 @@ class Benchmark extends utils.Adapter {
 
 				if (typeof obj.message === 'object' && Array.isArray(obj.message.eventLoopLags)) {
 					this.requestedMonitoring[obj.from].eventLoopLags = [...this.requestedMonitoring[obj.from].eventLoopLags, ...obj.message.eventLoopLags];
+				}
+
+				if (typeof obj.message === 'object' && Array.isArray(obj.message.time)) {
+					this.requestedMonitoring[obj.from].time = [...this.requestedMonitoring[obj.from].time, ...obj.message.time];
 				}
 			} else {
 				this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
@@ -288,6 +310,7 @@ class Benchmark extends utils.Adapter {
 					this.cpuStats.requestedMonitoring = [];
 					this.memStats.requestedMonitoring = [];
 					this.internalEventLoopLags.requestedMonitoring = [];
+					this.requestedMonitoringStartTime = process.hrtime();
 
 					this.monitorStats();
 					this.measureEventLoopLag(50, lag => {
@@ -300,15 +323,22 @@ class Benchmark extends utils.Adapter {
 					this.activeTest = 'none';
 					this.monitoringActive = false;
 					// send report to controlling instance
-					await this.sendToAsync('benchmark.0', 'requestedMonitoring', {
-						eventLoopLags: this.internalEventLoopLags.requestedMonitoring,
-						memStats: this.memStats.requestedMonitoring,
-						cpuStats: this.cpuStats.requestedMonitoring
-					});
+					if (this.requestedMonitoringStartTime) {
+						// we shouldn't receive a stop measuring if none has been started
+						const obj: RequestedMonitoringEntry = {
+							eventLoopLags: this.internalEventLoopLags.requestedMonitoring,
+							memStats: this.memStats.requestedMonitoring,
+							cpuStats: this.cpuStats.requestedMonitoring,
+							time: [parseFloat(process.hrtime(this.requestedMonitoringStartTime).join('.'))]
+						};
+
+						await this.sendToAsync('benchmark.0', 'requestedMonitoring', obj);
+					}
 					// free ram
 					delete this.internalEventLoopLags.requestedMonitoring;
 					delete this.memStats.requestedMonitoring;
 					delete this.cpuStats.requestedMonitoring;
+					delete this.requestedMonitoringStartTime;
 					break;
 			}
 		}

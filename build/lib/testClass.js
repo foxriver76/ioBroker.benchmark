@@ -125,7 +125,7 @@ class TestUtils {
         await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'stopMeasuring', {});
     }
     /**
-     *    Time to wait in ms
+     * Time to wait in ms
      */
     async wait(ms) {
         return new Promise(resolve => {
