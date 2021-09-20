@@ -64,7 +64,7 @@ class Benchmark extends utils.Adapter {
      * Execute the tests for a non secondary adapter
      * @private
      */
-	private async runTests(selectedTests:Record<string, any>): Promise<void> {
+	private async runTests(selectedTests: string[]): Promise<void> {
 		// stop all instances if isolated run
 		if (this.config.isolatedRun) {
 			this.restartInstances = [];
@@ -100,7 +100,7 @@ class Benchmark extends utils.Adapter {
 
 		this.log.info('Starting benchmark test...');
 
-		for (const activeTestName of Object.keys(selectedTests)) {
+		for (const activeTestName of selectedTests) {
 			times[activeTestName] = [];
 			this.cpuStats[activeTestName] = [];
 			this.memStats[activeTestName] = [];
@@ -201,18 +201,18 @@ class Benchmark extends utils.Adapter {
 			};
 
 			// check all requested monitoring
-			for (const instance of Object.keys(this.requestedMonitoring)) {
+			for (const [instance, result] of Object.entries(this.requestedMonitoring)) {
 				summaryState.secondaries = summaryState.secondaries || {};
-				const timeMean = this.round(this.calcMean(this.requestedMonitoring[instance].time));
-				const timeStd = this.round(this.calcStd(this.requestedMonitoring[instance].time));
+				const timeMean = this.round(this.calcMean(result.time));
+				const timeStd = this.round(this.calcStd(result.time));
 
 				summaryState.secondaries[instance] = {
-					cpuMean:this.round(this.calcMean(this.requestedMonitoring[instance].cpuStats)),
-					cpuStd: this.round(this.calcStd(this.requestedMonitoring[instance].cpuStats)),
-					memMean: this.round(this.calcMean(this.requestedMonitoring[instance].memStats)),
-					memStd: this.round(this.calcStd(this.requestedMonitoring[instance].memStats)),
-					eventLoopLagMean: this.round(this.calcMean(this.requestedMonitoring[instance].eventLoopLags)),
-					eventLoopLagStd: this.round(this.calcStd(this.requestedMonitoring[instance].eventLoopLags)),
+					cpuMean:this.round(this.calcMean(result.cpuStats)),
+					cpuStd: this.round(this.calcStd(result.cpuStats)),
+					memMean: this.round(this.calcMean(result.memStats)),
+					memStd: this.round(this.calcStd(result.memStats)),
+					eventLoopLagMean: this.round(this.calcMean(result.eventLoopLags)),
+					eventLoopLagStd: this.round(this.calcStd(result.eventLoopLags)),
 					timeMean,
 					timeStd,
 					actionsPerSecondMean: this.round(this.config.iterations / timeMean / Object.keys(this.requestedMonitoring).length), // actions are split on all instances
@@ -237,8 +237,7 @@ class Benchmark extends utils.Adapter {
 			for (const id of this.restartInstances) {
 				const obj = await this.getForeignObjectAsync(id);
 				if (obj && obj.common) {
-					obj.common.enabled = true;
-					await this.setForeignObjectAsync(id, obj);
+					await this.extendForeignObjectAsync(id, {common: {enabled: true}});
 				}
 			}
 		}
@@ -254,31 +253,33 @@ class Benchmark extends utils.Adapter {
 		if (!this.config.secondaryMode) {
 			if (obj.command === 'test') {
 				// run all tests on test command - do not await, we want to respond to message
-				this.runTests(allTests);
+				this.runTests(Object.keys(allTests));
 			} else if (allTests[obj.command]) {
-				const selectedTests:Record<string, any> = {};
-				selectedTests[obj.command] = allTests[obj.command];
-				this.runTests(selectedTests);
+				// this.runTests({
+				// 	[obj.command]: allTests[obj.command]
+				// });
+				this.runTests([obj.command]);
 			} else if (obj.command === 'requestedMonitoring') {
 				// we have received a requested monitoring
 				if (!this.requestedMonitoring[obj.from]) {
 					this.requestedMonitoring[obj.from] = {cpuStats: [], memStats: [], eventLoopLags: [], time: []};
 				}
 
+				const monitoring = this.requestedMonitoring[obj.from];
 				if (typeof obj.message === 'object' && Array.isArray(obj.message.cpuStats)) {
-					this.requestedMonitoring[obj.from].cpuStats = [...this.requestedMonitoring[obj.from].cpuStats, ...obj.message.cpuStats];
+					monitoring.cpuStats = [...monitoring.cpuStats, ...obj.message.cpuStats];
 				}
 
 				if (typeof obj.message === 'object' && Array.isArray(obj.message.memStats)) {
-					this.requestedMonitoring[obj.from].memStats = [...this.requestedMonitoring[obj.from].memStats, ...obj.message.memStats];
+					monitoring.memStats = [...monitoring.memStats, ...obj.message.memStats];
 				}
 
 				if (typeof obj.message === 'object' && Array.isArray(obj.message.eventLoopLags)) {
-					this.requestedMonitoring[obj.from].eventLoopLags = [...this.requestedMonitoring[obj.from].eventLoopLags, ...obj.message.eventLoopLags];
+					monitoring.eventLoopLags = [...monitoring.eventLoopLags, ...obj.message.eventLoopLags];
 				}
 
 				if (typeof obj.message === 'object' && Array.isArray(obj.message.time)) {
-					this.requestedMonitoring[obj.from].time = [...this.requestedMonitoring[obj.from].time, ...obj.message.time];
+					monitoring.time = [...monitoring.time, ...obj.message.time];
 				}
 			} else {
 				this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
@@ -431,15 +432,15 @@ class Benchmark extends utils.Adapter {
 
 	/**
 	 * Measure the Node.js event loop lag and repeatedly call the provided callback function with the updated results
-	 * @param {number} ms The number of milliseconds for monitoring
-	 * @param {function} cb Callback function to call for each new value
+	 * @param ms The number of milliseconds for monitoring
+	 * @param cb Callback function to call for each new value
 	 */
-	private measureEventLoopLag(ms:number, cb: (lag: number) => void): void {
+	private measureEventLoopLag(ms:number, cb?: (lag: number) => void): void {
 		let start = hrtime();
 
 		let timeout: Timeout;
 
-		const check = () => {
+		const check = (): void => {
 			// how much time has actually elapsed in the loop beyond what
 			// setTimeout says is supposed to happen. we use setTimeout to
 			// cover multiple iterations of the event loop, getting a larger
@@ -449,7 +450,7 @@ class Benchmark extends utils.Adapter {
 			// we use Math.max to handle case where timers are running efficiently
 			// and our callback executes earlier than `ms` due to how timers are
 			// implemented. this is ok. it means we're healthy.
-			cb && cb(Math.max(0, t - start - ms));
+			cb?.(Math.max(0, t - start - ms));
 			start = t;
 
 			// stop the process if no test active
