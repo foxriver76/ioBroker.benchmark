@@ -94,7 +94,7 @@ export abstract class TestUtils {
 	}
 
 	/**
-	 * Delete objects at given instance
+	 * Delete objects (and states) at given instance
 	 *
 	 * @param n - number of objects to be deleted
 	 * @param instanceNumber - number of the benchmark instance to delete objects from

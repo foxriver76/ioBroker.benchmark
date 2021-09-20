@@ -31,10 +31,7 @@ export class Test extends TestUtils {
      * Clean up the db, remove insatnces, etc.
      */
 	public async cleanUp(): Promise<void> {
-		// delete states
-		await this.delStates(this.adapter.config.iterations, 0);
-
-		// delete objects
+		// delete objects and states
 		await this.delObjects(this.adapter.config.iterations, 0);
 	}
 }

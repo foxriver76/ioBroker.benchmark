@@ -373,8 +373,8 @@ class Benchmark extends utils.Adapter {
     }
     /**
      * Measure the Node.js event loop lag and repeatedly call the provided callback function with the updated results
-     * @param {number} ms The number of milliseconds for monitoring
-     * @param {function} cb Callback function to call for each new value
+     * @param ms The number of milliseconds for monitoring
+     * @param cb Callback function to call for each new value
      */
     measureEventLoopLag(ms, cb) {
         let start = hrtime();

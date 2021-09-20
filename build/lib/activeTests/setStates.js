@@ -24,9 +24,7 @@ class Test extends testClass_1.TestUtils {
      * Clean up the db, remove insatnces, etc.
      */
     async cleanUp() {
-        // delete states
-        await this.delStates(this.adapter.config.iterations, 0);
-        // delete objects
+        // delete objects and states
         await this.delObjects(this.adapter.config.iterations, 0);
     }
 }
