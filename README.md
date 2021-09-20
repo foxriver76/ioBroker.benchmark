@@ -14,6 +14,12 @@
 ## benchmark adapter for ioBroker
 Benchmark your system.
 
+## How to add a new test?
+1. Create a new TypeScript file in src/lib/activeTests, with a class which inherits from TestUtils
+2. Define the three steps of your test (execute is automatically measured)
+3. Add your test to src/lib/allTests.ts
+4. Add a button and translation for your test to admin/jsonConfig.json
+
 ## Changelog
 <!--
 	Placeholder for the next version (at the beginning of the line):

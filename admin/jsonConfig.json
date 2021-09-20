@@ -72,6 +72,18 @@
       "es": "Suscribir estados",
       "pl": "Subskrybuj stany",
       "zh-cn": "订阅状态"
+    },
+    "statesDeletion": {
+      "en": "Delete states",
+      "de": "Zustände löschen",
+      "ru": "Удалить состояния",
+      "pt": "Excluir estados",
+      "nl": "Staten verwijderen",
+      "fr": "Supprimer des états",
+      "it": "Elimina stati",
+      "es": "Eliminar estados",
+      "pl": "Usuń stany",
+      "zh-cn": "删除状态"
     }
   },
   "items": {
