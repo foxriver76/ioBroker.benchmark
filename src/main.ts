@@ -20,7 +20,9 @@ interface SummaryState {
 	cpuMean: number,
 	cpuStd: number,
 	eventLoopLagMean: number,
-	eventLoopLagStd: number
+	eventLoopLagStd: number,
+	actionsPerSecondMean: number,
+	actionsPerSecondStd: number
 }
 
 class Benchmark extends utils.Adapter {
@@ -122,6 +124,7 @@ class Benchmark extends utils.Adapter {
 				obj._id = origId;
 			}
 
+			this.log.info(`Starting test "${activeTestName}"`);
 			// execute each test epochs time
 			for (let j = 1; j <= this.config.epochs; j++) {
 
@@ -145,6 +148,10 @@ class Benchmark extends utils.Adapter {
 				times[activeTestName].push(timeEnd);
 
 				await activeTest.cleanUp();
+
+				this.log.info(`Epoch ${j} finished in ${timeEnd} s - starting 30 s cooldown`);
+				// wait 30 sec to "cooldown" system
+				await this.wait(30000);
 			}
 
 			// set states - TIME
@@ -175,6 +182,12 @@ class Benchmark extends utils.Adapter {
 			await this.setStateAsync(`${activeTestName}.eventLoopLagMean`, eventLoopLagMean, true);
 			await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, eventLoopLagStd, true);
 
+			const actionsPerSecondMean = this.round(this.config.iterations / timeMean);
+			const actionsPerSecondStd = this.round(this.config.iterations / timeMean);
+
+			await this.setStateAsync(`${activeTestName}.actionsPerSecondMean`, actionsPerSecondMean, true);
+			await this.setStateAsync(`${activeTestName}.actionsPerSecondStd`, actionsPerSecondStd, true);
+
 			const summaryState: SummaryState = {
 				timeMean,
 				timeStd,
@@ -183,12 +196,17 @@ class Benchmark extends utils.Adapter {
 				memMean,
 				memStd,
 				eventLoopLagMean,
-				eventLoopLagStd
+				eventLoopLagStd,
+				actionsPerSecondMean,
+				actionsPerSecondStd
 			};
 
 			// check all requested monitoring
 			for (const instance of Object.keys(this.requestedMonitoring)) {
 				summaryState.secondaries = summaryState.secondaries || {};
+				const timeMean = this.round(this.calcMean(this.requestedMonitoring[instance].time));
+				const timeStd = this.round(this.calcStd(this.requestedMonitoring[instance].time));
+
 				summaryState.secondaries[instance] = {
 					cpuMean:this.round(this.calcMean(this.requestedMonitoring[instance].cpuStats)),
 					cpuStd: this.round(this.calcStd(this.requestedMonitoring[instance].cpuStats)),
@@ -196,8 +214,10 @@ class Benchmark extends utils.Adapter {
 					memStd: this.round(this.calcStd(this.requestedMonitoring[instance].memStats)),
 					eventLoopLagMean: this.round(this.calcMean(this.requestedMonitoring[instance].eventLoopLags)),
 					eventLoopLagStd: this.round(this.calcStd(this.requestedMonitoring[instance].eventLoopLags)),
-					timeMean: this.round(this.calcMean(this.requestedMonitoring[instance].time)),
-					timeStd: this.round(this.calcStd(this.requestedMonitoring[instance].time))
+					timeMean,
+					timeStd,
+					actionsPerSecondMean: this.round(this.config.iterations / timeMean / Object.keys(this.requestedMonitoring).length), // actions are split on all instances
+					actionsPerSecondStd: this.round(this.config.iterations / timeStd / Object.keys(this.requestedMonitoring).length)
 				};
 			}
 

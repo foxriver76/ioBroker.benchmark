@@ -1,6 +1,6 @@
 {
   "name": "iobroker.benchmark",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "description": "Benchmark your system",
   "author": {
     "name": "Moritz Heusinger",

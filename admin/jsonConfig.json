@@ -49,9 +49,9 @@
       "pl": "Wykonaj wszystkie testy",
       "zh-cn": "执行所有测试"
     },
-    "statesCreation": {
+    "setStates": {
       "en": "Set states",
-      "de": "Zustände festlegen",
+      "de": "Zustände setzen",
       "ru": "Установить состояния",
       "pt": "Definir estados",
       "nl": "Statussen instellen",
@@ -96,6 +96,30 @@
       "es": "Inactivo",
       "pl": "Bezczynny",
       "zh-cn": "闲置的"
+    },
+    "setStatesNonStrict": {
+      "en": "Set states (no checks)",
+      "de": "Zustände setzen (keine Prüfungen)",
+      "ru": "Установить состояния (без проверок)",
+      "pt": "Definir estados (sem verificações)",
+      "nl": "Statussen instellen (geen vinkjes)",
+      "fr": "Définir les états (pas de contrôle)",
+      "it": "Imposta stati (nessun controllo)",
+      "es": "Establecer estados (sin cheques)",
+      "pl": "Ustaw stany (bez kontroli)",
+      "zh-cn": "设置状态（无检查）"
+    },
+    "objectsCreation": {
+      "en": "Objects creation",
+      "de": "Objekterstellung",
+      "ru": "Создание объектов",
+      "pt": "Criação de objetos",
+      "nl": "Objecten maken",
+      "fr": "Création d'objets",
+      "it": "Creazione di oggetti",
+      "es": "Creación de objetos",
+      "pl": "Tworzenie obiektów",
+      "zh-cn": "对象创建"
     }
   },
   "items": {
@@ -120,10 +144,10 @@
       "newLine": true,
       "color": "primary"
     },
-    "statesCreation": {
+    "setStates": {
       "type": "sendTo",
-      "command": "statesCreation",
-      "label": "statesCreation",
+      "command": "setStates",
+      "label": "setStates",
       "newLine": true,
       "color": "primary"
     },
@@ -143,6 +167,18 @@
       "type": "sendTo",
       "command": "idle",
       "label": "idle",
+      "color": "primary"
+    },
+    "setStatesNonStrict": {
+      "type": "sendTo",
+      "command": "setStatesNonStrict",
+      "label": "setStatesNonStrict",
+      "color": "primary"
+    },
+    "objectsCreation": {
+      "type": "sendTo",
+      "command": "objectsCreation",
+      "label": "objectsCreation",
       "color": "primary"
     }
   }

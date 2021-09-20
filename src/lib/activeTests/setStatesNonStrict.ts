@@ -13,6 +13,10 @@ export class Test extends TestUtils {
 	public async prepare(): Promise<void> {
 		// set objects
 		await this.addObjects(this.adapter.config.iterations, 0);
+		// deactivate strict object checks
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		this.adapter.performStrictObjectChecks = false;
 	}
 
 	/**
@@ -28,13 +32,9 @@ export class Test extends TestUtils {
      */
 	public async cleanUp(): Promise<void> {
 		// delete states
-		for (let i = 0; i < this.adapter.config.iterations; i++) {
-			await this.adapter.delStateAsync(`test.${i}`);
-		}
+		await this.delStates(this.adapter.config.iterations, 0);
 
 		// delete objects
-		for (let i = 0; i < this.adapter.config.iterations; i++) {
-			await this.adapter.delObjectAsync(`test.${i}`);
-		}
+		await this.delObjects(this.adapter.config.iterations, 0);
 	}
 }

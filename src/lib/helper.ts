@@ -114,4 +114,29 @@ export const testObjects: ioBroker.Object[] = [
 			'read': true
 		},
 		'native': {}
-	}];
+	},
+	{
+		'_id': 'actionsPerSecondMean',
+		'type': 'state',
+		'common': {
+			'name': 'Actions per Second mean',
+			'role': 'state',
+			'type': 'number',
+			'write': false,
+			'read': true
+		},
+		'native': {}
+	},
+	{
+		'_id': 'actionsPerSecondMean',
+		'type': 'state',
+		'common': {
+			'name': 'Actions per Second mean',
+			'role': 'state',
+			'type': 'number',
+			'write': false,
+			'read': true
+		},
+		'native': {}
+	}
+];

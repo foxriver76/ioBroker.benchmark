@@ -117,6 +117,30 @@ exports.testObjects = [
             'read': true
         },
         'native': {}
+    },
+    {
+        '_id': 'actionsPerSecondMean',
+        'type': 'state',
+        'common': {
+            'name': 'Actions per Second mean',
+            'role': 'state',
+            'type': 'number',
+            'write': false,
+            'read': true
+        },
+        'native': {}
+    },
+    {
+        '_id': 'actionsPerSecondMean',
+        'type': 'state',
+        'common': {
+            'name': 'Actions per Second mean',
+            'role': 'state',
+            'type': 'number',
+            'write': false,
+            'read': true
+        },
+        'native': {}
     }
 ];
 //# sourceMappingURL=helper.js.map
