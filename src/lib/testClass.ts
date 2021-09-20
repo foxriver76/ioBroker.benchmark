@@ -20,6 +20,7 @@ export abstract class TestUtils {
 				throw new Error(`Invalid instance object for system.adapter.benchmark.${i}`);
 			}
 
+			// Probably use `extendForeignObject` instead?
 			instObj.common.enabled = true;
 			instObj.native.secondaryMode = true;
 
