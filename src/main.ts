@@ -71,12 +71,17 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
 	private async onReady(): Promise<void> {
-		try {
-			const pidsFileContent = readFileSync(require.resolve('iobroker.js-controller/pids.txt')).toString();
-			this.controllerPid = JSON.parse(pidsFileContent).pop();
-			this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
-		} catch (e: any) {
-			this.log.error(`Cannot determine controller pid file: ${e.message}`);
+		if (!this.config.secondaryMode) {
+			// only main mode needs controller pid
+			try {
+				const pidsFileContent = readFileSync(require.resolve('iobroker.js-controller/pids.txt')).toString();
+				this.controllerPid = JSON.parse(pidsFileContent).pop();
+				this.log.info(`Adapter started... controller determined (pid: ${this.controllerPid})`);
+			} catch (e: any) {
+				this.log.error(`Cannot determine controller pid file: ${e.message}`);
+			}
+		} else {
+			this.log.info('Adapter started in secondary mode');
 		}
 	}
 
@@ -500,7 +505,8 @@ class Benchmark extends utils.Adapter {
 				this.memStats[this.activeTest].push(stats.memory);
 			}
 
-			if (this.controllerPid) {
+			if (this.controllerPid && !this.config.secondaryMode) {
+				// only benchmark controller should monitor this
 				const controllerStats = await pidusage(this.controllerPid);
 
 				if (this.activeTest !== 'none') {
