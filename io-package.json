@@ -101,7 +101,14 @@
     "secondaryMode": false,
     "isolatedRun": true
   },
-  "objects": [],
+  "objects": [{
+    "_id": "benchmark.files",
+    "type": "meta",
+    "common": {
+      "name": "Files"
+    },
+    "native": {}
+  }],
   "instanceObjects": [
     {
       "_id": "summary",

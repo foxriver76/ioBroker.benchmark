@@ -2,6 +2,8 @@ import * as utils from '@iobroker/adapter-core';
 import pidusage from 'pidusage';
 import {testObjects} from './lib/helper';
 import {tests as allTests} from './lib/allTests';
+import {readFileSync} from 'fs';
+import path from 'path';
 
 type Timeout = NodeJS.Timeout;
 
@@ -14,6 +16,10 @@ interface RequestedMonitoringEntry {
 
 interface SummaryState {
 	secondaries?: Record<string, SummaryState>;
+	controllerMemMean?: number;
+	controllerMemStd?: number;
+	controllerCpuMean?: number;
+	controllerCpuStd?: number;
 	timeMean: number;
 	timeStd: number;
 	memMean: number;
@@ -31,12 +37,15 @@ interface SummaryState {
 class Benchmark extends utils.Adapter {
 	private activeTest: string;
 	private memStats: Record<string, number[]>;
+	private controllerMemStats: Record<string, number[]>
+	private controllerCpuStats: Record<string, number[]>
 	private cpuStats: Record<string, number[]>;
 	private restartInstances: string[] | undefined;
 	private monitoringActive: boolean;
 	private internalEventLoopLags: Record<string, number[]>;
 	private requestedMonitoring: Record<string, RequestedMonitoringEntry>;
 	private requestedMonitoringStartTime: [number, number] | undefined;
+	private controllerPid: number;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -52,14 +61,20 @@ class Benchmark extends utils.Adapter {
 		this.monitoringActive = false;
 		this.memStats = {};
 		this.cpuStats = {};
+		this.controllerMemStats = {};
+		this.controllerCpuStats = {};
 		this.internalEventLoopLags = {};
 		this.requestedMonitoring = {};
+
+		const pidsFileContent = readFileSync(path.join(__dirname, '..', 'iobroker.js-controller', 'pids.txt')).toString();
+		this.controllerPid = JSON.parse(pidsFileContent).pop();
 	}
 
 	/**
      * Is called when databases are connected and adapter received configuration.
      */
 	private async onReady(): Promise<void> {
+		this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
 		// everything message based right now
 	}
 
@@ -87,6 +102,8 @@ class Benchmark extends utils.Adapter {
 
 		this.memStats = {};
 		this.cpuStats = {};
+		this.controllerCpuStats = {};
+		this.controllerMemStats = {};
 		this.internalEventLoopLags = {};
 		this.requestedMonitoring = {};
 
@@ -107,6 +124,8 @@ class Benchmark extends utils.Adapter {
 			times[activeTestName] = [];
 			this.cpuStats[activeTestName] = [];
 			this.memStats[activeTestName] = [];
+			this.controllerMemStats[activeTestName] = [];
+			this.controllerCpuStats[activeTestName] = [];
 			this.internalEventLoopLags[activeTestName] = [];
 
 			await this.setObjectNotExistsAsync(activeTestName, {
@@ -193,6 +212,14 @@ class Benchmark extends utils.Adapter {
 			await this.setStateAsync(`${activeTestName}.actionsPerSecondMean`, actionsPerSecondMean, true);
 			await this.setStateAsync(`${activeTestName}.actionsPerSecondStd`, actionsPerSecondStd , true);
 
+			// controller mem stats
+			const controllerMemMean = this.round(this.calcMean(this.controllerMemStats[activeTestName]));
+			const controllerMemStd = this.round(this.calcStd(this.controllerMemStats[activeTestName]));
+
+			// controller cpu stats
+			const controllerCpuMean = this.round(this.calcMean(this.controllerCpuStats[activeTestName]));
+			const controllerCpuStd = this.round(this.calcStd(this.controllerCpuStats[activeTestName]));
+
 			const summaryState: SummaryState = {
 				timeMean,
 				timeStd,
@@ -200,6 +227,10 @@ class Benchmark extends utils.Adapter {
 				cpuStd,
 				memMean,
 				memStd,
+				controllerCpuMean,
+				controllerCpuStd,
+				controllerMemMean,
+				controllerMemStd,
 				eventLoopLagMean,
 				eventLoopLagStd,
 				actionsPerSecondMean,
@@ -251,6 +282,8 @@ class Benchmark extends utils.Adapter {
 			// clear RAM
 			delete this.cpuStats[activeTestName];
 			delete this.memStats[activeTestName];
+			delete this.controllerCpuStats[activeTestName];
+			delete this.controllerMemStats[activeTestName];
 			delete this.internalEventLoopLags[activeTestName];
 			this.requestedMonitoring = {};
 		}
@@ -266,6 +299,27 @@ class Benchmark extends utils.Adapter {
 		}
 
 		this.log.info('Finished benchmark...');
+
+		const summaryState = await this.getStateAsync('summary');
+
+		if (summaryState) {
+			this.log.info('Writing summary file ...');
+
+			let summaryArr;
+			try {
+				const file = await this.readFileAsync('benchmark.files', 'history.json');
+				const fileContent = typeof file.file === 'string' ? file.file : file.file.toString();
+				summaryArr = JSON.parse(fileContent);
+			} catch {
+				summaryArr = [];
+			}
+
+			summaryArr.push(summaryState.val);
+
+			await this.writeFileAsync('benchmark.files', 'history.json', JSON.stringify(summaryArr));
+
+			this.log.info('Summary file written');
+		}
 	}
 
 	/**
@@ -442,6 +496,13 @@ class Benchmark extends utils.Adapter {
 			if (this.activeTest !== 'none') {
 				this.cpuStats[this.activeTest].push(stats.cpu);
 				this.memStats[this.activeTest].push(stats.memory);
+			}
+
+			const controllerStats = await pidusage(this.controllerPid);
+
+			if (this.activeTest !== 'none') {
+				this.controllerCpuStats[this.activeTest].push(controllerStats.cpu);
+				this.controllerMemStats[this.activeTest].push(controllerStats.memory);
 			}
 
 			await this.wait(100);

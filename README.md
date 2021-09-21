@@ -27,6 +27,8 @@ Benchmark your system.
 -->
 
 ### **WORK IN PROGRESS**
+* (foxriver76) write summary file
+* (foxriver76) also monitor js-controller
 * (foxriver76) add overall summary state
 * (foxriver76) add epochs and iterations to summary
 * (foxriver76) added logging + restructuring code
