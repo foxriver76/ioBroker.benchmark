@@ -3,7 +3,6 @@ import pidusage from 'pidusage';
 import {testObjects} from './lib/helper';
 import {tests as allTests} from './lib/allTests';
 import {readFileSync} from 'fs';
-import path from 'path';
 import 'source-map-support/register';
 
 type Timeout = NodeJS.Timeout;
@@ -46,7 +45,7 @@ class Benchmark extends utils.Adapter {
 	private internalEventLoopLags: Record<string, number[]>;
 	private requestedMonitoring: Record<string, RequestedMonitoringEntry>;
 	private requestedMonitoringStartTime: [number, number] | undefined;
-	private controllerPid: number;
+	private controllerPid: number | undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -66,18 +65,19 @@ class Benchmark extends utils.Adapter {
 		this.controllerCpuStats = {};
 		this.internalEventLoopLags = {};
 		this.requestedMonitoring = {};
-
-		const pidsFileContent = readFileSync(path.join(__dirname, '..', 'iobroker.js-controller', 'pids.txt')).toString();
-		this.controllerPid = JSON.parse(pidsFileContent).pop();
 	}
 
 	/**
      * Is called when databases are connected and adapter received configuration.
      */
 	private async onReady(): Promise<void> {
-		this.log.info(require.resolve('iobroker.js-controller'));
-		this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
-		// everything message based right now
+		try {
+			const pidsFileContent = readFileSync(require.resolve('iobroker.js-controller/pids.txt')).toString();
+			this.controllerPid = JSON.parse(pidsFileContent).pop();
+			this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
+		} catch (e: any) {
+			this.log.error(`Cannot determine controller pid file: ${e.message}`);
+		}
 	}
 
 	/**
@@ -500,11 +500,13 @@ class Benchmark extends utils.Adapter {
 				this.memStats[this.activeTest].push(stats.memory);
 			}
 
-			const controllerStats = await pidusage(this.controllerPid);
+			if (this.controllerPid) {
+				const controllerStats = await pidusage(this.controllerPid);
 
-			if (this.activeTest !== 'none') {
-				this.controllerCpuStats[this.activeTest].push(controllerStats.cpu);
-				this.controllerMemStats[this.activeTest].push(controllerStats.memory);
+				if (this.activeTest !== 'none') {
+					this.controllerCpuStats[this.activeTest].push(controllerStats.cpu);
+					this.controllerMemStats[this.activeTest].push(controllerStats.memory);
+				}
 			}
 
 			await this.wait(100);

@@ -27,7 +27,6 @@ const pidusage_1 = __importDefault(require("pidusage"));
 const helper_1 = require("./lib/helper");
 const allTests_1 = require("./lib/allTests");
 const fs_1 = require("fs");
-const path_1 = __importDefault(require("path"));
 require("source-map-support/register");
 class Benchmark extends utils.Adapter {
     constructor(options = {}) {
@@ -46,16 +45,19 @@ class Benchmark extends utils.Adapter {
         this.controllerCpuStats = {};
         this.internalEventLoopLags = {};
         this.requestedMonitoring = {};
-        const pidsFileContent = (0, fs_1.readFileSync)(path_1.default.join(__dirname, '..', 'iobroker.js-controller', 'pids.txt')).toString();
-        this.controllerPid = JSON.parse(pidsFileContent).pop();
     }
     /**
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
-        this.log.info(require.resolve('iobroker.js-controller'));
-        this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
-        // everything message based right now
+        try {
+            const pidsFileContent = (0, fs_1.readFileSync)(require.resolve('iobroker.js-controller/pids.txt')).toString();
+            this.controllerPid = JSON.parse(pidsFileContent).pop();
+            this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
+        }
+        catch (e) {
+            this.log.error(`Cannot determine controller pid file: ${e.message}`);
+        }
     }
     /**
      * Execute the tests for a non secondary adapter
@@ -423,10 +425,12 @@ class Benchmark extends utils.Adapter {
                 this.cpuStats[this.activeTest].push(stats.cpu);
                 this.memStats[this.activeTest].push(stats.memory);
             }
-            const controllerStats = await (0, pidusage_1.default)(this.controllerPid);
-            if (this.activeTest !== 'none') {
-                this.controllerCpuStats[this.activeTest].push(controllerStats.cpu);
-                this.controllerMemStats[this.activeTest].push(controllerStats.memory);
+            if (this.controllerPid) {
+                const controllerStats = await (0, pidusage_1.default)(this.controllerPid);
+                if (this.activeTest !== 'none') {
+                    this.controllerCpuStats[this.activeTest].push(controllerStats.cpu);
+                    this.controllerMemStats[this.activeTest].push(controllerStats.memory);
+                }
             }
             await this.wait(100);
         }
