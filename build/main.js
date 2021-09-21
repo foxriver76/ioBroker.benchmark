@@ -159,7 +159,9 @@ class Benchmark extends utils.Adapter {
                 eventLoopLagMean,
                 eventLoopLagStd,
                 actionsPerSecondMean,
-                actionsPerSecondStd
+                actionsPerSecondStd,
+                epochs: this.config.epochs,
+                iterations: this.config.iterations
             };
             // check all requested monitoring
             for (const [instance, result] of Object.entries(this.requestedMonitoring)) {
@@ -176,10 +178,27 @@ class Benchmark extends utils.Adapter {
                     timeMean,
                     timeStd,
                     actionsPerSecondMean: this.round(this.config.iterations / timeMean / Object.keys(this.requestedMonitoring).length),
-                    actionsPerSecondStd: timeStd !== 0 ? this.round(this.config.iterations / timeStd / Object.keys(this.requestedMonitoring).length) : 0
+                    actionsPerSecondStd: timeStd !== 0 ? this.round(this.config.iterations / timeStd / Object.keys(this.requestedMonitoring).length) : 0,
+                    epochs: this.config.epochs,
+                    iterations: this.config.iterations
                 };
             }
+            // update overall summary
             await this.setStateAsync(`${activeTestName}.summary`, JSON.stringify(summaryState), true);
+            let overallSummary;
+            try {
+                // get the overall summary
+                const state = await this.getStateAsync('summary');
+                if (state && typeof state.val === 'string') {
+                    overallSummary = JSON.parse(state.val);
+                }
+            }
+            catch (_c) {
+                // ignore
+            }
+            overallSummary = overallSummary || {};
+            overallSummary[activeTestName] = summaryState;
+            await this.setStateAsync('summary', JSON.stringify(overallSummary), true);
             // clear RAM
             delete this.cpuStats[activeTestName];
             delete this.memStats[activeTestName];

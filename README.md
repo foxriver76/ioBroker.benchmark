@@ -27,7 +27,10 @@ Benchmark your system.
 -->
 
 ### **WORK IN PROGRESS**
+* (foxriver76) add overall summary state
+* (foxriver76) add epochs and iterations to summary
 * (foxriver76) added logging + restructuring code
+* (foxriver76) added cleanup button and allow prefixing ids
 
 ### 0.0.3 (2021-09-20)
 * (foxriver76) we fixed actionsPerSecondStd state if only one epoch

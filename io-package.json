@@ -102,5 +102,18 @@
     "isolatedRun": true
   },
   "objects": [],
-  "instanceObjects": []
+  "instanceObjects": [
+    {
+      "_id": "summary",
+      "type": "state",
+      "common": {
+        "name": "Overall Summary",
+        "role": "state",
+        "type": "object",
+        "write": false,
+        "read": true
+      },
+      "native": {}
+    }
+  ]
 }
