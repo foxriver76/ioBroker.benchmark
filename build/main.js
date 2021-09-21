@@ -28,6 +28,7 @@ const helper_1 = require("./lib/helper");
 const allTests_1 = require("./lib/allTests");
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
+require("source-map-support/register");
 class Benchmark extends utils.Adapter {
     constructor(options = {}) {
         super({
@@ -52,6 +53,7 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
+        this.log.info(require.resolve('iobroker.js-controller'));
         this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
         // everything message based right now
     }

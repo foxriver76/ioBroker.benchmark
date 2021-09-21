@@ -4,6 +4,7 @@ import {testObjects} from './lib/helper';
 import {tests as allTests} from './lib/allTests';
 import {readFileSync} from 'fs';
 import path from 'path';
+import 'source-map-support/register';
 
 type Timeout = NodeJS.Timeout;
 
@@ -74,6 +75,7 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
 	private async onReady(): Promise<void> {
+		this.log.info(require.resolve('iobroker.js-controller'));
 		this.log.info(`Adapter started... controller determined ${this.controllerPid}`);
 		// everything message based right now
 	}

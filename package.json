@@ -20,7 +20,8 @@
     "@iobroker/adapter-core": "^2.5.1",
     "pidusage": "^2.0.21",
     "@types/pidusage": "^2.0.1",
-    "promisify-child-process": "^4.1.1"
+    "promisify-child-process": "^4.1.1",
+    "source-map-support": "^0.5.20"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.3.0",
