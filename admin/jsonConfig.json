@@ -120,6 +120,18 @@
       "es": "Creación de objetos",
       "pl": "Tworzenie obiektów",
       "zh-cn": "对象创建"
+    },
+    "cleanUp": {
+      "en": "Clean up",
+      "de": "Aufräumen",
+      "ru": "Очистить",
+      "pt": "Limpar",
+      "nl": "Schoonmaken",
+      "fr": "Nettoyer",
+      "it": "Ripulire",
+      "es": "Limpiar",
+      "pl": "Sprzątać",
+      "zh-cn": "清理"
     }
   },
   "items": {
@@ -142,6 +154,12 @@
       "command": "test",
       "label": "runAllTests",
       "newLine": true,
+      "color": "primary"
+    },
+    "cleanUp": {
+      "type": "sendTo",
+      "command": "cleanUp",
+      "label": "cleanUp",
       "color": "primary"
     },
     "setStates": {

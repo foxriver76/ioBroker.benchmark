@@ -38,12 +38,13 @@ export abstract class TestUtils {
      *
      * @param n - number of objects to be added
      * @param instanceNumber - number of the benchmark instance to add objects at
+	 * @param prefix - prefix for ids
      */
-	public async addObjects(n: number, instanceNumber: number): Promise<void> {
+	public async addObjects(n: number, instanceNumber: number, prefix=''): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
 			// set objects locally
 			for (let i = 0; i < n; i++) {
-				await this.adapter.setObjectAsync(`test.${i}`, {
+				await this.adapter.setObjectAsync(`test.${prefix}${i}`, {
 					'type': 'state',
 					'common': {
 						name: i.toString(),
@@ -56,7 +57,7 @@ export abstract class TestUtils {
 				});
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'set', n: n});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'set', n, prefix});
 		}
 	}
 
@@ -65,14 +66,15 @@ export abstract class TestUtils {
      *
      * @param n - number of states to be added
      * @param instanceNumber - number of the benchmark instance to add states at
+	 * @param prefix - prefix for ids
      */
-	public async addStates(n: number, instanceNumber: number): Promise<void> {
+	public async addStates(n: number, instanceNumber: number, prefix=''): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
 			for (let i = 0; i < n; i++) {
-				await this.adapter.setStateAsync(`test.${i}`, i, true);
+				await this.adapter.setStateAsync(`test.${prefix}${i}`, i, true);
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'set', n: n});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'set', n, prefix});
 		}
 	}
 
@@ -81,15 +83,16 @@ export abstract class TestUtils {
 	 *
 	 * @param n - number of states to be deleted
 	 * @param instanceNumber - number of the benchmark instance to delete states from
+	 * @param prefix - prefix for ids
 	 */
-	public async delStates(n: number, instanceNumber: number): Promise<void> {
+	public async delStates(n: number, instanceNumber: number, prefix=''): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
 			// local
 			for (let i = 0; i < n; i++) {
-				await this.adapter.delStateAsync(`test.${i}`);
+				await this.adapter.delStateAsync(`test.${prefix}${i}`);
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'del', n: n});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'del', n, prefix});
 		}
 	}
 
@@ -98,15 +101,16 @@ export abstract class TestUtils {
 	 *
 	 * @param n - number of objects to be deleted
 	 * @param instanceNumber - number of the benchmark instance to delete objects from
+	 * @param prefix - prefix for ids
 	 */
-	public async delObjects(n: number, instanceNumber: number): Promise<void> {
+	public async delObjects(n: number, instanceNumber: number, prefix=''): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
 			// local
 			for (let i = 0; i < n; i++) {
-				await this.adapter.delObjectAsync(`test.${i}`);
+				await this.adapter.delObjectAsync(`test.${prefix}${i}`);
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'del', n: n});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'del', n, prefix});
 		}
 	}
 
