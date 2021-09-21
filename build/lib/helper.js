@@ -63,7 +63,7 @@ exports.testObjects = [
             'type': 'number',
             'write': false,
             'read': true,
-            'unit': 'bytes'
+            'unit': 'MB'
         },
         'native': {}
     },
@@ -76,7 +76,7 @@ exports.testObjects = [
             'type': 'number',
             'write': false,
             'read': true,
-            'unit': 'bytes'
+            'unit': 'MB'
         },
         'native': {}
     },

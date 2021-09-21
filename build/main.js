@@ -157,8 +157,8 @@ class Benchmark extends utils.Adapter {
             await this.setStateAsync(`${activeTestName}.cpuMean`, cpuMean, true);
             await this.setStateAsync(`${activeTestName}.cpuStd`, cpuStd, true);
             // set states - MEM
-            const memMean = this.round(this.calcMean(this.memStats[activeTestName]));
-            const memStd = this.round(this.calcStd(this.memStats[activeTestName]));
+            const memMean = this.round(this.calcMean(this.memStats[activeTestName]) / 1000000);
+            const memStd = this.round(this.calcStd(this.memStats[activeTestName]) / 1000000);
             await this.setStateAsync(`${activeTestName}.memMean`, memMean, true);
             await this.setStateAsync(`${activeTestName}.memStd`, memStd, true);
             // set states - event loop lag
@@ -171,8 +171,8 @@ class Benchmark extends utils.Adapter {
             await this.setStateAsync(`${activeTestName}.actionsPerSecondMean`, actionsPerSecondMean, true);
             await this.setStateAsync(`${activeTestName}.actionsPerSecondStd`, actionsPerSecondStd, true);
             // controller mem stats
-            const controllerMemMean = this.round(this.calcMean(this.controllerMemStats[activeTestName]));
-            const controllerMemStd = this.round(this.calcStd(this.controllerMemStats[activeTestName]));
+            const controllerMemMean = this.round(this.calcMean(this.controllerMemStats[activeTestName]) / 1000000);
+            const controllerMemStd = this.round(this.calcStd(this.controllerMemStats[activeTestName]) / 1000000);
             // controller cpu stats
             const controllerCpuMean = this.round(this.calcMean(this.controllerCpuStats[activeTestName]));
             const controllerCpuStd = this.round(this.calcStd(this.controllerCpuStats[activeTestName]));
@@ -202,8 +202,8 @@ class Benchmark extends utils.Adapter {
                 summaryState.secondaries[instance] = {
                     cpuMean: this.round(this.calcMean(result.cpuStats)),
                     cpuStd: this.round(this.calcStd(result.cpuStats)),
-                    memMean: this.round(this.calcMean(result.memStats)),
-                    memStd: this.round(this.calcStd(result.memStats)),
+                    memMean: this.round(this.calcMean(result.memStats) / 1000000),
+                    memStd: this.round(this.calcStd(result.memStats) / 1000000),
                     eventLoopLagMean: this.round(this.calcMean(result.eventLoopLags)),
                     eventLoopLagStd: this.round(this.calcStd(result.eventLoopLags)),
                     timeMean,

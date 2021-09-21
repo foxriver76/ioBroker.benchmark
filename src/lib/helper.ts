@@ -60,7 +60,7 @@ export const testObjects: ioBroker.Object[] = [
 			'type': 'number',
 			'write': false,
 			'read': true,
-			'unit': 'bytes'
+			'unit': 'MB'
 		},
 		'native': {}
 	},
@@ -73,7 +73,7 @@ export const testObjects: ioBroker.Object[] = [
 			'type': 'number',
 			'write': false,
 			'read': true,
-			'unit': 'bytes'
+			'unit': 'MB'
 		},
 		'native': {}
 	},
