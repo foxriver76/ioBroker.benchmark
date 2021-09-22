@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "news": {
+      "0.1.2": {
+        "en": "fixed statesDeletion test",
+        "de": "feste ZuständeLöschtest",
+        "ru": "фиксированные состояния Тест на удаление",
+        "pt": "teste de exclusão de estados fixos",
+        "nl": "vaste toestandenVerwijdertest",
+        "fr": "états fixesTest de suppression",
+        "it": "stati fissiTest di eliminazione",
+        "es": "estados fijos Prueba de eliminación",
+        "pl": "stany stałeTest usuwania",
+        "zh-cn": "固定状态删除测试"
+      },
       "0.1.1": {
         "en": "implemented `cleanUpBetweenEpoch` and `prepareBetweenEpoch` to save ressources",
         "de": "implementiert `cleanUpBetweenEpoch` und `prepareBetweenEpoch` um Ressourcen zu sparen",

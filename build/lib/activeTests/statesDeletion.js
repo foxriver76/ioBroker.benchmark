@@ -19,7 +19,8 @@ class Test extends testClass_1.TestUtils {
      * Prepare step between epochs, set up stuff which has been removed during the test
      */
     async prepareBetweenEpoch() {
-        // nothing needed
+        // set states
+        await this.addStates(this.adapter.config.iterations, 0);
     }
     /**
      * The test itself

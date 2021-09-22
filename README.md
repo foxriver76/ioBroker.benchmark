@@ -25,6 +25,9 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.1.2 (2021-09-22)
+* (foxriver76) fixed statesDeletion test
+
 ### 0.1.1 (2021-09-22)
 * (foxriver76) implemented `cleanUpBetweenEpoch` and `prepareBetweenEpoch` to save ressources
 
