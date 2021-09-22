@@ -13,11 +13,24 @@ class Test extends testClass_1.TestUtils {
         // nothing needed
     }
     /**
+     * Prepare step between epochs, set up stuff which has been removed during the test
+     */
+    async prepareBetweenEpoch() {
+        // nothing needed
+    }
+    /**
      * The test itself
      */
     async execute() {
         // set objects
         await this.addObjects(this.adapter.config.iterations, 0);
+    }
+    /**
+     * Clean up everything which has been set during the test, but obtain state after prepare step
+     */
+    async cleanUpBetweenEpoch() {
+        // same as cleanup
+        await this.cleanUp();
     }
     /**
      * Clean up the db, remove insatnces, etc.

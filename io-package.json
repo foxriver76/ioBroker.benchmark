@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "news": {
+      "0.1.1": {
+        "en": "implemented `cleanUpBetweenEpoch` and `prepareBetweenEpoch` to save ressources",
+        "de": "implementiert `cleanUpBetweenEpoch` und `prepareBetweenEpoch` um Ressourcen zu sparen",
+        "ru": "реализованы `cleanUpBetweenEpoch` и` prepareBetweenEpoch` для сохранения ресурсов",
+        "pt": "implementou `cleanUpBetweenEpoch` e` prepareBetweenEpoch` para salvar recursos",
+        "nl": "`cleanUpBetweenEpoch` en `prepareBetweenEpoch` geïmplementeerd om bronnen te sparen",
+        "fr": "implémenté `cleanUpBetweenEpoch` et `prepareBetweenEpoch` pour économiser des ressources",
+        "it": "implementato `cleanUpBetweenEpoch` e `prepareBetweenEpoch` per salvare risorse",
+        "es": "implementó `cleanUpBetweenEpoch` y` prepareBetweenEpoch` para ahorrar recursos",
+        "pl": "zaimplementowano `cleanUpBetweenEpoch` i `prepareBetweenEpoch` w celu oszczędzania zasobów",
+        "zh-cn": "实现了 `cleanUpBetweenEpoch` 和 `prepareBetweenEpoch` 以节省资源"
+      },
       "0.1.0": {
         "en": "write mem stats in MB\nwrite summary file\nalso monitor js-controller\nadd overall summary state\nadd epochs and iterations to summary\nadded logging + restructuring code\nadded cleanup button and allow prefixing ids",
         "de": "Mem-Statistiken in MB schreiben\nZusammenfassungsdatei schreiben\nauch js-controller überwachen\nGesamtzusammenfassungsstatus hinzufügen\nEpochen und Iterationen zur Zusammenfassung hinzufügen\nProtokollierung + Restrukturierungscode hinzugefügt\nSchaltfläche zum Bereinigen hinzugefügt und Voranstellen von IDs zulassen",

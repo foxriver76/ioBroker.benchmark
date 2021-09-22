@@ -22,6 +22,13 @@ export class Test extends TestUtils {
 	}
 
 	/**
+	 * Prepare step between epochs, set up stuff which has been removed during the test
+	 */
+	public async prepareBetweenEpoch(): Promise<void> {
+		// nothing needed instances are still there with objects
+	}
+
+	/**
      * The test itself
      */
 	public async execute(): Promise<void> {
@@ -45,6 +52,16 @@ export class Test extends TestUtils {
 				await this.stopMeasuringForeignInstance(i);
 			}
 		});
+	}
+
+	/**
+	 * Clean up everything which has been set during the test, but obtain state after prepare step
+	 */
+	public async cleanUpBetweenEpoch(): Promise<void> {
+		// del only states on all instances
+		for (let i = 1; i <= 4; i++) {
+			await this.delStates(Math.ceil(this.adapter.config.iterations / 4), i);
+		}
 	}
 
 	/**

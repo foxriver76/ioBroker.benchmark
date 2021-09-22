@@ -130,8 +130,14 @@ class Benchmark extends utils.Adapter {
                 const activeTestConstructor = allTests_1.tests[activeTestName];
                 const activeTest = new activeTestConstructor(this);
                 // prepare the test
-                this.log.info('Prepare ...');
-                await activeTest.prepare();
+                if (j === 1) {
+                    this.log.info('Prepare ...');
+                    await activeTest.prepare();
+                }
+                else {
+                    this.log.info('Prepare between epoch ...');
+                    await activeTest.prepareBetweenEpoch();
+                }
                 // only measure real execution
                 this.activeTest = activeTestName;
                 const timeStart = process.hrtime();
@@ -140,8 +146,16 @@ class Benchmark extends utils.Adapter {
                 const timeEnd = parseFloat(process.hrtime(timeStart).join('.'));
                 this.activeTest = 'none';
                 times[activeTestName].push(timeEnd);
-                this.log.info('Clean ...');
-                await activeTest.cleanUp();
+                // receive clean state again
+                if (j === this.config.epochs) {
+                    // last epoch clean up all
+                    this.log.info('Clean ...');
+                    await activeTest.cleanUp();
+                }
+                else {
+                    this.log.info('Clean between epoch ...');
+                    await activeTest.cleanUpBetweenEpoch();
+                }
                 this.log.info(`Epoch ${j} finished in ${timeEnd} s - starting 30 s cooldown`);
                 // wait 30 sec to "cooldown" system
                 await this.wait(30000);

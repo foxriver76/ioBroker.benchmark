@@ -18,11 +18,24 @@ class Test extends testClass_1.TestUtils {
         this.adapter.performStrictObjectChecks = false;
     }
     /**
+     * Prepare step between epochs, set up stuff which has been removed during the test
+     */
+    async prepareBetweenEpoch() {
+        // nothing needed
+    }
+    /**
      * The test itself
      */
     async execute() {
         // set states
         await this.addStates(this.adapter.config.iterations, 0);
+    }
+    /**
+     * Clean up everything which has been set during the test, but obtain state after prepare step
+     */
+    async cleanUpBetweenEpoch() {
+        // del only states
+        await this.delStates(this.adapter.config.iterations, 0);
     }
     /**
      * Clean up the db, remove insatnces, etc.

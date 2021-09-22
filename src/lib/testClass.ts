@@ -133,9 +133,14 @@ export abstract class TestUtils {
 	}
 
 	/**
-     * Prepare steps which are needed for tests to be executed
+     * Prepare steps which are needed for tests to be executed before first test starts
      */
 	abstract prepare(): Promise<void>;
+
+	/**
+	 * Prepare step between epochs, set up stuff which has been removed during the test
+	 */
+	abstract prepareBetweenEpoch(): Promise<void>
 
 	/**
      * The tests itself
@@ -146,6 +151,11 @@ export abstract class TestUtils {
      * Clean up everything which has been created
      */
 	abstract cleanUp(): Promise<void>;
+
+	/**
+	 * Clean up everything which has been set during the test, but obtain state after prepare step
+	 */
+	abstract cleanUpBetweenEpoch(): Promise<void>
 
 	/**
      * Time to wait in ms

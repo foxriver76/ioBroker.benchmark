@@ -25,6 +25,9 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.1.1 (2021-09-22)
+* (foxriver76) implemented `cleanUpBetweenEpoch` and `prepareBetweenEpoch` to save ressources
+
 ### 0.1.0 (2021-09-21)
 * (foxriver76) write mem stats in MB
 * (foxriver76) write summary file
