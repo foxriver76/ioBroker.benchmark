@@ -6,6 +6,8 @@ import {Test as objectsCreation} from './activeTests/objectsCreation';
 import {Test as setStatesNonStrict} from './activeTests/setStatesNonStrict';
 import {Test as objectsDeletion} from './activeTests/objectsDeletion';
 import {Test as getStates} from './activeTests/getStates';
+import {Test as messages} from './activeTests/messages';
+import {Test as getStatesAlias} from './activeTests/getStatesAlias';
 import {TestUtils} from './testClass';
 
 export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
@@ -16,5 +18,7 @@ export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
 	objectsCreation,
 	objectsDeletion,
 	setStatesNonStrict,
-	getStates
+	getStates,
+	getStatesAlias,
+	messages
 };

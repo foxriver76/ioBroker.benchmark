@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "news": {
+      "0.1.4": {
+        "en": "fixed `actionsPerSecondStd` state\nadded tests `getStatesAlias` and `messages`\nfixed execution of `getStates` test",
+        "de": "`actionsPerSecondStd`-Zustand behoben\nTests `getStatesAlias` und `messages` hinzugefügt\nFehler bei der Ausführung des `getStates`-Tests behoben",
+        "ru": "исправлено состояние actionsPerSecondStd\nдобавлены тесты `getStatesAlias` и` messages`\nисправлено выполнение теста getStates",
+        "pt": "corrigiu o estado `actionsPerSecondStd`\nadicionaram os testes `getStatesAlias` e` messages`\nexecução fixa do teste `getStates`",
+        "nl": "vaste `actionsPerSecondStd` status\ntoegevoegde tests `getStatesAlias` en `berichten`\nvaste uitvoering van de `getStates`-test",
+        "fr": "état `actionsPerSecondStd` fixe\ntests ajoutés `getStatesAlias` et `messages`\nexécution fixe du test `getStates`",
+        "it": "corretto stato `actionsPerSecondStd`\naggiunti i test `getStatesAlias` e `messages`\ncorretta esecuzione del test `getStates`",
+        "es": "estado fijo `actionsPerSecondStd`\npruebas agregadas `getStatesAlias` y` messages`\nejecución fija de la prueba `getStates`",
+        "pl": "poprawiony stan `actionsPerSecondStd`\ndodano testy `getStatesAlias` i `messages`\npoprawione wykonanie testu `getStates`",
+        "zh-cn": "固定 `actionsPerSecondStd` 状态\n添加了测试 `getStatesAlias` 和 `messages`\n修复了 `getStates` 测试的执行"
+      },
       "0.1.3": {
         "en": "optimize JSON file writing\nadded tests `objectsDeletion` and `getStates`",
         "de": "Optimieren Sie das Schreiben von JSON-Dateien\nTests `objectsDeletion` und `getStates` hinzugefügt",
@@ -74,18 +86,6 @@
         "es": "arreglamos el estado actionsPerSecondStd",
         "pl": "naprawiliśmy stan actionsPerSecondStd",
         "zh-cn": "我们修复了 actionsPerSecondStd 状态"
-      },
-      "0.0.1": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Первый выпуск",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "zh-cn": "初始发行"
       }
     },
     "title": "Benchmark",

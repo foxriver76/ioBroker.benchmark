@@ -62,6 +62,49 @@ export abstract class TestUtils {
 	}
 
 	/**
+	 * Add Alias Objects (source and target) at given instance
+	 *
+	 * @param n - number of objects to be added
+	 * @param instanceNumber - number of the benchmark instance to add objects at
+	 * @param prefix - prefix for ids
+	 */
+	public async addAliasObjects(n: number, instanceNumber: number, prefix=''): Promise<void> {
+		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
+			// create object then alias locally
+			for (let i = 0; i < n; i++) {
+				await this.adapter.setObjectAsync(`test.${prefix}${i}`, {
+					'type': 'state',
+					'common': {
+						name: i.toString(),
+						read: true,
+						write: true,
+						role: 'state',
+						type: 'number'
+					},
+					native: {}
+				});
+
+				await this.adapter.setForeignObjectAsync(`alias.0.__benchmark.${prefix}${i}`,{
+					type: 'state',
+					common: {
+						name: 'I am an alias',
+						read: true,
+						write: true,
+						role: 'state',
+						type: 'number',
+						alias: {
+							id: `${this.adapter.namespace}.test.${prefix}${i}`
+						}
+					},
+					native: {}
+				});
+			}
+		} else {
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'setAlias', n, prefix});
+		}
+	}
+
+	/**
      * Add States at given instance
      *
      * @param n - number of states to be added
@@ -115,6 +158,25 @@ export abstract class TestUtils {
 	}
 
 	/**
+	 * Delete objects (and corresponding alias objects) at given instance
+	 *
+	 * @param n - number of objects to be deleted
+	 * @param instanceNumber - number of the benchmark instance to delete objects from
+	 * @param prefix - prefix for ids
+	 */
+	public async delAliasObjects(n: number, instanceNumber: number, prefix=''): Promise<void> {
+		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
+			// del alias and then object
+			for (let i = 0; i < n; i++) {
+				await this.adapter.delForeignObjectAsync(`alias.0.__benchmark.${prefix}${i}`);
+				await this.adapter.delObjectAsync(`test.${prefix}${i}`);
+			}
+		} else {
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'del', n, prefix});
+		}
+	}
+
+	/**
 	 *	Get n states, only supported on local (controller) instance
 	 *
 	 * @param n - number of states to get
@@ -123,6 +185,30 @@ export abstract class TestUtils {
 	public async getStates(n :number, prefix=''): Promise<void> {
 		for (let i = 0; i < n; i++) {
 			await this.adapter.getStateAsync(`test.${prefix}${i}`);
+		}
+	}
+
+	/**
+	 *	Get n states from alias, only supported on local (controller) instance
+	 *
+	 * @param n - number of states to get
+	 * @param prefix - prefix for ids
+	 */
+	public async getStatesFromAlias(n :number, prefix=''): Promise<void> {
+		for (let i = 0; i < n; i++) {
+			await this.adapter.getForeignStateAsync(`alias.0.__benchmark.${prefix}${i}`);
+		}
+	}
+
+	/**
+	 * Send n messages to a given instance
+	 *
+	 * @param n - number of messages to be sent
+	 * @param instanceNumber - number of the benchmark instance to send messages too
+	 */
+	public async sendMessages(n: number, instanceNumber:number): Promise<void> {
+		for (let i= 0; i < n; i++) {
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'testMessage', {ping: 'pong', pong: 'ping'});
 		}
 	}
 

@@ -25,8 +25,9 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.4 (2021-09-23)
+* (foxriver76) fixed `actionsPerSecondStd` state
+* (foxriver76) added tests `getStatesAlias` and `messages`
 * (foxriver76) fixed execution of `getStates` test
 
 ### 0.1.3 (2021-09-23)

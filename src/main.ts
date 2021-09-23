@@ -226,7 +226,7 @@ class Benchmark extends utils.Adapter {
 			await this.setStateAsync(`${activeTestName}.eventLoopLagStd`, eventLoopLagStd, true);
 
 			const actionsPerSecondMean = this.round(this.config.iterations / timeMean);
-			const actionsPerSecondStd = timeStd !== 0 ? this.round(this.config.iterations / timeStd) : 0;
+			const actionsPerSecondStd = this.round(this.calcStd(times[activeTestName].map(time => this.config.iterations / time)));
 
 			await this.setStateAsync(`${activeTestName}.actionsPerSecondMean`, actionsPerSecondMean, true);
 			await this.setStateAsync(`${activeTestName}.actionsPerSecondStd`, actionsPerSecondStd , true);
@@ -274,7 +274,7 @@ class Benchmark extends utils.Adapter {
 					timeMean,
 					timeStd,
 					actionsPerSecondMean: this.round(this.config.iterations / timeMean / Object.keys(this.requestedMonitoring).length), // actions are split on all instances
-					actionsPerSecondStd: timeStd !== 0 ? this.round(this.config.iterations / timeStd / Object.keys(this.requestedMonitoring).length) : 0,
+					actionsPerSecondStd: this.round(this.calcStd(result.time.map(time => this.config.iterations / time / Object.keys(this.requestedMonitoring).length))),
 					epochs: this.config.epochs,
 					iterations: this.config.iterations
 				};
@@ -381,6 +381,7 @@ class Benchmark extends utils.Adapter {
 				}
 			} else if (obj.command === 'cleanUp') {
 				this.log.info('Cleaning up objects');
+				await this.delForeignObjectAsync('alias.0.__benchmark', {recursive: true});
 				await this.delObjectAsync('test', {recursive: true});
 				this.log.info('Objects cleaned up');
 			} else {
@@ -408,6 +409,42 @@ class Benchmark extends utils.Adapter {
 						} else if (obj.message.cmd === 'del' && typeof obj.message.n === 'number') {
 							for (let i = 0; i < obj.message.n; i++) {
 								await this.delObjectAsync(`test.${obj.message.prefix}${i}`);
+							}
+						} else if (obj.message.cmd === 'delAlias' && typeof obj.message.n === 'number') {
+							for (let i = 0; i < obj.message.n; i++) {
+								// del alias first
+								await this.delForeignObjectAsync(`alias.0.__benchmark.${obj.message.prefix}${i}`);
+								await this.delObjectAsync(`test.${obj.message.prefix}${i}`);
+							}
+						} else if (obj.message.cmd = 'setAlias' && typeof obj.message.n === 'number') {
+							// create object and then alias
+							for (let i = 0; i < obj.message.n; i++) {
+								await this.setObjectAsync(`test.${obj.message.prefix}${i}`, {
+									'type': 'state',
+									'common': {
+										name: i.toString(),
+										read: true,
+										write: true,
+										role: 'state',
+										type: 'number'
+									},
+									native: {}
+								});
+
+								await this.setForeignObjectAsync(`alias.0.__benchmark.${obj.message.prefix}${i}`, {
+									type: 'state',
+									common: {
+										name: 'I am an alias',
+										read: true,
+										write: true,
+										role: 'state',
+										type: 'number',
+										alias: {
+											id: `${this.namespace}.test.${obj.message.prefix}${i}`
+										}
+									},
+									native: {}
+								});
 							}
 						}
 					}
@@ -462,6 +499,11 @@ class Benchmark extends utils.Adapter {
 					delete this.cpuStats.requestedMonitoring;
 					delete this.requestedMonitoringStartTime;
 					break;
+				case 'testMessage':
+					// we received a message from a test, just ignore and send it back
+					break;
+				default:
+					this.log.warn(`Unknown command message: ${obj.command}`);
 			}
 		}
 

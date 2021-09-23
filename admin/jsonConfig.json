@@ -156,6 +156,30 @@
       "es": "Obtener estados",
       "pl": "Uzyskaj stany",
       "zh-cn": "获取状态"
+    },
+    "getStatesAlias": {
+      "en": "Get states with alias",
+      "de": "Abrufen von Zuständen mit Alias",
+      "ru": "Получить состояния с псевдонимом",
+      "pt": "Obter estados com alias",
+      "nl": "Staten met alias ophalen",
+      "fr": "Obtenir des états avec un alias",
+      "it": "Ottieni stati con alias",
+      "es": "Obtener estados con alias",
+      "pl": "Uzyskaj stany z aliasem",
+      "zh-cn": "使用别名获取状态"
+    },
+    "messages": {
+      "en": "Messages",
+      "de": "Nachrichten",
+      "ru": "Сообщения",
+      "pt": "Mensagens",
+      "nl": "Berichten",
+      "fr": "messages",
+      "it": "Messaggi",
+      "es": "Mensajes",
+      "pl": "Wiadomości",
+      "zh-cn": "留言"
     }
   },
   "items": {
@@ -233,6 +257,18 @@
       "type": "sendTo",
       "command": "getStates",
       "label": "getStates",
+      "color": "primary"
+    },
+    "getStatesAlias": {
+      "type": "sendTo",
+      "command": "getStatesAlias",
+      "label": "getStatesAlias",
+      "color": "primary"
+    },
+    "messages": {
+      "type": "sendTo",
+      "command": "messages",
+      "label": "messages",
       "color": "primary"
     }
   }

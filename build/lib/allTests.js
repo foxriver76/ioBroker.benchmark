@@ -9,6 +9,8 @@ const objectsCreation_1 = require("./activeTests/objectsCreation");
 const setStatesNonStrict_1 = require("./activeTests/setStatesNonStrict");
 const objectsDeletion_1 = require("./activeTests/objectsDeletion");
 const getStates_1 = require("./activeTests/getStates");
+const messages_1 = require("./activeTests/messages");
+const getStatesAlias_1 = require("./activeTests/getStatesAlias");
 exports.tests = {
     setStates: setStates_1.Test,
     statesSubscription: statesSubscription_1.Test,
@@ -17,6 +19,8 @@ exports.tests = {
     objectsCreation: objectsCreation_1.Test,
     objectsDeletion: objectsDeletion_1.Test,
     setStatesNonStrict: setStatesNonStrict_1.Test,
-    getStates: getStates_1.Test
+    getStates: getStates_1.Test,
+    getStatesAlias: getStatesAlias_1.Test,
+    messages: messages_1.Test
 };
 //# sourceMappingURL=allTests.js.map
