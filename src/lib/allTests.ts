@@ -5,6 +5,7 @@ import {Test as idle} from './activeTests/idle';
 import {Test as objectsCreation} from './activeTests/objectsCreation';
 import {Test as setStatesNonStrict} from './activeTests/setStatesNonStrict';
 import {Test as objectsDeletion} from './activeTests/objectsDeletion';
+import {Test as getStates} from './activeTests/getStates';
 import {TestUtils} from './testClass';
 
 export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
@@ -14,5 +15,6 @@ export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
 	idle,
 	objectsCreation,
 	objectsDeletion,
-	setStatesNonStrict
+	setStatesNonStrict,
+	getStates
 };

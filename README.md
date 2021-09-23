@@ -25,6 +25,10 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (foxriver76) fixed execution of `getStates` test
+
 ### 0.1.3 (2021-09-23)
 * (foxriver76) optimize JSON file writing
 * (foxriver76) added tests `objectsDeletion` and `getStates`

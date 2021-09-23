@@ -120,7 +120,7 @@ export abstract class TestUtils {
 	 * @param n - number of states to get
 	 * @param prefix - prefix for ids
 	 */
-	public async getStates(n :number, prefix='') {
+	public async getStates(n :number, prefix=''): Promise<void> {
 		for (let i = 0; i < n; i++) {
 			await this.adapter.getStateAsync(`test.${prefix}${i}`);
 		}
