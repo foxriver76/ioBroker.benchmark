@@ -132,6 +132,30 @@
       "es": "Limpiar",
       "pl": "Sprzątać",
       "zh-cn": "清理"
+    },
+    "objectsDeletion": {
+      "en": "Delete objects",
+      "de": "Objekte löschen",
+      "ru": "Удалить объекты",
+      "pt": "Apagar objetos",
+      "nl": "Objecten verwijderen",
+      "fr": "Supprimer des objets",
+      "it": "Elimina oggetti",
+      "es": "Eliminar objetos",
+      "pl": "Usuń obiekty",
+      "zh-cn": "删除对象"
+    },
+    "getStates": {
+      "en": "Get states",
+      "de": "Zustände abrufen",
+      "ru": "Получить состояния",
+      "pt": "Obter estados",
+      "nl": "Staten ophalen",
+      "fr": "Obtenir les états",
+      "it": "Ottieni stati",
+      "es": "Obtener estados",
+      "pl": "Uzyskaj stany",
+      "zh-cn": "获取状态"
     }
   },
   "items": {
@@ -197,6 +221,18 @@
       "type": "sendTo",
       "command": "objectsCreation",
       "label": "objectsCreation",
+      "color": "primary"
+    },
+    "objectsDeletion": {
+      "type": "sendTo",
+      "command": "objectsDeletion",
+      "label": "objectsDeletion",
+      "color": "primary"
+    },
+    "getStates": {
+      "type": "sendTo",
+      "command": "getStates",
+      "label": "getStates",
       "color": "primary"
     }
   }

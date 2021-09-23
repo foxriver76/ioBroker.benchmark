@@ -16,7 +16,7 @@ Benchmark your system.
 
 ## How to add a new test?
 1. Create a new TypeScript file in src/lib/activeTests, with a class which inherits from TestUtils
-2. Define the three steps of your test (execute is automatically measured)
+2. Define the three (five) steps of your test (execute is automatically measured)
 3. Add your test to src/lib/allTests.ts
 4. Add a button and translation for your test to admin/jsonConfig.json
 
@@ -25,6 +25,10 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.1.3 (2021-09-23)
+* (foxriver76) optimize JSON file writing
+* (foxriver76) added tests `objectsDeletion` and `getStates`
+
 ### 0.1.2 (2021-09-22)
 * (foxriver76) fixed statesDeletion test
 

@@ -115,6 +115,18 @@ export abstract class TestUtils {
 	}
 
 	/**
+	 *	Get n states, only supported on local (controller) instance
+	 *
+	 * @param n - number of states to get
+	 * @param prefix - prefix for ids
+	 */
+	public async getStates(n :number, prefix='') {
+		for (let i = 0; i < n; i++) {
+			await this.adapter.getStateAsync(`test.${prefix}${i}`);
+		}
+	}
+
+	/**
 	 * Start measuring a foreign instance to (eventLoopLag, ram, cpu)
 	 *
 	 * @param instanceNumber - number of the benchmark instance to add states at
