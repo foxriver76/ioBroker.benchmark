@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "news": {
+      "0.1.5": {
+        "en": "added db types to summary",
+        "de": "DB-Typen zur Zusammenfassung hinzugefügt",
+        "ru": "добавлены типы БД в сводку",
+        "pt": "adicionou tipos de banco de dados ao resumo",
+        "nl": "db-typen toegevoegd aan samenvatting",
+        "fr": "ajout de types de base de données au résumé",
+        "it": "aggiunti tipi di db al riepilogo",
+        "es": "tipos de db agregados al resumen",
+        "pl": "dodano typy baz danych do podsumowania",
+        "zh-cn": "将数据库类型添加到摘要中"
+      },
       "0.1.4": {
         "en": "fixed `actionsPerSecondStd` state\nadded tests `getStatesAlias` and `messages`\nfixed execution of `getStates` test",
         "de": "`actionsPerSecondStd`-Zustand behoben\nTests `getStatesAlias` und `messages` hinzugefügt\nFehler bei der Ausführung des `getStates`-Tests behoben",
@@ -74,18 +86,6 @@
         "es": "arreglamos el estado actionsPerSecondStd si solo una época",
         "pl": "naprawiliśmy stan actionsPerSecondStd jeśli tylko jedna epoka",
         "zh-cn": "如果只有一个时期，我们修复了 actionsPerSecondStd 状态"
-      },
-      "0.0.2": {
-        "en": "we fixed actionsPerSecondStd state",
-        "de": "Wir haben den ActionsPerSecondStd-Zustand behoben",
-        "ru": "мы исправили actionsPerSecondStd состояние",
-        "pt": "corrigimos o estado actionsPerSecondStd",
-        "nl": "we hebben acties opgelost PerSecondStd-status",
-        "fr": "nous avons corrigé l'état actionsPerSecondStd",
-        "it": "abbiamo corretto lo stato delle azioniPerSecondStd",
-        "es": "arreglamos el estado actionsPerSecondStd",
-        "pl": "naprawiliśmy stan actionsPerSecondStd",
-        "zh-cn": "我们修复了 actionsPerSecondStd 状态"
       }
     },
     "title": "Benchmark",

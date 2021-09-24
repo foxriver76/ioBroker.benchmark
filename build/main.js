@@ -50,6 +50,7 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
+        var _a, _b;
         if (!this.config.secondaryMode) {
             // only main mode needs controller pid
             try {
@@ -63,6 +64,15 @@ class Benchmark extends utils.Adapter {
         }
         else {
             this.log.info('Adapter started in secondary mode');
+        }
+        const baseSettigns = (await this.sendToHostAsync(this.host, 'readBaseSettings', {}));
+        if (((_a = baseSettigns === null || baseSettigns === void 0 ? void 0 : baseSettigns.config) === null || _a === void 0 ? void 0 : _a.objects) && ((_b = baseSettigns === null || baseSettigns === void 0 ? void 0 : baseSettigns.config) === null || _b === void 0 ? void 0 : _b.states)) {
+            this.objectsDbType = baseSettigns.config.objects.type;
+            this.statesDbType = baseSettigns.config.states.type;
+        }
+        else {
+            this.log.error('Cannot determine DB type');
+            this.terminate();
         }
     }
     /**
@@ -206,7 +216,9 @@ class Benchmark extends utils.Adapter {
                 actionsPerSecondMean,
                 actionsPerSecondStd,
                 epochs: this.config.epochs,
-                iterations: this.config.iterations
+                iterations: this.config.iterations,
+                statesDbType: this.statesDbType,
+                objectsDbType: this.objectsDbType
             };
             // check all requested monitoring
             for (const [instance, result] of Object.entries(this.requestedMonitoring)) {

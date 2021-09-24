@@ -25,6 +25,9 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.1.5 (2021-09-24)
+* (foxriver76) added db types to summary
+
 ### 0.1.4 (2021-09-23)
 * (foxriver76) fixed `actionsPerSecondStd` state
 * (foxriver76) added tests `getStatesAlias` and `messages`

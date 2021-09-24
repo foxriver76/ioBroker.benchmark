@@ -32,6 +32,8 @@ interface SummaryState {
 	actionsPerSecondStd: number;
 	epochs: number;
 	iterations: number;
+	objectsDbType?: string,
+	statesDbType?: string
 }
 
 class Benchmark extends utils.Adapter {
@@ -46,6 +48,8 @@ class Benchmark extends utils.Adapter {
 	private requestedMonitoring: Record<string, RequestedMonitoringEntry>;
 	private requestedMonitoringStartTime: [number, number] | undefined;
 	private controllerPid: number | undefined;
+	private objectsDbType: string | undefined;
+	private statesDbType: string | undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -82,6 +86,16 @@ class Benchmark extends utils.Adapter {
 			}
 		} else {
 			this.log.info('Adapter started in secondary mode');
+		}
+
+		const baseSettigns = (await this.sendToHostAsync(this.host, 'readBaseSettings', {})) as Record<string, any>;
+
+		if (baseSettigns?.config?.objects && baseSettigns?.config?.states) {
+			this.objectsDbType = baseSettigns.config.objects.type;
+			this.statesDbType = baseSettigns.config.states.type;
+		} else {
+			this.log.error('Cannot determine DB type');
+			this.terminate();
 		}
 	}
 
@@ -255,7 +269,9 @@ class Benchmark extends utils.Adapter {
 				actionsPerSecondMean,
 				actionsPerSecondStd,
 				epochs: this.config.epochs,
-				iterations: this.config.iterations
+				iterations: this.config.iterations,
+				statesDbType: this.statesDbType,
+				objectsDbType: this.objectsDbType
 			};
 
 			// check all requested monitoring
