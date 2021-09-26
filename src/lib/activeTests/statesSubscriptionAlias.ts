@@ -19,6 +19,9 @@ export class Test extends TestUtils {
 			// we need at least adapter.config.iterations states to fullfil our subscription
 			await this.addAliasObjects(Math.ceil(this.adapter.config.iterations / 4), i, '', false, false, (i - 1) * Math.ceil(this.adapter.config.iterations / 4));
 		}
+
+		// we subscribe to the alias
+		await this.adapter.subscribeForeignStatesAsync('alias.0.__benchmark.*');
 	}
 
 	/**
@@ -32,9 +35,6 @@ export class Test extends TestUtils {
      * The test itself
      */
 	public async execute(): Promise<void> {
-		// we subscribe to the alias
-		await this.adapter.subscribeForeignStatesAsync('alias.0.__benchmark.*');
-
 		let counter = 0;
 		return new Promise(async resolve => {
 			const onStateChange: () => void = () => {
@@ -70,12 +70,13 @@ export class Test extends TestUtils {
      * Clean up the db, remove insatnces, etc.
      */
 	public async cleanUp(): Promise<void> {
+		await this.adapter.unsubscribeForeignStatesAsync('alias.0.__benchmark.*');
 		// delete instances
 		this.adapter.log.info('Deleting 4 instances');
-		await this.removeInstances(4);
 		// delete alias objects
 		for (let i = 1; i <= 4; i++) {
 			await this.delAliasObjects(Math.ceil(this.adapter.config.iterations / 4), i, '', (i- 1) * Math.ceil(this.adapter.config.iterations / 4));
 		}
+		await this.removeInstances(4);
 	}
 }

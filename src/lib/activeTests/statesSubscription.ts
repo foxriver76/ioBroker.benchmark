@@ -19,6 +19,9 @@ export class Test extends TestUtils {
 			// we need at least adapter.config.iterations states to fullfil our subscription
 			await this.addObjects(Math.ceil(this.adapter.config.iterations / 4), i);
 		}
+
+		// subscribe
+		await this.adapter.subscribeForeignStatesAsync('benchmark.*');
 	}
 
 	/**
@@ -32,8 +35,6 @@ export class Test extends TestUtils {
      * The test itself
      */
 	public async execute(): Promise<void> {
-		await this.adapter.subscribeForeignStatesAsync('benchmark.*');
-
 		let counter = 0;
 		return new Promise(async resolve => {
 			const onStateChange: () => void = () => {
@@ -68,6 +69,7 @@ export class Test extends TestUtils {
      * Clean up the db, remove insatnces, etc.
      */
 	public async cleanUp(): Promise<void> {
+		await this.adapter.unsubscribeForeignStatesAsync('benchmark.*');
 		// delete instances
 		this.adapter.log.info('Deleting 4 instances');
 		await this.removeInstances(4);

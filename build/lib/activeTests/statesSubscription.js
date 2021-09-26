@@ -17,6 +17,8 @@ class Test extends testClass_1.TestUtils {
             // we need at least adapter.config.iterations states to fullfil our subscription
             await this.addObjects(Math.ceil(this.adapter.config.iterations / 4), i);
         }
+        // subscribe
+        await this.adapter.subscribeForeignStatesAsync('benchmark.*');
     }
     /**
      * Prepare step between epochs, set up stuff which has been removed during the test
@@ -28,7 +30,6 @@ class Test extends testClass_1.TestUtils {
      * The test itself
      */
     async execute() {
-        await this.adapter.subscribeForeignStatesAsync('benchmark.*');
         let counter = 0;
         return new Promise(async (resolve) => {
             const onStateChange = () => {
@@ -59,6 +60,7 @@ class Test extends testClass_1.TestUtils {
      * Clean up the db, remove insatnces, etc.
      */
     async cleanUp() {
+        await this.adapter.unsubscribeForeignStatesAsync('benchmark.*');
         // delete instances
         this.adapter.log.info('Deleting 4 instances');
         await this.removeInstances(4);
