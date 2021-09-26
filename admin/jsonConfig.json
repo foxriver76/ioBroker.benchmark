@@ -204,6 +204,18 @@
       "es": "Suscribir estados con alias",
       "pl": "Subskrybuj stany z aliasem",
       "zh-cn": "使用别名订阅状态"
+    },
+    "statesSubscriptionAliasWrite": {
+      "en": "Subscribe states with alias write function",
+      "de": "Abonnieren von Zuständen mit der Alias-Schreibfunktion",
+      "ru": "Состояния подписки с функцией записи псевдонима",
+      "pt": "Subscrever estados com função de gravação de alias",
+      "nl": "Abonneer staten met alias schrijffunctie",
+      "fr": "États d'abonnement avec fonction d'écriture d'alias",
+      "it": "Sottoscrivi gli stati con la funzione di scrittura alias",
+      "es": "Suscribir estados con función de escritura de alias",
+      "pl": "Subskrybuj stany z funkcją zapisu aliasów",
+      "zh-cn": "使用别名写入功能订阅状态"
     }
   },
   "items": {
@@ -251,6 +263,12 @@
       "type": "sendTo",
       "command": "statesSubscriptionAlias",
       "label": "statesSubscriptionAlias",
+      "color": "primary"
+    },
+    "statesSubscriptionAliasWrite": {
+      "type": "sendTo",
+      "command": "statesSubscriptionAliasWrite",
+      "label": "statesSubscriptionAliasWrite",
       "color": "primary"
     },
     "statesDeletion": {

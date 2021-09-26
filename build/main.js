@@ -415,6 +415,11 @@ class Benchmark extends utils.Adapter {
                                 await this.delStateAsync(`test.${obj.message.prefix}${i}`);
                             }
                         }
+                        else if (obj.message.cmd === 'setAlias' && typeof obj.message.n === 'number') {
+                            for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
+                                await this.setForeignStateAsync(`alias.0.__benchmark.${obj.message.prefix}${i}`, i);
+                            }
+                        }
                     }
                     break;
                 case 'startMeasuring':

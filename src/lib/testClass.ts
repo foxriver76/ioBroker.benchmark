@@ -131,6 +131,24 @@ export abstract class TestUtils {
 	}
 
 	/**
+	 * Add States at given instance
+	 *
+	 * @param n - number of states to be added
+	 * @param instanceNumber - number of the benchmark instance to add states at
+	 * @param prefix - prefix for ids
+	 * @param startIdx - offset for setting first state
+	 */
+	public async addAliasStates(n: number, instanceNumber: number, prefix='', startIdx=0): Promise<void> {
+		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
+			for (let i = startIdx; i < n + startIdx; i++) {
+				await this.adapter.setForeignStateAsync(`alias.0.__benchmark.${prefix}${i}`, i, true);
+			}
+		} else {
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'setAlias', n, prefix, startIdx});
+		}
+	}
+
+	/**
 	 * Delete staes at given instance
 	 *
 	 * @param n - number of states to be deleted

@@ -10,12 +10,14 @@ import {Test as messages} from './activeTests/messages';
 import {Test as getStatesAlias} from './activeTests/getStatesAlias';
 import {Test as getStatesAliasRead} from './activeTests/getStatesAliasRead';
 import {Test as statesSubscriptionAlias} from './activeTests/statesSubscriptionAlias';
+import {Test as statesSubscriptionAliasWrite} from './activeTests/statesSubscriptionAliasWrite';
 import {TestUtils} from './testClass';
 
 export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
 	setStates,
 	statesSubscription,
 	statesSubscriptionAlias,
+	statesSubscriptionAliasWrite,
 	statesDeletion,
 	idle,
 	objectsCreation,
