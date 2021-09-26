@@ -427,14 +427,14 @@ class Benchmark extends utils.Adapter {
 								await this.delObjectAsync(`test.${obj.message.prefix}${i}`);
 							}
 						} else if (obj.message.cmd === 'delAlias' && typeof obj.message.n === 'number') {
-							for (let i = 0; i < obj.message.n; i++) {
+							for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
 								// del alias first
 								await this.delForeignObjectAsync(`alias.0.__benchmark.${obj.message.prefix}${i}`);
 								await this.delObjectAsync(`test.${obj.message.prefix}${i}`);
 							}
-						} else if (obj.message.cmd = 'setAlias' && typeof obj.message.n === 'number') {
+						} else if (obj.message.cmd === 'setAlias' && typeof obj.message.n === 'number') {
 							// create object and then alias
-							for (let i = 0; i < obj.message.n; i++) {
+							for (let i = obj.message.startIdx; i < obj.message.startIdx + obj.message.n; i++) {
 								await this.setObjectAsync(`test.${obj.message.prefix}${i}`, {
 									'type': 'state',
 									'common': {
@@ -469,11 +469,11 @@ class Benchmark extends utils.Adapter {
 					if (typeof obj.message === 'object') {
 						if (obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
 							// set states
-							for (let i = 0; i < obj.message.n; i++) {
+							for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
 								await this.setStateAsync(`test.${obj.message.prefix}${i}`, i, true);
 							}
 						} else if (obj.message.cmd === 'del' && typeof obj.message.n === 'number') {
-							for (let i = 0; i < obj.message.n; i++) {
+							for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
 								await this.delStateAsync(`test.${obj.message.prefix}${i}`);
 							}
 						}
@@ -610,7 +610,7 @@ class Benchmark extends utils.Adapter {
 
 		let timeout: Timeout;
 
-		const check = () => {
+		const check:() => void = () => {
 			// how much time has actually elapsed in the loop beyond what
 			// setTimeout says is supposed to happen. we use setTimeout to
 			// cover multiple iterations of the event loop, getting a larger

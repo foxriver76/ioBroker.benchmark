@@ -8,11 +8,14 @@ import {Test as objectsDeletion} from './activeTests/objectsDeletion';
 import {Test as getStates} from './activeTests/getStates';
 import {Test as messages} from './activeTests/messages';
 import {Test as getStatesAlias} from './activeTests/getStatesAlias';
+import {Test as getStatesAliasRead} from './activeTests/getStatesAliasRead';
+import {Test as statesSubscriptionAlias} from './activeTests/statesSubscriptionAlias';
 import {TestUtils} from './testClass';
 
 export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
 	setStates,
 	statesSubscription,
+	statesSubscriptionAlias,
 	statesDeletion,
 	idle,
 	objectsCreation,
@@ -20,5 +23,6 @@ export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
 	setStatesNonStrict,
 	getStates,
 	getStatesAlias,
+	getStatesAliasRead,
 	messages
 };

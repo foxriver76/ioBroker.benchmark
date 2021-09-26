@@ -169,6 +169,18 @@
       "pl": "Uzyskaj stany z aliasem",
       "zh-cn": "使用别名获取状态"
     },
+    "getStatesAliasRead": {
+      "en": "Get states with alias read function",
+      "de": "Abrufen von Zuständen mit der Alias-Lesefunktion",
+      "ru": "Получить состояния с функцией чтения псевдонима",
+      "pt": "Obter estados com função de leitura de alias",
+      "nl": "Statussen ophalen met alias leesfunctie",
+      "fr": "Obtenir des états avec la fonction de lecture d'alias",
+      "it": "Ottieni stati con la funzione di lettura alias",
+      "es": "Obtener estados con función de lectura de alias",
+      "pl": "Uzyskaj stany za pomocą funkcji odczytu aliasów",
+      "zh-cn": "使用别名读取功能获取状态"
+    },
     "messages": {
       "en": "Messages",
       "de": "Nachrichten",
@@ -180,6 +192,18 @@
       "es": "Mensajes",
       "pl": "Wiadomości",
       "zh-cn": "留言"
+    },
+    "statesSubscriptionAlias": {
+      "en": "Subscribe states with alias",
+      "de": "Zustände mit Alias abonnieren",
+      "ru": "Состояния подписки с псевдонимом",
+      "pt": "Subscrever estados com alias",
+      "nl": "Abonneer staten met alias",
+      "fr": "États d'abonnement avec alias",
+      "it": "Sottoscrivi gli stati con alias",
+      "es": "Suscribir estados con alias",
+      "pl": "Subskrybuj stany z aliasem",
+      "zh-cn": "使用别名订阅状态"
     }
   },
   "items": {
@@ -223,6 +247,12 @@
       "label": "statesSubscription",
       "color": "primary"
     },
+    "statesSubscriptionAlias": {
+      "type": "sendTo",
+      "command": "statesSubscriptionAlias",
+      "label": "statesSubscriptionAlias",
+      "color": "primary"
+    },
     "statesDeletion": {
       "type": "sendTo",
       "command": "statesDeletion",
@@ -263,6 +293,12 @@
       "type": "sendTo",
       "command": "getStatesAlias",
       "label": "getStatesAlias",
+      "color": "primary"
+    },
+    "getStatesAliasRead": {
+      "type": "sendTo",
+      "command": "getStatesAliasRead",
+      "label": "getStatesAliasRead",
       "color": "primary"
     },
     "messages": {

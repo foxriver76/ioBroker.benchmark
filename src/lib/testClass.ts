@@ -67,11 +67,14 @@ export abstract class TestUtils {
 	 * @param n - number of objects to be added
 	 * @param instanceNumber - number of the benchmark instance to add objects at
 	 * @param prefix - prefix for ids
+	 * @param read - use read function
+	 * @param write - use write function
+	 * @param startIdx - offset for starting index
 	 */
-	public async addAliasObjects(n: number, instanceNumber: number, prefix=''): Promise<void> {
+	public async addAliasObjects(n: number, instanceNumber: number, prefix='', read=false, write=false, startIdx=0): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
 			// create object then alias locally
-			for (let i = 0; i < n; i++) {
+			for (let i = startIdx; i < startIdx + n; i++) {
 				await this.adapter.setObjectAsync(`test.${prefix}${i}`, {
 					'type': 'state',
 					'common': {
@@ -84,7 +87,8 @@ export abstract class TestUtils {
 					native: {}
 				});
 
-				await this.adapter.setForeignObjectAsync(`alias.0.__benchmark.${prefix}${i}`,{
+				const aliasObj: ioBroker.Object = {
+					_id: `alias.0.__benchmark.${prefix}${i}`,
 					type: 'state',
 					common: {
 						name: 'I am an alias',
@@ -93,14 +97,18 @@ export abstract class TestUtils {
 						role: 'state',
 						type: 'number',
 						alias: {
-							id: `${this.adapter.namespace}.test.${prefix}${i}`
+							id: `${this.adapter.namespace}.test.${prefix}${i}`,
+							write: write ? 'val * 3' : undefined,
+							read: read ? 'val / 2' : undefined
 						}
 					},
 					native: {}
-				});
+				};
+
+				await this.adapter.setForeignObjectAsync(`alias.0.__benchmark.${prefix}${i}`, aliasObj);
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'setAlias', n, prefix});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'setAlias', n, prefix, read, write, startIdx});
 		}
 	}
 
@@ -110,14 +118,15 @@ export abstract class TestUtils {
      * @param n - number of states to be added
      * @param instanceNumber - number of the benchmark instance to add states at
 	 * @param prefix - prefix for ids
+	 * @param startIdx - offset for setting first state
      */
-	public async addStates(n: number, instanceNumber: number, prefix=''): Promise<void> {
+	public async addStates(n: number, instanceNumber: number, prefix='', startIdx=0): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
-			for (let i = 0; i < n; i++) {
+			for (let i = startIdx; i < n + startIdx; i++) {
 				await this.adapter.setStateAsync(`test.${prefix}${i}`, i, true);
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'set', n, prefix});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'set', n, prefix, startIdx});
 		}
 	}
 
@@ -127,15 +136,16 @@ export abstract class TestUtils {
 	 * @param n - number of states to be deleted
 	 * @param instanceNumber - number of the benchmark instance to delete states from
 	 * @param prefix - prefix for ids
+	 * @param startIdx - offset
 	 */
-	public async delStates(n: number, instanceNumber: number, prefix=''): Promise<void> {
+	public async delStates(n: number, instanceNumber: number, prefix='', startIdx = 0): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
 			// local
-			for (let i = 0; i < n; i++) {
+			for (let i = startIdx; i < n + startIdx; i++) {
 				await this.adapter.delStateAsync(`test.${prefix}${i}`);
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'del', n, prefix});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {cmd: 'del', n, prefix, startIdx});
 		}
 	}
 
@@ -163,16 +173,17 @@ export abstract class TestUtils {
 	 * @param n - number of objects to be deleted
 	 * @param instanceNumber - number of the benchmark instance to delete objects from
 	 * @param prefix - prefix for ids
+	 * @param startIdx - offset
 	 */
-	public async delAliasObjects(n: number, instanceNumber: number, prefix=''): Promise<void> {
+	public async delAliasObjects(n: number, instanceNumber: number, prefix='', startIdx=0): Promise<void> {
 		if (this.adapter.namespace === `benchmark.${instanceNumber}`) {
 			// del alias and then object
-			for (let i = 0; i < n; i++) {
+			for (let i = startIdx; i < n + startIdx; i++) {
 				await this.adapter.delForeignObjectAsync(`alias.0.__benchmark.${prefix}${i}`);
 				await this.adapter.delObjectAsync(`test.${prefix}${i}`);
 			}
 		} else {
-			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'del', n, prefix});
+			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'del', n, prefix, startIdx});
 		}
 	}
 
