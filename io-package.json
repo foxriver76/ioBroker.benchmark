@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "news": {
+      "0.1.6": {
+        "en": "added tests for subscription with alias, getStates with alias read",
+        "de": "Tests für Abonnement mit Alias hinzugefügt, getStates mit Alias read",
+        "ru": "добавлены тесты для подписки с псевдонимом, getStates с псевдонимом прочитано",
+        "pt": "testes adicionados para inscrição com alias, getStates com leitura de alias",
+        "nl": "tests toegevoegd voor abonnement met alias, getStates met alias read",
+        "fr": "ajout de tests pour l'abonnement avec alias, getStates avec alias lu",
+        "it": "aggiunti test per l'abbonamento con alias, getStates con alias read",
+        "es": "pruebas agregadas para suscripción con alias, getStates con alias read",
+        "pl": "dodane testy subskrypcji z aliasem, getStates z odczytem aliasu",
+        "zh-cn": "添加了使用别名订阅的测试，使用别名读取 getState"
+      },
       "0.1.5": {
         "en": "added db types to summary",
         "de": "DB-Typen zur Zusammenfassung hinzugefügt",
@@ -74,18 +86,6 @@
         "es": "escribir estadísticas de memoria en MB\nescribir archivo de resumen\ntambién monitorear js-controller\nagregar estado de resumen general\nagregar épocas e iteraciones al resumen\nregistro agregado + código de reestructuración\nbotón de limpieza agregado y permitir identificadores de prefijo",
         "pl": "pisz statystyki mem w MB\nnapisz plik podsumowania\nmonitoruj również kontroler js\ndodaj ogólny stan podsumowania\ndodaj do podsumowania epoki i iteracje\ndodane logowanie + kod restrukturyzacyjny\ndodano przycisk czyszczenia i zezwalaj na prefiksowanie identyfikatorów",
         "zh-cn": "以 MB 为单位写入 mem 统计信息\n写摘要文件\n还监视 js 控制器\n添加整体摘要状态\n将纪元和迭代添加到摘要中\n添加日志记录+重组代码\n添加了清理按钮并允许前缀 ID"
-      },
-      "0.0.3": {
-        "en": "we fixed actionsPerSecondStd state if only one epoch",
-        "de": "Wir haben den ActionsPerSecondStd-Zustand behoben, wenn nur eine Epoche",
-        "ru": "мы исправили состояние actionsPerSecondStd, если только одна эпоха",
-        "pt": "corrigimos o estado actionsPerSecondStd se apenas uma época",
-        "nl": "we hebben de staat actiesPerSecondStd gerepareerd als er maar één tijdperk is",
-        "fr": "nous avons corrigé l'état actionsPerSecondStd si une seule époque",
-        "it": "abbiamo corretto lo stato delle azioniPerSecondStd se solo un'epoca",
-        "es": "arreglamos el estado actionsPerSecondStd si solo una época",
-        "pl": "naprawiliśmy stan actionsPerSecondStd jeśli tylko jedna epoka",
-        "zh-cn": "如果只有一个时期，我们修复了 actionsPerSecondStd 状态"
       }
     },
     "title": "Benchmark",
