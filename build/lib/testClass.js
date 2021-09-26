@@ -194,7 +194,7 @@ class TestUtils {
             }
         }
         else {
-            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', { cmd: 'del', n, prefix, startIdx });
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', { cmd: 'delAlias', n, prefix, startIdx });
         }
     }
     /**

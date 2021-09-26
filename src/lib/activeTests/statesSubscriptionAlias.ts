@@ -71,12 +71,14 @@ export class Test extends TestUtils {
      */
 	public async cleanUp(): Promise<void> {
 		await this.adapter.unsubscribeForeignStatesAsync('alias.0.__benchmark.*');
-		// delete instances
-		this.adapter.log.info('Deleting 4 instances');
+
 		// delete alias objects
 		for (let i = 1; i <= 4; i++) {
-			await this.delAliasObjects(Math.ceil(this.adapter.config.iterations / 4), i, '', (i- 1) * Math.ceil(this.adapter.config.iterations / 4));
+			await this.delAliasObjects(Math.ceil(this.adapter.config.iterations / 4), i, '', (i - 1) * Math.ceil(this.adapter.config.iterations / 4));
 		}
+
+		// delete instances
+		this.adapter.log.info('Deleting 4 instances');
 		await this.removeInstances(4);
 	}
 }

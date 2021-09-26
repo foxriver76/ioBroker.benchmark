@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "news": {
+      "0.1.7": {
+        "en": "added test for alias subscription with write function",
+        "de": "Test für Alias-Abonnement mit Schreibfunktion hinzugefügt",
+        "ru": "добавлен тест для подписки на псевдоним с функцией записи",
+        "pt": "adicionado teste para inscrição de alias com função de gravação",
+        "nl": "toegevoegde test voor alias-abonnement met schrijffunctie",
+        "fr": "test ajouté pour l'abonnement d'alias avec fonction d'écriture",
+        "it": "aggiunto test per sottoscrizione alias con funzione di scrittura",
+        "es": "prueba agregada para suscripción de alias con función de escritura",
+        "pl": "dodany test dla subskrypcji aliasów z funkcją zapisu",
+        "zh-cn": "添加了具有写入功能的别名订阅测试"
+      },
       "0.1.6": {
         "en": "added tests for subscription with alias, getStates with alias read",
         "de": "Tests für Abonnement mit Alias hinzugefügt, getStates mit Alias read",
@@ -74,18 +86,6 @@
         "es": "implementó `cleanUpBetweenEpoch` y` prepareBetweenEpoch` para ahorrar recursos",
         "pl": "zaimplementowano `cleanUpBetweenEpoch` i `prepareBetweenEpoch` w celu oszczędzania zasobów",
         "zh-cn": "实现了 `cleanUpBetweenEpoch` 和 `prepareBetweenEpoch` 以节省资源"
-      },
-      "0.1.0": {
-        "en": "write mem stats in MB\nwrite summary file\nalso monitor js-controller\nadd overall summary state\nadd epochs and iterations to summary\nadded logging + restructuring code\nadded cleanup button and allow prefixing ids",
-        "de": "Mem-Statistiken in MB schreiben\nZusammenfassungsdatei schreiben\nauch js-controller überwachen\nGesamtzusammenfassungsstatus hinzufügen\nEpochen und Iterationen zur Zusammenfassung hinzufügen\nProtokollierung + Restrukturierungscode hinzugefügt\nSchaltfläche zum Bereinigen hinzugefügt und Voranstellen von IDs zulassen",
-        "ru": "писать статистику памяти в МБ\nнаписать сводный файл\nтакже контролировать js-контроллер\nдобавить общее итоговое состояние\nдобавить в сводку эпохи и итерации\nдобавлен логгинг + код реструктуризации\nдобавлена кнопка очистки и разрешена префикс для идентификаторов",
-        "pt": "escrever estatísticas de mem em MB\nescrever arquivo de resumo\ntambém monitorar js-controller\nadicionar estado de resumo geral\nadicione épocas e iterações ao resumo\nadicionado registro + código de reestruturação\nadicionado botão de limpeza e permitir prefixação de ids",
-        "nl": "schrijf mem-statistieken in MB\nschrijf samenvattend bestand\ncontroleer ook js-controller\nalgemene samenvattingsstatus toevoegen\ntijdperken en iteraties toevoegen aan samenvatting\ntoegevoegde logging + herstructureringscode\nopruimknop toegevoegd en voorvoegsel-ID's toestaan",
-        "fr": "écrire les statistiques mem en Mo\nécrire le fichier récapitulatif\nsurveiller également js-controller\najouter un état récapitulatif global\najouter des époques et des itérations au résumé\najout de journalisation + code de restructuration\nbouton de nettoyage ajouté et autoriser le préfixe des identifiants",
-        "it": "scrivi le statistiche mem in MB\nscrivi file di riepilogo\nmonitora anche js-controller\naggiungi lo stato di riepilogo generale\naggiungi epoche e iterazioni al riepilogo\naggiunta registrazione + codice di ristrutturazione\naggiunto il pulsante di pulizia e consenti il prefisso degli ID",
-        "es": "escribir estadísticas de memoria en MB\nescribir archivo de resumen\ntambién monitorear js-controller\nagregar estado de resumen general\nagregar épocas e iteraciones al resumen\nregistro agregado + código de reestructuración\nbotón de limpieza agregado y permitir identificadores de prefijo",
-        "pl": "pisz statystyki mem w MB\nnapisz plik podsumowania\nmonitoruj również kontroler js\ndodaj ogólny stan podsumowania\ndodaj do podsumowania epoki i iteracje\ndodane logowanie + kod restrukturyzacyjny\ndodano przycisk czyszczenia i zezwalaj na prefiksowanie identyfikatorów",
-        "zh-cn": "以 MB 为单位写入 mem 统计信息\n写摘要文件\n还监视 js 控制器\n添加整体摘要状态\n将纪元和迭代添加到摘要中\n添加日志记录+重组代码\n添加了清理按钮并允许前缀 ID"
       }
     },
     "title": "Benchmark",

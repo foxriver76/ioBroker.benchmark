@@ -25,8 +25,7 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.7 (2021-09-26)
 * (foxriver76) added test for alias subscription with write function
 
 ### 0.1.6 (2021-09-26)
