@@ -25,8 +25,7 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.8 (2021-10-20)
 * (foxriver76) make `addInstances` wait that instance is actually alive
 
 ### 0.1.7 (2021-09-26)

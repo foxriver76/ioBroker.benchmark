@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "news": {
+      "0.1.8": {
+        "en": "make `addInstances` wait that instance is actually alive",
+        "de": "lass `addInstances` warten, bis die Instanz tatsächlich aktiv ist",
+        "ru": "заставить `addInstances` ждать, что экземпляр действительно жив",
+        "pt": "faça `addInstances` esperar que a instância esteja realmente viva",
+        "nl": "laat `addInstances` wachten totdat de instantie daadwerkelijk in leven is",
+        "fr": "faire `addInstances` attendre que l'instance soit réellement active",
+        "it": "fai in modo che `addInstances` attenda che l'istanza sia effettivamente attiva",
+        "es": "hacer que `addInstances` espere que la instancia esté realmente viva",
+        "pl": "spraw, aby `addInstances` czekało, że instancja rzeczywiście działa",
+        "zh-cn": "让 `addInstances` 等待该实例实际上还活着"
+      },
       "0.1.7": {
         "en": "added test for alias subscription with write function",
         "de": "Test für Alias-Abonnement mit Schreibfunktion hinzugefügt",
@@ -74,18 +86,6 @@
         "es": "estados fijos Prueba de eliminación",
         "pl": "stany stałeTest usuwania",
         "zh-cn": "固定状态删除测试"
-      },
-      "0.1.1": {
-        "en": "implemented `cleanUpBetweenEpoch` and `prepareBetweenEpoch` to save ressources",
-        "de": "implementiert `cleanUpBetweenEpoch` und `prepareBetweenEpoch` um Ressourcen zu sparen",
-        "ru": "реализованы `cleanUpBetweenEpoch` и` prepareBetweenEpoch` для сохранения ресурсов",
-        "pt": "implementou `cleanUpBetweenEpoch` e` prepareBetweenEpoch` para salvar recursos",
-        "nl": "`cleanUpBetweenEpoch` en `prepareBetweenEpoch` geïmplementeerd om bronnen te sparen",
-        "fr": "implémenté `cleanUpBetweenEpoch` et `prepareBetweenEpoch` pour économiser des ressources",
-        "it": "implementato `cleanUpBetweenEpoch` e `prepareBetweenEpoch` per salvare risorse",
-        "es": "implementó `cleanUpBetweenEpoch` y` prepareBetweenEpoch` para ahorrar recursos",
-        "pl": "zaimplementowano `cleanUpBetweenEpoch` i `prepareBetweenEpoch` w celu oszczędzania zasobów",
-        "zh-cn": "实现了 `cleanUpBetweenEpoch` 和 `prepareBetweenEpoch` 以节省资源"
       }
     },
     "title": "Benchmark",
