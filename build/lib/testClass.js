@@ -11,11 +11,25 @@ class TestUtils {
      */
     async addInstances(nInstances, host) {
         for (let i = 1; i <= nInstances; i++) {
+            await this.adapter.subscribeForeignStatesAsync(`system.adapter.benchmark.${i}.alive`);
             await (0, promisify_child_process_1.exec)(`iobroker add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
-            // enable instance in secondaryMode
-            const instObj = { common: { enabled: true }, native: { secondaryMode: true } };
-            await this.adapter.extendForeignObjectAsync(`system.adapter.benchmark.${i}`, instObj);
-            // give controller some time to actually start the instance
+            // give controller some time to actually start the instance so we check for alive state
+            const stateChangePromise = () => {
+                return new Promise(resolve => {
+                    const onStateChange = () => {
+                        resolve();
+                        this.adapter.removeListener('stateChange', onStateChange);
+                    };
+                    this.adapter.on('stateChange', onStateChange);
+                    // enable instance in secondaryMode
+                    const instObj = { common: { enabled: true }, native: { secondaryMode: true } };
+                    this.adapter.extendForeignObject(`system.adapter.benchmark.${i}`, instObj);
+                });
+            };
+            // wait until ready
+            await stateChangePromise();
+            await this.adapter.unsubscribeForeignStatesAsync(`system.adapter.benchmark.${i}.alive`);
+            // and now we wait 500 ms just to be sure, that adapter is ready to receive messages
             await this.wait(500);
         }
     }
