@@ -25,7 +25,7 @@ Benchmark your system.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 0.1.11 (2021-10-25)
+### 0.1.12 (2021-10-25)
 * (foxriver76) fix iob executable to also work on Windows systems (closes #3)
 
 ### 0.1.8 (2021-10-20)
