@@ -1,11 +1,14 @@
 import {exec as execAsync} from 'promisify-child-process';
 import {AdapterInstance} from '@iobroker/adapter-core';
+import {join} from 'path';
 
 export abstract class TestUtils {
 	public adapter: AdapterInstance;
+	private iobExecutable: string;
 
 	protected constructor(adapter: AdapterInstance) {
 		this.adapter = adapter;
+		this.iobExecutable = join(__dirname, '..', '..', '..', 'iobroker.js-controller', 'iobroker.js');
 	}
 
 	/**
@@ -15,7 +18,7 @@ export abstract class TestUtils {
 		for (let i = 1; i <= nInstances; i++) {
 			await this.adapter.subscribeForeignStatesAsync(`system.adapter.benchmark.${i}.alive`);
 
-			await execAsync(`iobroker add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
+			await execAsync(`node ${this.iobExecutable} add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
 
 			// give controller some time to actually start the instance so we check for alive state
 			const stateChangePromise: () => Promise<void> = () => {
@@ -49,7 +52,7 @@ export abstract class TestUtils {
      */
 	public async removeInstances(nInstances: number): Promise<void> {
 		for (let i = 1; i <= nInstances; i++) {
-			await execAsync(`iobroker del benchmark.${i}`);
+			await execAsync(`node ${this.iobExecutable} del benchmark.${i}`);
 		}
 	}
 

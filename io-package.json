@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "news": {
+      "0.1.9": {
+        "en": "fix iob executable to also work on Windows systems (closes #3)",
+        "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
+        "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",
+        "pt": "conserta o executável iob para funcionar também em sistemas Windows (fecha # 3)",
+        "nl": "repareer iob uitvoerbaar om ook op Windows-systemen te werken (sluit #3)",
+        "fr": "correction de l'exécutable iob pour qu'il fonctionne également sur les systèmes Windows (ferme #3)",
+        "it": "fix iob eseguibile per funzionare anche su sistemi Windows (chiude #3)",
+        "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
+        "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
+        "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
+      },
       "0.1.8": {
         "en": "make `addInstances` wait that instance is actually alive",
         "de": "lass `addInstances` warten, bis die Instanz tatsächlich aktiv ist",
@@ -74,18 +86,6 @@
         "es": "optimizar la escritura de archivos JSON\npruebas agregadas `objectsDeletion` y` getStates`",
         "pl": "zoptymalizuj zapisywanie plików JSON\ndodano testy `objectsDeletion` i `getStates`",
         "zh-cn": "优化 JSON 文件写入\n添加了测试 `objectsDeletion` 和 `getStates`"
-      },
-      "0.1.2": {
-        "en": "fixed statesDeletion test",
-        "de": "feste ZuständeLöschtest",
-        "ru": "фиксированные состояния Тест на удаление",
-        "pt": "teste de exclusão de estados fixos",
-        "nl": "vaste toestandenVerwijdertest",
-        "fr": "états fixesTest de suppression",
-        "it": "stati fissiTest di eliminazione",
-        "es": "estados fijos Prueba de eliminación",
-        "pl": "stany stałeTest usuwania",
-        "zh-cn": "固定状态删除测试"
       }
     },
     "title": "Benchmark",

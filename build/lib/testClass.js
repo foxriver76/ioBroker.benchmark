@@ -2,9 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestUtils = void 0;
 const promisify_child_process_1 = require("promisify-child-process");
+const path_1 = require("path");
 class TestUtils {
     constructor(adapter) {
         this.adapter = adapter;
+        this.iobExecutable = (0, path_1.join)(__dirname, '..', '..', '..', 'iobroker.js-controller', 'iobroker.js');
     }
     /**
      * Adds the desired number of instances in secondaryMode
@@ -12,7 +14,7 @@ class TestUtils {
     async addInstances(nInstances, host) {
         for (let i = 1; i <= nInstances; i++) {
             await this.adapter.subscribeForeignStatesAsync(`system.adapter.benchmark.${i}.alive`);
-            await (0, promisify_child_process_1.exec)(`iobroker add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
+            await (0, promisify_child_process_1.exec)(`node ${this.iobExecutable} add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
             // give controller some time to actually start the instance so we check for alive state
             const stateChangePromise = () => {
                 return new Promise(resolve => {
@@ -38,7 +40,7 @@ class TestUtils {
      */
     async removeInstances(nInstances) {
         for (let i = 1; i <= nInstances; i++) {
-            await (0, promisify_child_process_1.exec)(`iobroker del benchmark.${i}`);
+            await (0, promisify_child_process_1.exec)(`node ${this.iobExecutable} del benchmark.${i}`);
         }
     }
     /**
