@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestUtils = void 0;
 const promisify_child_process_1 = require("promisify-child-process");
-const path_1 = require("path");
 class TestUtils {
     constructor(adapter) {
         this.adapter = adapter;
-        this.iobExecutable = (0, path_1.join)(__dirname, '..', '..', '..', 'iobroker.js-controller', 'iobroker.js');
+        this.iobExecutable = require.resolve('iobroker.js-controller/iobroker.js');
     }
     /**
      * Adds the desired number of instances in secondaryMode

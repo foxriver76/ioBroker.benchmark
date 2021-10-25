@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "news": {
+      "0.1.10": {
+        "en": "fix iob executable to also work on Windows systems (closes #3)",
+        "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
+        "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",
+        "pt": "conserta o executável iob para funcionar também em sistemas Windows (fecha # 3)",
+        "nl": "repareer iob uitvoerbaar om ook op Windows-systemen te werken (sluit #3)",
+        "fr": "correction de l'exécutable iob pour qu'il fonctionne également sur les systèmes Windows (ferme #3)",
+        "it": "fix iob eseguibile per funzionare anche su sistemi Windows (chiude #3)",
+        "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
+        "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
+        "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
+      },
       "0.1.9": {
         "en": "fix iob executable to also work on Windows systems (closes #3)",
         "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
@@ -74,18 +86,6 @@
         "es": "estado fijo `actionsPerSecondStd`\npruebas agregadas `getStatesAlias` y` messages`\nejecución fija de la prueba `getStates`",
         "pl": "poprawiony stan `actionsPerSecondStd`\ndodano testy `getStatesAlias` i `messages`\npoprawione wykonanie testu `getStates`",
         "zh-cn": "固定 `actionsPerSecondStd` 状态\n添加了测试 `getStatesAlias` 和 `messages`\n修复了 `getStates` 测试的执行"
-      },
-      "0.1.3": {
-        "en": "optimize JSON file writing\nadded tests `objectsDeletion` and `getStates`",
-        "de": "Optimieren Sie das Schreiben von JSON-Dateien\nTests `objectsDeletion` und `getStates` hinzugefügt",
-        "ru": "оптимизировать запись файла JSON\nдобавлены тесты `objectsDeletion` и` getStates`",
-        "pt": "otimizar a gravação de arquivo JSON\nadicionado os testes `objectsDeletion` e` getStates`",
-        "nl": "optimaliseer het schrijven van JSON-bestanden\ntoegevoegde tests `objectsDeletion` en `getStates`",
-        "fr": "optimiser l'écriture du fichier JSON\ntests ajoutés `objectsDeletion` et `getStates`",
-        "it": "ottimizzare la scrittura di file JSON\naggiunti i test `objectsDeletion` e `getStates`",
-        "es": "optimizar la escritura de archivos JSON\npruebas agregadas `objectsDeletion` y` getStates`",
-        "pl": "zoptymalizuj zapisywanie plików JSON\ndodano testy `objectsDeletion` i `getStates`",
-        "zh-cn": "优化 JSON 文件写入\n添加了测试 `objectsDeletion` 和 `getStates`"
       }
     },
     "title": "Benchmark",

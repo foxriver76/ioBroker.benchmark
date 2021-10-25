@@ -1,14 +1,13 @@
 import {exec as execAsync} from 'promisify-child-process';
 import {AdapterInstance} from '@iobroker/adapter-core';
-import {join} from 'path';
 
 export abstract class TestUtils {
 	public adapter: AdapterInstance;
-	private iobExecutable: string;
+	private readonly iobExecutable: string;
 
 	protected constructor(adapter: AdapterInstance) {
 		this.adapter = adapter;
-		this.iobExecutable = join(__dirname, '..', '..', '..', 'iobroker.js-controller', 'iobroker.js');
+		this.iobExecutable = require.resolve('iobroker.js-controller/iobroker.js');
 	}
 
 	/**
