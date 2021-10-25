@@ -14,6 +14,13 @@
 ## benchmark adapter for ioBroker
 Benchmark your system.
 
+## Important: Information for users
+Note, that the purpose of the adapter, in its current state, is mainly to benchmark different scenarios to gather 
+insights on changes on js-controller level.
+The Benchmark Tests can take very long and can cause high loads on your system. Also note, that by default the benchmark adapter
+runs in an isolated mode, which will disable all adapters and only keep the controller and itself alive. Furthermore, the adapter
+always needs to be run with instance number `0`.
+
 ## How to add a new test?
 1. Create a new TypeScript file in src/lib/activeTests, with a class which inherits from TestUtils
 2. Define the three (five) steps of your test (execute is automatically measured)
