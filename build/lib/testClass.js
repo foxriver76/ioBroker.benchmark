@@ -13,7 +13,7 @@ class TestUtils {
     async addInstances(nInstances, host) {
         for (let i = 1; i <= nInstances; i++) {
             await this.adapter.subscribeForeignStatesAsync(`system.adapter.benchmark.${i}.alive`);
-            await (0, promisify_child_process_1.exec)(`${process.execPath} ${this.iobExecutable} add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
+            await (0, promisify_child_process_1.exec)(`"${process.execPath}" "${this.iobExecutable}" add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
             // give controller some time to actually start the instance so we check for alive state
             const stateChangePromise = () => {
                 return new Promise(resolve => {
@@ -39,7 +39,7 @@ class TestUtils {
      */
     async removeInstances(nInstances) {
         for (let i = 1; i <= nInstances; i++) {
-            await (0, promisify_child_process_1.exec)(`${process.execPath} ${this.iobExecutable} del benchmark.${i}`);
+            await (0, promisify_child_process_1.exec)(`"${process.execPath}" "${this.iobExecutable}" del benchmark.${i}`);
         }
     }
     /**

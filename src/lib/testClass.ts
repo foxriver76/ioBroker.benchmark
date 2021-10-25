@@ -17,7 +17,7 @@ export abstract class TestUtils {
 		for (let i = 1; i <= nInstances; i++) {
 			await this.adapter.subscribeForeignStatesAsync(`system.adapter.benchmark.${i}.alive`);
 
-			await execAsync(`${process.execPath} ${this.iobExecutable} add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
+			await execAsync(`"${process.execPath}" "${this.iobExecutable}" add benchmark ${i} --enabled false${host ? ` --host ${host}` : ''}`);
 
 			// give controller some time to actually start the instance so we check for alive state
 			const stateChangePromise: () => Promise<void> = () => {
@@ -51,7 +51,7 @@ export abstract class TestUtils {
      */
 	public async removeInstances(nInstances: number): Promise<void> {
 		for (let i = 1; i <= nInstances; i++) {
-			await execAsync(`${process.execPath} ${this.iobExecutable} del benchmark.${i}`);
+			await execAsync(`"${process.execPath}" "${this.iobExecutable}" del benchmark.${i}`);
 		}
 	}
 

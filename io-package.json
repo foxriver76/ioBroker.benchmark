@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "news": {
+      "0.1.13": {
+        "en": "fix iob executable to also work on Windows systems (closes #3)",
+        "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
+        "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",
+        "pt": "conserta o executável iob para funcionar também em sistemas Windows (fecha # 3)",
+        "nl": "repareer iob uitvoerbaar om ook op Windows-systemen te werken (sluit #3)",
+        "fr": "correction de l'exécutable iob pour qu'il fonctionne également sur les systèmes Windows (ferme #3)",
+        "it": "fix iob eseguibile per funzionare anche su sistemi Windows (chiude #3)",
+        "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
+        "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
+        "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
+      },
       "0.1.12": {
         "en": "fix iob executable to also work on Windows systems (closes #3)",
         "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
@@ -74,18 +86,6 @@
         "es": "prueba agregada para suscripción de alias con función de escritura",
         "pl": "dodany test dla subskrypcji aliasów z funkcją zapisu",
         "zh-cn": "添加了具有写入功能的别名订阅测试"
-      },
-      "0.1.6": {
-        "en": "added tests for subscription with alias, getStates with alias read",
-        "de": "Tests für Abonnement mit Alias hinzugefügt, getStates mit Alias read",
-        "ru": "добавлены тесты для подписки с псевдонимом, getStates с псевдонимом прочитано",
-        "pt": "testes adicionados para inscrição com alias, getStates com leitura de alias",
-        "nl": "tests toegevoegd voor abonnement met alias, getStates met alias read",
-        "fr": "ajout de tests pour l'abonnement avec alias, getStates avec alias lu",
-        "it": "aggiunti test per l'abbonamento con alias, getStates con alias read",
-        "es": "pruebas agregadas para suscripción con alias, getStates con alias read",
-        "pl": "dodane testy subskrypcji z aliasem, getStates z odczytem aliasu",
-        "zh-cn": "添加了使用别名订阅的测试，使用别名读取 getState"
       }
     },
     "title": "Benchmark",
