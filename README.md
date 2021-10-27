@@ -83,7 +83,7 @@ always needs to be run with instance number `0`.
 ## License
 MIT License
 
-Copyright (c) 2021 foxriver76 <moritz.heusinger@gmail.com>
+Copyright (c) 2021 Moritz Heusinger <moritz.heusinger@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
