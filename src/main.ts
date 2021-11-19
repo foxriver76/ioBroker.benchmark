@@ -103,7 +103,7 @@ class Benchmark extends utils.Adapter {
      * Execute the tests for a non secondary adapter
      * @private
      */
-	private async runTests(selectedTests: Record<string, any>): Promise<void> {
+	private async runTests(selectedTests: string[]): Promise<void> {
 		// stop all instances if isolated run
 		if (this.config.isolatedRun) {
 			this.restartInstances = [];
@@ -141,9 +141,7 @@ class Benchmark extends utils.Adapter {
 
 		this.log.info('Starting benchmark test...');
 
-		const selectedTestsArr = Object.keys(selectedTests);
-
-		for (const activeTestName of selectedTestsArr) {
+		for (const activeTestName of selectedTests) {
 			times[activeTestName] = [];
 			this.cpuStats[activeTestName] = [];
 			this.memStats[activeTestName] = [];
@@ -208,7 +206,7 @@ class Benchmark extends utils.Adapter {
 					await activeTest.cleanUpBetweenEpoch();
 				}
 
-				if (selectedTestsArr.indexOf(activeTestName) === selectedTestsArr.length - 1 && j === this.config.epochs) {
+				if (selectedTests.indexOf(activeTestName) === selectedTests.length - 1 && j === this.config.epochs) {
 					// it was the last test + last epoch, no need to cooldown
 					this.log.info(`Epoch ${j} finished in ${timeEnd} s`);
 				} else {
@@ -378,11 +376,9 @@ class Benchmark extends utils.Adapter {
 		if (!this.config.secondaryMode) {
 			if (obj.command === 'test') {
 				// run all tests on test command - do not await, we want to respond to message
-				this.runTests(allTests);
+				this.runTests(Object.keys(allTests));
 			} else if (allTests[obj.command]) {
-				const selectedTests:Record<string, any> = {};
-				selectedTests[obj.command] = allTests[obj.command];
-				this.runTests(selectedTests);
+				this.runTests([obj.command]);
 			} else if (obj.command === 'requestedMonitoring') {
 				// we have received a requested monitoring
 				if (!this.requestedMonitoring[obj.from]) {

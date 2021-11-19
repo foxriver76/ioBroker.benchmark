@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.14",
+    "version": "0.1.15",
     "news": {
+      "0.1.15": {
+        "en": "internal simplification",
+        "de": "interne Vereinfachung",
+        "ru": "внутреннее упрощение",
+        "pt": "simplificação interna",
+        "nl": "interne vereenvoudiging",
+        "fr": "simplification interne",
+        "it": "semplificazione interna",
+        "es": "simplificación interna",
+        "pl": "wewnętrzne uproszczenie",
+        "zh-cn": "内部简化"
+      },
       "0.1.14": {
         "en": "make cooldown dependent on test time (closes #4)\non last iteration of last test we do not need to cooldown",
         "de": "Abklingzeit abhängig von Testzeit machen (schließt #4)\nbei der letzten Iteration des letzten Tests brauchen wir nicht abzukühlen",
@@ -74,18 +86,6 @@
         "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
         "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
         "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
-      },
-      "0.1.8": {
-        "en": "make `addInstances` wait that instance is actually alive",
-        "de": "lass `addInstances` warten, bis die Instanz tatsächlich aktiv ist",
-        "ru": "заставить `addInstances` ждать, что экземпляр действительно жив",
-        "pt": "faça `addInstances` esperar que a instância esteja realmente viva",
-        "nl": "laat `addInstances` wachten totdat de instantie daadwerkelijk in leven is",
-        "fr": "faire `addInstances` attendre que l'instance soit réellement active",
-        "it": "fai in modo che `addInstances` attenda che l'istanza sia effettivamente attiva",
-        "es": "hacer que `addInstances` espere que la instancia esté realmente viva",
-        "pl": "spraw, aby `addInstances` czekało, że instancja rzeczywiście działa",
-        "zh-cn": "让 `addInstances` 等待该实例实际上还活着"
       }
     },
     "title": "Benchmark",

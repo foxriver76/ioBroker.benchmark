@@ -112,8 +112,7 @@ class Benchmark extends utils.Adapter {
             }
         });
         this.log.info('Starting benchmark test...');
-        const selectedTestsArr = Object.keys(selectedTests);
-        for (const activeTestName of selectedTestsArr) {
+        for (const activeTestName of selectedTests) {
             times[activeTestName] = [];
             this.cpuStats[activeTestName] = [];
             this.memStats[activeTestName] = [];
@@ -167,7 +166,7 @@ class Benchmark extends utils.Adapter {
                     this.log.info('Clean between epoch ...');
                     await activeTest.cleanUpBetweenEpoch();
                 }
-                if (selectedTestsArr.indexOf(activeTestName) === selectedTestsArr.length - 1 && j === this.config.epochs) {
+                if (selectedTests.indexOf(activeTestName) === selectedTests.length - 1 && j === this.config.epochs) {
                     // it was the last test + last epoch, no need to cooldown
                     this.log.info(`Epoch ${j} finished in ${timeEnd} s`);
                 }
@@ -312,12 +311,10 @@ class Benchmark extends utils.Adapter {
         if (!this.config.secondaryMode) {
             if (obj.command === 'test') {
                 // run all tests on test command - do not await, we want to respond to message
-                this.runTests(allTests_1.tests);
+                this.runTests(Object.keys(allTests_1.tests));
             }
             else if (allTests_1.tests[obj.command]) {
-                const selectedTests = {};
-                selectedTests[obj.command] = allTests_1.tests[obj.command];
-                this.runTests(selectedTests);
+                this.runTests([obj.command]);
             }
             else if (obj.command === 'requestedMonitoring') {
                 // we have received a requested monitoring
