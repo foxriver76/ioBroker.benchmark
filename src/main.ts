@@ -141,7 +141,9 @@ class Benchmark extends utils.Adapter {
 
 		this.log.info('Starting benchmark test...');
 
-		for (const activeTestName of Object.keys(selectedTests)) {
+		const selectedTestsArr = Object.keys(selectedTests);
+
+		for (const activeTestName of selectedTestsArr) {
 			times[activeTestName] = [];
 			this.cpuStats[activeTestName] = [];
 			this.memStats[activeTestName] = [];
@@ -206,9 +208,20 @@ class Benchmark extends utils.Adapter {
 					await activeTest.cleanUpBetweenEpoch();
 				}
 
-				this.log.info(`Epoch ${j} finished in ${timeEnd} s - starting 30 s cooldown`);
-				// wait 30 sec to "cooldown" system
-				await this.wait(30000);
+				if (selectedTestsArr.indexOf(activeTestName) === selectedTestsArr.length - 1 && j === this.config.epochs) {
+					// it was the last test + last epoch, no need to cooldown
+					this.log.info(`Epoch ${j} finished in ${timeEnd} s`);
+				} else {
+					// there are still tests to go, so cooldown
+					// for cooldown we respect full time
+					const timeWithClean = parseFloat(process.hrtime(timeStart).join('.'));
+
+					// cooldown ~test + clean time but maximum 30 seconds and minimum 10 seconds
+					const cooldownSec = Math.max(Math.min(Math.round(timeWithClean), 30), 10);
+					this.log.info(`Epoch ${j} finished in ${timeEnd} s - starting ${cooldownSec} s cooldown`);
+					// wait to "cooldown" system
+					await this.wait(cooldownSec * 1000);
+				}
 			}
 
 			// set states - TIME

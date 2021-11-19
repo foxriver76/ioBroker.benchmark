@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.13",
+    "version": "0.1.14",
     "news": {
+      "0.1.14": {
+        "en": "make cooldown dependent on test time (closes #4)\non last iteration of last test we do not need to cooldown",
+        "de": "Abklingzeit abhängig von Testzeit machen (schließt #4)\nbei der letzten Iteration des letzten Tests brauchen wir nicht abzukühlen",
+        "ru": "сделать перезарядку зависимой от времени теста (закрывает # 4)\nна последней итерации последнего теста нам не нужно перезаряжать",
+        "pt": "tornar o resfriamento dependente do tempo de teste (fecha # 4)\nna última iteração do último teste, não precisamos esfriar",
+        "nl": "afkoeltijd afhankelijk maken van testtijd (sluit #4)\nbij de laatste iteratie van de laatste test hoeven we niet af te koelen",
+        "fr": "rendre le temps de recharge dépendant de la durée du test (ferme #4)\nlors de la dernière itération du dernier test, nous n'avons pas besoin de refroidir",
+        "it": "rendi il cooldown dipendente dal tempo di test (chiude #4)\nall'ultima iterazione dell'ultimo test non è necessario il cooldown",
+        "es": "hacer que el enfriamiento dependa del tiempo de prueba (cierra el n. ° 4)\nen la última iteración de la última prueba, no necesitamos enfriar",
+        "pl": "uzależnić czas odnowienia od czasu testu (zamyka #4)\nw ostatniej iteracji ostatniego testu nie musimy się odnawiać",
+        "zh-cn": "使冷却时间取决于测试时间（关闭 #4）\n在上次测试的最后一次迭代中，我们不需要冷却"
+      },
       "0.1.13": {
         "en": "fix iob executable to also work on Windows systems (closes #3)",
         "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
@@ -74,18 +86,6 @@
         "es": "hacer que `addInstances` espere que la instancia esté realmente viva",
         "pl": "spraw, aby `addInstances` czekało, że instancja rzeczywiście działa",
         "zh-cn": "让 `addInstances` 等待该实例实际上还活着"
-      },
-      "0.1.7": {
-        "en": "added test for alias subscription with write function",
-        "de": "Test für Alias-Abonnement mit Schreibfunktion hinzugefügt",
-        "ru": "добавлен тест для подписки на псевдоним с функцией записи",
-        "pt": "adicionado teste para inscrição de alias com função de gravação",
-        "nl": "toegevoegde test voor alias-abonnement met schrijffunctie",
-        "fr": "test ajouté pour l'abonnement d'alias avec fonction d'écriture",
-        "it": "aggiunto test per sottoscrizione alias con funzione di scrittura",
-        "es": "prueba agregada para suscripción de alias con función de escritura",
-        "pl": "dodany test dla subskrypcji aliasów z funkcją zapisu",
-        "zh-cn": "添加了具有写入功能的别名订阅测试"
       }
     },
     "title": "Benchmark",
