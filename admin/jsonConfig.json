@@ -216,6 +216,18 @@
       "es": "Suscribir estados con función de escritura de alias",
       "pl": "Subskrybuj stany z funkcją zapisu aliasów",
       "zh-cn": "使用别名写入功能订阅状态"
+    },
+    "setStatesParallel": {
+      "en": "Set states in parallel",
+      "de": "Zustände parallel setzen",
+      "ru": "Установить состояния параллельно",
+      "pt": "Definir estados em paralelo",
+      "nl": "Stel statussen parallel in",
+      "fr": "Mettre des états en parallèle",
+      "it": "Imposta stati in parallelo",
+      "es": "Establecer estados en paralelo",
+      "pl": "Ustaw stany równolegle",
+      "zh-cn": "并行设置状态"
     }
   },
   "items": {
@@ -323,6 +335,12 @@
       "type": "sendTo",
       "command": "messages",
       "label": "messages",
+      "color": "primary"
+    },
+    "setStatesParallel": {
+      "type": "sendTo",
+      "command": "setStatesParallel",
+      "label": "setStatesParallel",
       "color": "primary"
     }
   }

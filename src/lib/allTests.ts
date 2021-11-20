@@ -11,6 +11,7 @@ import {Test as getStatesAlias} from './activeTests/getStatesAlias';
 import {Test as getStatesAliasRead} from './activeTests/getStatesAliasRead';
 import {Test as statesSubscriptionAlias} from './activeTests/statesSubscriptionAlias';
 import {Test as statesSubscriptionAliasWrite} from './activeTests/statesSubscriptionAliasWrite';
+import {Test as setStatesParallel} from './activeTests/setStatesParallel';
 import {TestUtils} from './testClass';
 
 export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
@@ -26,5 +27,6 @@ export const tests: Record<string, (new (...args: any[]) => TestUtils)> = {
 	getStates,
 	getStatesAlias,
 	getStatesAliasRead,
-	messages
+	messages,
+	setStatesParallel
 };

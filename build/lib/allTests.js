@@ -14,6 +14,7 @@ const getStatesAlias_1 = require("./activeTests/getStatesAlias");
 const getStatesAliasRead_1 = require("./activeTests/getStatesAliasRead");
 const statesSubscriptionAlias_1 = require("./activeTests/statesSubscriptionAlias");
 const statesSubscriptionAliasWrite_1 = require("./activeTests/statesSubscriptionAliasWrite");
+const setStatesParallel_1 = require("./activeTests/setStatesParallel");
 exports.tests = {
     setStates: setStates_1.Test,
     statesSubscription: statesSubscription_1.Test,
@@ -27,6 +28,7 @@ exports.tests = {
     getStates: getStates_1.Test,
     getStatesAlias: getStatesAlias_1.Test,
     getStatesAliasRead: getStatesAliasRead_1.Test,
-    messages: messages_1.Test
+    messages: messages_1.Test,
+    setStatesParallel: setStatesParallel_1.Test
 };
 //# sourceMappingURL=allTests.js.map

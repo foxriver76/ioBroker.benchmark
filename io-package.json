@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.1.15",
+    "version": "0.2.0",
     "news": {
+      "0.2.0": {
+        "en": "we added a parallel `setState` test for multicore performance evaluation (closes #5)",
+        "de": "Wir haben einen parallelen `setState`-Test zur Multicore-Leistungsbewertung hinzugefügt (schließt #5)",
+        "ru": "мы добавили параллельный тест setState для оценки производительности многоядерных процессоров (закрывает №5)",
+        "pt": "adicionamos um teste `setState` paralelo para avaliação de desempenho multicore (fecha # 5)",
+        "nl": "we hebben een parallelle `setState`-test toegevoegd voor multicore-prestatie-evaluatie (sluit #5)",
+        "fr": "nous avons ajouté un test parallèle `setState` pour l'évaluation des performances multicœurs (ferme #5)",
+        "it": "abbiamo aggiunto un test parallelo `setState` per la valutazione delle prestazioni multicore (chiude il numero 5)",
+        "es": "agregamos una prueba `setState` paralela para la evaluación del rendimiento multinúcleo (cierra el n. ° 5)",
+        "pl": "dodaliśmy równoległy test `setState` do oceny wydajności wielordzeniowej (zamyka #5)",
+        "zh-cn": "我们为多核性能评估添加了一个并行的 `setState` 测试（关闭 #5）"
+      },
       "0.1.15": {
         "en": "internal simplification",
         "de": "interne Vereinfachung",
@@ -64,18 +76,6 @@
         "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
       },
       "0.1.10": {
-        "en": "fix iob executable to also work on Windows systems (closes #3)",
-        "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
-        "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",
-        "pt": "conserta o executável iob para funcionar também em sistemas Windows (fecha # 3)",
-        "nl": "repareer iob uitvoerbaar om ook op Windows-systemen te werken (sluit #3)",
-        "fr": "correction de l'exécutable iob pour qu'il fonctionne également sur les systèmes Windows (ferme #3)",
-        "it": "fix iob eseguibile per funzionare anche su sistemi Windows (chiude #3)",
-        "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
-        "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
-        "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
-      },
-      "0.1.9": {
         "en": "fix iob executable to also work on Windows systems (closes #3)",
         "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
         "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",

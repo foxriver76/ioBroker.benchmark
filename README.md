@@ -32,6 +32,9 @@ always needs to be run with instance number `0`.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.2.0 (2021-11-20)
+* (foxriver76) we added a parallel `setState` test for multicore performance evaluation (closes #5)
+
 ### 0.1.15 (2021-11-19)
 * (foxriver76) internal simplification
 
