@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "news": {
+      "0.3.0": {
+        "en": "we added three `getObjectView` tests",
+        "de": "wir haben drei `getObjectView`-Tests hinzugefügt",
+        "ru": "мы добавили три теста getObjectView",
+        "pt": "adicionamos três testes `getObjectView`",
+        "nl": "we hebben drie `getObjectView`-tests toegevoegd",
+        "fr": "nous avons ajouté trois tests `getObjectView`",
+        "it": "abbiamo aggiunto tre test `getObjectView`",
+        "es": "agregamos tres pruebas `getObjectView`",
+        "pl": "dodaliśmy trzy testy `getObjectView`",
+        "zh-cn": "我们添加了三个 `getObjectView` 测试"
+      },
       "0.2.0": {
         "en": "we added a parallel `setState` test for multicore performance evaluation (closes #5)",
         "de": "Wir haben einen parallelen `setState`-Test zur Multicore-Leistungsbewertung hinzugefügt (schließt #5)",

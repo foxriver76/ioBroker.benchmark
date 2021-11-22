@@ -87,7 +87,7 @@ The alias contains a simple write function.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.3.0 (2021-11-22)
 * (foxriver76) we added three `getObjectView` tests
 
 ### 0.2.0 (2021-11-20)
