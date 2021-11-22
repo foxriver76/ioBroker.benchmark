@@ -10,9 +10,11 @@ class Test extends testClass_1.TestUtils {
      * Everything to setup the test but does not need to be measured
      */
     async prepare() {
+        // this time objects does not need to match iterations and scaling both will mess up comparison
+        const noAllObjects = 10000;
         // we create only 2 % irrelevant objects
-        const noMetaObjs = Math.round(this.adapter.config.iterations * 0.02);
-        await this.addObjects(this.adapter.config.iterations - noMetaObjs, 0);
+        const noMetaObjs = Math.round(noAllObjects * 0.02);
+        await this.addObjects(noAllObjects - noMetaObjs, 0);
         await this.addMetaObjects(noMetaObjs);
     }
     /**
@@ -25,8 +27,8 @@ class Test extends testClass_1.TestUtils {
      * The test itself
      */
     async execute() {
-        // get 10k object views hard, iterations will only change number of objects
-        for (let i = 0; i < 10000; i++) {
+        // get object views
+        for (let i = 0; i < this.adapter.config.iterations; i++) {
             await this.adapter.getObjectViewAsync('system', 'state', {
                 startkey: 'benchmark.0.test',
                 endkey: 'benchmark.0.test\u9999'
@@ -43,9 +45,10 @@ class Test extends testClass_1.TestUtils {
      * Clean up the db, remove insatnces, etc.
      */
     async cleanUp() {
+        const noAllObjects = 10000;
         // delete objects
-        const noMetaObjs = Math.round(this.adapter.config.iterations * 0.02);
-        await this.delObjects(this.adapter.config.iterations - noMetaObjs, 0);
+        const noMetaObjs = Math.round(noAllObjects * 0.02);
+        await this.delObjects(noAllObjects - noMetaObjs, 0);
         await this.delMetaObjects(noMetaObjs);
     }
 }

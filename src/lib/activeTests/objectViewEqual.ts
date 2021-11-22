@@ -11,10 +11,12 @@ export class Test extends TestUtils {
      * Everything to setup the test but does not need to be measured
      */
 	public async prepare(): Promise<void> {
+		// this time objects does not need to match iterations and scaling both will mess up comparison
+		const noAllObjects = 10000;
 		// set objects half half
-		const noObjects = Math.round(this.adapter.config.iterations * 0.5);
-		await this.addObjects(noObjects, 0);
-		await this.addMetaObjects(noObjects);
+		const noEqualObjects = Math.round(noAllObjects * 0.5);
+		await this.addObjects(noEqualObjects, 0);
+		await this.addMetaObjects(noEqualObjects);
 	}
 
 	/**
@@ -28,8 +30,8 @@ export class Test extends TestUtils {
      * The test itself
      */
 	public async execute(): Promise<void> {
-		// get 10k object views hard, iterations will only change number of objects
-		for (let i = 0; i < 10000; i++) {
+		// get object views
+		for (let i = 0; i < this.adapter.config.iterations; i++) {
 			await this.adapter.getObjectViewAsync('system', 'state', {
 				startkey: 'benchmark.0.test',
 				endkey: 'benchmark.0.test\u9999'
@@ -48,7 +50,8 @@ export class Test extends TestUtils {
      * Clean up the db, remove insatnces, etc.
      */
 	public async cleanUp(): Promise<void> {
-		const noObjects = Math.round(this.adapter.config.iterations * 0.5);
+		const noAllObjects = 10000;
+		const noObjects = Math.round(noAllObjects * 0.5);
 		// delete objects
 		await this.delObjects(noObjects, 0);
 		await this.delMetaObjects(noObjects);
