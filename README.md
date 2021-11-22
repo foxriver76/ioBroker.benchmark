@@ -32,6 +32,9 @@ always needs to be run with instance number `0`.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (foxriver76) we added three `getObjectView` tests
+
 ### 0.2.0 (2021-11-20)
 * (foxriver76) we added a parallel `setState` test for multicore performance evaluation (closes #5)
 

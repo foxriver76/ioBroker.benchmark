@@ -56,7 +56,7 @@ export abstract class TestUtils {
 	}
 
 	/**
-     * Add Objects at given instance
+     * Add state Objects at given instance
      *
      * @param n - number of objects to be added
      * @param instanceNumber - number of the benchmark instance to add objects at
@@ -80,6 +80,26 @@ export abstract class TestUtils {
 			}
 		} else {
 			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'set', n, prefix});
+		}
+	}
+
+	/**
+	 * Add meta Objects at controller instance
+	 *
+	 * @param n - number of objects to be added
+	 * @param prefix - prefix for ids
+	 */
+	public async addMetaObjects(n: number, prefix=''): Promise<void> {
+		// set objects locally
+		for (let i = 0; i < n; i++) {
+			await this.adapter.setObjectAsync(`test.${prefix}${i}meta`, {
+				'type': 'meta',
+				'common': {
+					name: i.toString(),
+					type: 'meta.folder'
+				},
+				native: {}
+			});
 		}
 	}
 
@@ -204,6 +224,19 @@ export abstract class TestUtils {
 			}
 		} else {
 			await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {cmd: 'del', n, prefix});
+		}
+	}
+
+	/**
+	 * Delete meta objects at controller instance
+	 *
+	 * @param n - number of objects to be deleted
+	 * @param prefix - prefix for ids
+	 */
+	public async delMetaObjects(n: number, prefix=''): Promise<void> {
+		// local
+		for (let i = 0; i < n; i++) {
+			await this.adapter.delObjectAsync(`test.${prefix}${i}meta`);
 		}
 	}
 

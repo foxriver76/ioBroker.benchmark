@@ -228,6 +228,42 @@
       "es": "Establecer estados en paralelo",
       "pl": "Ustaw stany równolegle",
       "zh-cn": "并行设置状态"
+    },
+    "objectViewLarge": {
+      "en": "object view large",
+      "de": "Objektansicht groß",
+      "ru": "вид объекта большой",
+      "pt": "visão do objeto grande",
+      "nl": "objectweergave groot",
+      "fr": "vue de l'objet grand",
+      "it": "vista oggetto grande",
+      "es": "vista de objeto grande",
+      "pl": "duży widok obiektu",
+      "zh-cn": "对象视图大"
+    },
+    "objectViewEqual": {
+      "en": "object view equal",
+      "de": "Objektansicht gleich",
+      "ru": "вид объекта равный",
+      "pt": "visão de objeto igual",
+      "nl": "objectweergave gelijk",
+      "fr": "vue objet égale",
+      "it": "vista oggetto uguale",
+      "es": "vista de objeto igual",
+      "pl": "widok obiektu równy",
+      "zh-cn": "对象视图相等"
+    },
+    "objectViewSmall": {
+      "en": "object view small",
+      "de": "Objektansicht klein",
+      "ru": "вид объекта маленький",
+      "pt": "visão de objeto pequena",
+      "nl": "objectweergave klein",
+      "fr": "vue de l'objet petit",
+      "it": "vista oggetto piccola",
+      "es": "vista de objeto pequeña",
+      "pl": "widok obiektu mały",
+      "zh-cn": "对象视图小"
     }
   },
   "items": {
@@ -341,6 +377,24 @@
       "type": "sendTo",
       "command": "setStatesParallel",
       "label": "setStatesParallel",
+      "color": "primary"
+    },
+    "objectViewEqual": {
+      "type": "sendTo",
+      "command": "objectViewEqual",
+      "label": "objectViewEqual",
+      "color": "primary"
+    },
+    "objectViewSmall": {
+      "type": "sendTo",
+      "command": "objectViewSmall",
+      "label": "objectViewSmall",
+      "color": "primary"
+    },
+    "objectViewLarge": {
+      "type": "sendTo",
+      "command": "objectViewLarge",
+      "label": "objectViewLarge",
       "color": "primary"
     }
   }
