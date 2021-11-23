@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "news": {
+      "0.3.2": {
+        "en": "we now also remove secondary instances on clean up",
+        "de": "Wir entfernen jetzt auch sekundäre Instanzen beim Aufräumen",
+        "ru": "теперь мы также удаляем вторичные экземпляры при очистке",
+        "pt": "agora também removemos instâncias secundárias na limpeza",
+        "nl": "we verwijderen nu ook secundaire instanties bij het opruimen",
+        "fr": "nous supprimons désormais également les instances secondaires lors du nettoyage",
+        "it": "ora rimuoviamo anche le istanze secondarie durante la pulizia",
+        "es": "ahora también eliminamos instancias secundarias al limpiar",
+        "pl": "teraz usuwamy również drugorzędne instancje podczas czyszczenia",
+        "zh-cn": "我们现在还在清理时删除辅助实例"
+      },
       "0.3.1": {
         "en": "we now prettify the summary file",
         "de": "Wir verschönern jetzt die Zusammenfassungsdatei",
@@ -64,18 +76,6 @@
         "zh-cn": "使冷却时间取决于测试时间（关闭 #4）\n在上次测试的最后一次迭代中，我们不需要冷却"
       },
       "0.1.13": {
-        "en": "fix iob executable to also work on Windows systems (closes #3)",
-        "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
-        "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",
-        "pt": "conserta o executável iob para funcionar também em sistemas Windows (fecha # 3)",
-        "nl": "repareer iob uitvoerbaar om ook op Windows-systemen te werken (sluit #3)",
-        "fr": "correction de l'exécutable iob pour qu'il fonctionne également sur les systèmes Windows (ferme #3)",
-        "it": "fix iob eseguibile per funzionare anche su sistemi Windows (chiude #3)",
-        "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
-        "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
-        "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
-      },
-      "0.1.12": {
         "en": "fix iob executable to also work on Windows systems (closes #3)",
         "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
         "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",

@@ -28,6 +28,7 @@ const helper_1 = require("./lib/helper");
 const allTests_1 = require("./lib/allTests");
 const fs_1 = require("fs");
 require("source-map-support/register");
+const promisify_child_process_1 = require("promisify-child-process");
 class Benchmark extends utils.Adapter {
     constructor(options = {}) {
         super({
@@ -341,6 +342,15 @@ class Benchmark extends utils.Adapter {
                 this.log.info('Cleaning up objects');
                 await this.delForeignObjectAsync('alias.0.__benchmark', { recursive: true });
                 await this.delObjectAsync('test', { recursive: true });
+                const instancesObj = await this.getObjectViewAsync('system', 'instance', { startkey: 'system.adapter.benchmark.', endkey: 'system.adapter.benchmark.\u9999' });
+                for (const instance of instancesObj.rows) {
+                    const iobExecutable = require.resolve('iobroker.js-controller/iobroker.js');
+                    if (!instance.id.endsWith(this.namespace)) {
+                        const instanceNo = instance.id.split('.')[3];
+                        this.log.info(`Removing instance benchmark.${instanceNo}`);
+                        await (0, promisify_child_process_1.exec)(`"${process.execPath}" "${iobExecutable}" del benchmark.${instanceNo}`);
+                    }
+                }
                 this.log.info('Objects cleaned up');
             }
             else {

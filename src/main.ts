@@ -4,6 +4,7 @@ import {testObjects} from './lib/helper';
 import {tests as allTests} from './lib/allTests';
 import {readFileSync} from 'fs';
 import 'source-map-support/register';
+import {exec as execAsync} from 'promisify-child-process';
 
 type Timeout = NodeJS.Timeout;
 
@@ -408,6 +409,17 @@ class Benchmark extends utils.Adapter {
 				this.log.info('Cleaning up objects');
 				await this.delForeignObjectAsync('alias.0.__benchmark', {recursive: true});
 				await this.delObjectAsync('test', {recursive: true});
+				const instancesObj = await this.getObjectViewAsync('system', 'instance',
+					{startkey: 'system.adapter.benchmark.', endkey: 'system.adapter.benchmark.\u9999'});
+
+				for (const instance of instancesObj.rows) {
+					const iobExecutable = require.resolve('iobroker.js-controller/iobroker.js');
+					if (!instance.id.endsWith(this.namespace)) {
+						const instanceNo = instance.id.split('.')[3];
+						this.log.info(`Removing instance benchmark.${instanceNo}`);
+						await execAsync(`"${process.execPath}" "${iobExecutable}" del benchmark.${instanceNo}`);
+					}
+				}
 				this.log.info('Objects cleaned up');
 			} else {
 				this.log.warn(`Unknown message: ${JSON.stringify(obj)}`);
