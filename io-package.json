@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "news": {
+      "0.3.1": {
+        "en": "we now prettify the summary file",
+        "de": "Wir verschönern jetzt die Zusammenfassungsdatei",
+        "ru": "мы теперь преобразим итоговый файл",
+        "pt": "agora vamos embelezar o arquivo de resumo",
+        "nl": "we verfraaien nu het samenvattingsbestand",
+        "fr": "on embellit maintenant le fichier récapitulatif",
+        "it": "ora abbelliamo il file di riepilogo",
+        "es": "ahora embellecemos el archivo de resumen",
+        "pl": "teraz upiększamy plik podsumowania",
+        "zh-cn": "我们现在美化摘要文件"
+      },
       "0.3.0": {
         "en": "we added three `getObjectView` tests",
         "de": "wir haben drei `getObjectView`-Tests hinzugefügt",
@@ -64,18 +76,6 @@
         "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
       },
       "0.1.12": {
-        "en": "fix iob executable to also work on Windows systems (closes #3)",
-        "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
-        "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",
-        "pt": "conserta o executável iob para funcionar também em sistemas Windows (fecha # 3)",
-        "nl": "repareer iob uitvoerbaar om ook op Windows-systemen te werken (sluit #3)",
-        "fr": "correction de l'exécutable iob pour qu'il fonctionne également sur les systèmes Windows (ferme #3)",
-        "it": "fix iob eseguibile per funzionare anche su sistemi Windows (chiude #3)",
-        "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
-        "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
-        "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
-      },
-      "0.1.11": {
         "en": "fix iob executable to also work on Windows systems (closes #3)",
         "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
         "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",

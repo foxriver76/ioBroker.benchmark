@@ -87,6 +87,9 @@ The alias contains a simple write function.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.3.1 (2021-11-23)
+* (foxriver76) we now prettify the summary file
+
 ### 0.3.0 (2021-11-22)
 * (foxriver76) we added three `getObjectView` tests
 

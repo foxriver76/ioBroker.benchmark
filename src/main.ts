@@ -362,7 +362,7 @@ class Benchmark extends utils.Adapter {
 
 			if (typeof summaryState.val === 'string') {
 				summaryArr.push(JSON.parse(summaryState.val));
-				await this.writeFileAsync('benchmark.files', 'history.json', JSON.stringify(summaryArr));
+				await this.writeFileAsync('benchmark.files', 'history.json', JSON.stringify(summaryArr, null, 2));
 				this.log.info('Summary file written');
 			}
 		}
