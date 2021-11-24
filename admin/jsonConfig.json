@@ -304,17 +304,25 @@
       }
     },
     "runAllTests": {
+      "style": {
+        "backgroundColor": "#4dabf5",
+        "color": "white",
+        "margin": "12px"
+      },
       "type": "sendTo",
       "command": "test",
       "label": "runAllTests",
-      "newLine": true,
-      "color": "primary"
+      "newLine": true
     },
     "cleanUp": {
+      "style": {
+        "backgroundColor": "#4dabf5",
+        "color": "white",
+        "margin": "12px"
+      },
       "type": "sendTo",
       "command": "cleanUp",
-      "label": "cleanUp",
-      "color": "primary"
+      "label": "cleanUp"
     },
     "dividerStates": {
       "type": "divider"
