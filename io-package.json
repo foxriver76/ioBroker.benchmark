@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.3.2",
+    "version": "0.4.0",
     "news": {
+      "0.4.0": {
+        "en": "we introduced some categories in the user interface\nwe switched to checkboxes to allow to execute a subset of all tests",
+        "de": "wir haben einige Kategorien in der Benutzeroberfläche eingeführt\nwir haben auf Checkboxen umgestellt, um eine Teilmenge aller Tests ausführen zu können",
+        "ru": "мы ввели несколько категорий в пользовательский интерфейс\nмы перешли на флажки, чтобы разрешить выполнение подмножества всех тестов",
+        "pt": "introduzimos algumas categorias na interface do usuário\nmudamos as caixas de seleção para permitir a execução de um subconjunto de todos os testes",
+        "nl": "we hebben enkele categorieën in de gebruikersinterface geïntroduceerd\nwe zijn overgeschakeld naar selectievakjes om een subset van alle tests uit te voeren",
+        "fr": "nous avons introduit certaines catégories dans l'interface utilisateur\nnous sommes passés à des cases à cocher pour permettre d'exécuter un sous-ensemble de tous les tests",
+        "it": "abbiamo introdotto alcune categorie nell'interfaccia utente\nsiamo passati alle caselle di controllo per consentire l'esecuzione di un sottoinsieme di tutti i test",
+        "es": "introdujimos algunas categorías en la interfaz de usuario\ncambiamos a casillas de verificación para permitir ejecutar un subconjunto de todas las pruebas",
+        "pl": "wprowadziliśmy kilka kategorii w interfejsie użytkownika\nprzełączyliśmy się na pola wyboru, aby umożliwić wykonanie podzbioru wszystkich testów",
+        "zh-cn": "我们在用户界面中引入了一些类别\n我们切换到复选框以允许执行所有测试的子集"
+      },
       "0.3.2": {
         "en": "we now also remove secondary instances on clean up",
         "de": "Wir entfernen jetzt auch sekundäre Instanzen beim Aufräumen",
@@ -74,18 +86,6 @@
         "es": "hacer que el enfriamiento dependa del tiempo de prueba (cierra el n. ° 4)\nen la última iteración de la última prueba, no necesitamos enfriar",
         "pl": "uzależnić czas odnowienia od czasu testu (zamyka #4)\nw ostatniej iteracji ostatniego testu nie musimy się odnawiać",
         "zh-cn": "使冷却时间取决于测试时间（关闭 #4）\n在上次测试的最后一次迭代中，我们不需要冷却"
-      },
-      "0.1.13": {
-        "en": "fix iob executable to also work on Windows systems (closes #3)",
-        "de": "Fix iob ausführbare Datei, um auch auf Windows-Systemen zu funktionieren (schließt #3)",
-        "ru": "исправить исполняемый файл iob, чтобы он также работал в системах Windows (закрывает №3)",
-        "pt": "conserta o executável iob para funcionar também em sistemas Windows (fecha # 3)",
-        "nl": "repareer iob uitvoerbaar om ook op Windows-systemen te werken (sluit #3)",
-        "fr": "correction de l'exécutable iob pour qu'il fonctionne également sur les systèmes Windows (ferme #3)",
-        "it": "fix iob eseguibile per funzionare anche su sistemi Windows (chiude #3)",
-        "es": "arregla el ejecutable de iob para que también funcione en sistemas Windows (cierra el n. ° 3)",
-        "pl": "naprawiono plik wykonywalny iob, aby działał również w systemach Windows (zamyka #3)",
-        "zh-cn": "修复 iob 可执行文件，使其也适用于 Windows 系统（关闭 #3）"
       }
     },
     "title": "Benchmark",

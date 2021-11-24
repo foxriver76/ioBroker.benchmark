@@ -87,8 +87,7 @@ The alias contains a simple write function.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.4.0 (2021-11-24)
 * (foxriver76) we introduced some categories in the user interface
 * (foxriver76) we switched to checkboxes to allow to execute a subset of all tests
 
