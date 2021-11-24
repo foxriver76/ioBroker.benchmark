@@ -87,6 +87,10 @@ The alias contains a simple write function.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (foxriver76) we introduced some categories in the user interface
+
 ### 0.3.2 (2021-11-23)
 * (foxriver76) we now also remove secondary instances on clean up
 

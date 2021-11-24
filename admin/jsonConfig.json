@@ -268,6 +268,7 @@
   },
   "items": {
     "iterations": {
+      "newLine": true,
       "type": "number",
       "label": "iterations",
       "min": 0
@@ -281,6 +282,27 @@
       "type": "checkbox",
       "label": "isolatedRun"
     },
+    "titleGeneral": {
+      "newLine": true,
+      "type": "staticText",
+      "style": {
+        "marginTop": "12px",
+        "fontWeight": "bold",
+        "fontSize": "16px"
+      },
+      "text": {
+        "en": "General",
+        "de": "Allgemein",
+        "ru": "Общий",
+        "pt": "Em geral",
+        "nl": "Algemeen",
+        "fr": "Général",
+        "it": "Generale",
+        "es": "General",
+        "pl": "Ogólny",
+        "zh-cn": "一般的"
+      }
+    },
     "runAllTests": {
       "type": "sendTo",
       "command": "test",
@@ -293,6 +315,29 @@
       "command": "cleanUp",
       "label": "cleanUp",
       "color": "primary"
+    },
+    "dividerStates": {
+      "type": "divider"
+    },
+    "titleStates": {
+      "type": "staticText",
+      "style": {
+        "fontWeight": "bold",
+        "fontSize": "16px"
+      },
+      "text": {
+        "en": "States",
+        "de": "Zustände",
+        "ru": "состояния",
+        "pt": "Estados",
+        "nl": "Staten",
+        "fr": "États",
+        "it": "stati",
+        "es": "Estados",
+        "pl": "Stany",
+        "zh-cn": "状态"
+      },
+      "newLine": true
     },
     "setStates": {
       "type": "sendTo",
@@ -325,28 +370,16 @@
       "label": "statesDeletion",
       "color": "primary"
     },
-    "idle": {
-      "type": "sendTo",
-      "command": "idle",
-      "label": "idle",
-      "color": "primary"
-    },
     "setStatesNonStrict": {
       "type": "sendTo",
       "command": "setStatesNonStrict",
       "label": "setStatesNonStrict",
       "color": "primary"
     },
-    "objectsCreation": {
+    "setStatesParallel": {
       "type": "sendTo",
-      "command": "objectsCreation",
-      "label": "objectsCreation",
-      "color": "primary"
-    },
-    "objectsDeletion": {
-      "type": "sendTo",
-      "command": "objectsDeletion",
-      "label": "objectsDeletion",
+      "command": "setStatesParallel",
+      "label": "setStatesParallel",
       "color": "primary"
     },
     "getStates": {
@@ -367,16 +400,40 @@
       "label": "getStatesAliasRead",
       "color": "primary"
     },
-    "messages": {
+    "dividerObjects": {
+      "type": "divider"
+    },
+    "titleObjects": {
+      "newLine": true,
+      "type": "staticText",
+      "style": {
+        "fontWeight": "bold",
+        "fontSize": "16px"
+      },
+      "text": {
+        "en": "Objects",
+        "de": "Objekte",
+        "ru": "Объекты",
+        "pt": "Objetos",
+        "nl": "Voorwerpen",
+        "fr": "Objets",
+        "it": "oggetti",
+        "es": "Objetos",
+        "pl": "Obiekty",
+        "zh-cn": "对象"
+      }
+    },
+    "objectsCreation": {
+      "newLine": true,
       "type": "sendTo",
-      "command": "messages",
-      "label": "messages",
+      "command": "objectsCreation",
+      "label": "objectsCreation",
       "color": "primary"
     },
-    "setStatesParallel": {
+    "objectsDeletion": {
       "type": "sendTo",
-      "command": "setStatesParallel",
-      "label": "setStatesParallel",
+      "command": "objectsDeletion",
+      "label": "objectsDeletion",
       "color": "primary"
     },
     "objectViewEqual": {
@@ -395,6 +452,42 @@
       "type": "sendTo",
       "command": "objectViewLarge",
       "label": "objectViewLarge",
+      "color": "primary"
+    },
+    "dividerOther": {
+      "type": "divider"
+    },
+    "titleOther": {
+      "newLine": true,
+      "type": "staticText",
+      "style": {
+        "fontWeight": "bold",
+        "fontSize": "16px"
+      },
+      "text": {
+        "en": "Other",
+        "de": "Sonstiges",
+        "ru": "Другой",
+        "pt": "De outros",
+        "nl": "Ander",
+        "fr": "Autre",
+        "it": "Altro",
+        "es": "Otro",
+        "pl": "Inne",
+        "zh-cn": "其他"
+      }
+    },
+    "messages": {
+      "newLine": true,
+      "type": "sendTo",
+      "command": "messages",
+      "label": "messages",
+      "color": "primary"
+    },
+    "idle": {
+      "type": "sendTo",
+      "command": "idle",
+      "label": "idle",
       "color": "primary"
     }
   }
