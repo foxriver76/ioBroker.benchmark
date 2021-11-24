@@ -326,7 +326,14 @@ class Benchmark extends utils.Adapter {
                         selectedTests.push(name);
                     }
                 }
-                this.runTests(selectedTests);
+                if (selectedTests.length) {
+                    this.runTests(selectedTests);
+                }
+                else {
+                    // no tests have been selected
+                    this.sendTo(obj.from, obj.command, { error: 'No tests selected' }, obj.callback);
+                    return;
+                }
             }
             else if (obj.command === 'requestedMonitoring') {
                 // we have received a requested monitoring

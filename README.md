@@ -90,6 +90,7 @@ The alias contains a simple write function.
 
 ### **WORK IN PROGRESS**
 * (foxriver76) we introduced some categories in the user interface
+* (foxriver76) we switched to checkboxes to allow to execute a subset of all tests
 
 ### 0.3.2 (2021-11-23)
 * (foxriver76) we now also remove secondary instances on clean up

@@ -1,6 +1,18 @@
 {
   "type": "panel",
   "i18n": {
+    "No tests selected": {
+      "en": "No tests selected!",
+      "de": "Keine Tests ausgewählt!",
+      "ru": "Тесты не выбраны!",
+      "pt": "Nenhum teste selecionado!",
+      "nl": "Geen testen geselecteerd!",
+      "fr": "Aucun test sélectionné !",
+      "it": "Nessun test selezionato!",
+      "es": "¡No se seleccionaron pruebas!",
+      "pl": "Nie wybrano testów!",
+      "zh-cn": "未选择任何测试！"
+    },
     "iterations": {
       "en": "Number of iterations",
       "de": "Anzahl der Iterationen",
