@@ -49,6 +49,18 @@
       "pl": "Wykonaj wszystkie testy",
       "zh-cn": "执行所有测试"
     },
+    "runSelectedTests": {
+      "en": "Execute selected tests",
+      "de": "Ausgewählte Tests ausführen",
+      "ru": "Выполнить выбранные тесты",
+      "pt": "Executar testes selecionados",
+      "nl": "Geselecteerde tests uitvoeren",
+      "fr": "Exécuter les tests sélectionnés",
+      "it": "Esegui i test selezionati",
+      "es": "Ejecutar pruebas seleccionadas",
+      "pl": "Wykonaj wybrane testy",
+      "zh-cn": "执行选定的测试"
+    },
     "setStates": {
       "en": "Set states",
       "de": "Zustände setzen",
@@ -312,7 +324,45 @@
       "type": "sendTo",
       "command": "test",
       "label": "runAllTests",
-      "newLine": true
+      "newLine": true,
+      "confirm": {
+        "text": {
+          "en": "Please ensure, that the config has been saved!",
+          "de": "Bitte stellen Sie sicher, dass die Konfiguration gespeichert wurde!",
+          "ru": "Убедитесь, что конфигурация сохранена!",
+          "pt": "Certifique-se de que a configuração foi salva!",
+          "nl": "Zorg ervoor dat de configuratie is opgeslagen!",
+          "fr": "Veuillez vous assurer que la configuration a été enregistrée !",
+          "it": "Assicurati che la configurazione sia stata salvata!",
+          "es": "¡Asegúrese de que la configuración se haya guardado!",
+          "pl": "Upewnij się, że konfiguracja została zapisana!",
+          "zh-cn": "请确保配置已保存！"
+        }
+      }
+    },
+    "runSelectedTests": {
+      "style": {
+        "backgroundColor": "#4dabf5",
+        "color": "white",
+        "margin": "12px"
+      },
+      "type": "sendTo",
+      "command": "selectedTests",
+      "label": "runSelectedTests",
+      "confirm": {
+        "text": {
+          "en": "Please ensure, that the config has been saved!",
+          "de": "Bitte stellen Sie sicher, dass die Konfiguration gespeichert wurde!",
+          "ru": "Убедитесь, что конфигурация сохранена!",
+          "pt": "Certifique-se de que a configuração foi salva!",
+          "nl": "Zorg ervoor dat de configuratie is opgeslagen!",
+          "fr": "Veuillez vous assurer que la configuration a été enregistrée !",
+          "it": "Assicurati che la configurazione sia stata salvata!",
+          "es": "¡Asegúrese de que la configuración se haya guardado!",
+          "pl": "Upewnij się, że konfiguracja została zapisana!",
+          "zh-cn": "请确保配置已保存！"
+        }
+      }
     },
     "cleanUp": {
       "style": {
@@ -348,65 +398,45 @@
       "newLine": true
     },
     "setStates": {
-      "type": "sendTo",
-      "command": "setStates",
+      "type": "checkbox",
       "label": "setStates",
-      "newLine": true,
-      "color": "primary"
+      "newLine": true
     },
     "statesSubscription": {
-      "type": "sendTo",
-      "command": "statesSubscription",
-      "label": "statesSubscription",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "statesSubscription"
     },
     "statesSubscriptionAlias": {
-      "type": "sendTo",
-      "command": "statesSubscriptionAlias",
-      "label": "statesSubscriptionAlias",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "statesSubscriptionAlias"
     },
     "statesSubscriptionAliasWrite": {
-      "type": "sendTo",
-      "command": "statesSubscriptionAliasWrite",
-      "label": "statesSubscriptionAliasWrite",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "statesSubscriptionAliasWrite"
     },
     "statesDeletion": {
-      "type": "sendTo",
-      "command": "statesDeletion",
-      "label": "statesDeletion",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "statesDeletion"
     },
     "setStatesNonStrict": {
-      "type": "sendTo",
-      "command": "setStatesNonStrict",
-      "label": "setStatesNonStrict",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "setStatesNonStrict"
     },
     "setStatesParallel": {
-      "type": "sendTo",
-      "command": "setStatesParallel",
-      "label": "setStatesParallel",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "setStatesParallel"
     },
     "getStates": {
-      "type": "sendTo",
-      "command": "getStates",
-      "label": "getStates",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "getStates"
     },
     "getStatesAlias": {
-      "type": "sendTo",
-      "command": "getStatesAlias",
-      "label": "getStatesAlias",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "getStatesAlias"
     },
     "getStatesAliasRead": {
-      "type": "sendTo",
-      "command": "getStatesAliasRead",
-      "label": "getStatesAliasRead",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "getStatesAliasRead"
     },
     "dividerObjects": {
       "type": "divider"
@@ -433,34 +463,24 @@
     },
     "objectsCreation": {
       "newLine": true,
-      "type": "sendTo",
-      "command": "objectsCreation",
-      "label": "objectsCreation",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "objectsCreation"
     },
     "objectsDeletion": {
-      "type": "sendTo",
-      "command": "objectsDeletion",
-      "label": "objectsDeletion",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "objectsDeletion"
     },
     "objectViewEqual": {
-      "type": "sendTo",
-      "command": "objectViewEqual",
-      "label": "objectViewEqual",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "objectViewEqual"
     },
     "objectViewSmall": {
-      "type": "sendTo",
-      "command": "objectViewSmall",
-      "label": "objectViewSmall",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "objectViewSmall"
     },
     "objectViewLarge": {
-      "type": "sendTo",
-      "command": "objectViewLarge",
-      "label": "objectViewLarge",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "objectViewLarge"
     },
     "dividerOther": {
       "type": "divider"
@@ -487,16 +507,12 @@
     },
     "messages": {
       "newLine": true,
-      "type": "sendTo",
-      "command": "messages",
-      "label": "messages",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "messages"
     },
     "idle": {
-      "type": "sendTo",
-      "command": "idle",
-      "label": "idle",
-      "color": "primary"
+      "type": "checkbox",
+      "label": "idle"
     }
   }
 }

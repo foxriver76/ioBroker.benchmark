@@ -380,6 +380,18 @@ class Benchmark extends utils.Adapter {
 				this.runTests(Object.keys(allTests));
 			} else if (allTests[obj.command]) {
 				this.runTests([obj.command]);
+			} else if (obj.command === 'selectedTests') {
+				// find all activated tests
+				const selectedTests:string[] = [];
+
+				for (const [name, value] of Object.entries(this.config)) {
+					if (allTests[name] && value === true) {
+						// it's a test and it's activated
+						selectedTests.push(name);
+					}
+				}
+
+				this.runTests(selectedTests);
 			} else if (obj.command === 'requestedMonitoring') {
 				// we have received a requested monitoring
 				if (!this.requestedMonitoring[obj.from]) {
