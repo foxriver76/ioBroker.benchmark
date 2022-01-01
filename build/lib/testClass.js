@@ -3,8 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestUtils = void 0;
 const promisify_child_process_1 = require("promisify-child-process");
 class TestUtils {
-    constructor(adapter) {
+    constructor(adapter, requirements) {
         this.adapter = adapter;
+        this.requirements = requirements || {};
         this.iobExecutable = require.resolve('iobroker.js-controller/iobroker.js');
     }
     /**

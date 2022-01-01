@@ -1,12 +1,19 @@
 import {exec as execAsync} from 'promisify-child-process';
 import {AdapterInstance} from '@iobroker/adapter-core';
 
+export interface TestRequirements {
+	controllerVersion?: string,
+	freeMemory?: number
+}
+
 export abstract class TestUtils {
 	public adapter: AdapterInstance;
+	public readonly requirements: TestRequirements;
 	private readonly iobExecutable: string;
 
-	protected constructor(adapter: AdapterInstance) {
+	protected constructor(adapter: AdapterInstance, requirements?: TestRequirements) {
 		this.adapter = adapter;
+		this.requirements = requirements || {};
 		this.iobExecutable = require.resolve('iobroker.js-controller/iobroker.js');
 	}
 

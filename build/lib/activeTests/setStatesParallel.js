@@ -4,7 +4,7 @@ exports.Test = void 0;
 const testClass_1 = require("../testClass");
 class Test extends testClass_1.TestUtils {
     constructor(adapter) {
-        super(adapter);
+        super(adapter, { freeMemory: 2000 });
     }
     /**
      * Everything to setup the test but does not need to be measured

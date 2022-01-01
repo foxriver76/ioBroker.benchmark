@@ -23,6 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils = __importStar(require("@iobroker/adapter-core"));
+const semver = __importStar(require("semver"));
 const pidusage_1 = __importDefault(require("pidusage"));
 const helper_1 = require("./lib/helper");
 const allTests_1 = require("./lib/allTests");
@@ -55,12 +56,31 @@ class Benchmark extends utils.Adapter {
         if (!this.config.secondaryMode) {
             // only main mode needs controller pid
             try {
-                const pidsFileContent = (0, fs_1.readFileSync)(require.resolve('iobroker.js-controller/pids.txt')).toString();
-                this.controllerPid = JSON.parse(pidsFileContent).pop();
+                // state only existent on controller v4 and above
+                const pidState = await this.getForeignStateAsync(`system.host.${this.host}.pid`);
+                if (pidState && typeof pidState.val === 'number') {
+                    this.controllerPid = pidState.val;
+                }
+                else {
+                    const pidsFileContent = (0, fs_1.readFileSync)(require.resolve('iobroker.js-controller/pids.txt')).toString();
+                    this.controllerPid = JSON.parse(pidsFileContent).pop();
+                }
                 this.log.info(`Adapter started... controller determined (pid: ${this.controllerPid})`);
             }
             catch (e) {
                 this.log.error(`Cannot determine controller pid file: ${e.message}`);
+            }
+            try {
+                const hostObj = await this.getForeignObjectAsync(`system.host.${this.host}`);
+                if (hostObj && hostObj.common && hostObj.common.installedVersion) {
+                    this.controllerVersion = hostObj.common.installedVersion;
+                }
+                else {
+                    this.log.error('Could not determine controller version');
+                }
+            }
+            catch (e) {
+                this.log.error(`Could not determine controller version: ${e.message}`);
             }
         }
         else {
@@ -114,6 +134,15 @@ class Benchmark extends utils.Adapter {
         });
         this.log.info('Starting benchmark test...');
         for (const activeTestName of selectedTests) {
+            const activeTestConstructor = allTests_1.tests[activeTestName];
+            const activeTest = new activeTestConstructor(this);
+            try {
+                await this.checkRequirements(activeTest.requirements);
+            }
+            catch (e) {
+                this.log.warn(`Skipping test "${activeTestName}": ${e.message}`);
+                continue;
+            }
             times[activeTestName] = [];
             this.cpuStats[activeTestName] = [];
             this.memStats[activeTestName] = [];
@@ -138,8 +167,6 @@ class Benchmark extends utils.Adapter {
             this.log.info(`Starting test "${activeTestName}"`);
             // execute each test epochs time
             for (let j = 1; j <= this.config.epochs; j++) {
-                const activeTestConstructor = allTests_1.tests[activeTestName];
-                const activeTest = new activeTestConstructor(this);
                 // prepare the test
                 if (j === 1) {
                     this.log.info('Prepare ...');
@@ -603,6 +630,43 @@ class Benchmark extends utils.Adapter {
      */
     round(number) {
         return (Math.round(number * 100) / 100);
+    }
+    /**
+     * Checks if the requirements are fullfilled, else throws
+     * @param requirements
+     * @private
+     */
+    async checkRequirements(requirements) {
+        // check that controller version is satisfied
+        if (requirements.controllerVersion) {
+            if (!this.controllerVersion) {
+                throw new Error(`Required js-controller version "${requirements.controllerVersion}", but current version is unknown`);
+            }
+            if (!semver.satisfies(this.controllerVersion, requirements.controllerVersion)) {
+                throw new Error(`Required js-controller version "${requirements.controllerVersion}", installed version "${this.controllerVersion}"`);
+            }
+        }
+        // check that we have enough memory
+        if (requirements.freeMemory) {
+            let memFree;
+            let state = await this.getForeignStateAsync(`system.host.${this.host}.memAvailable`);
+            // if state empty, we need freemem state
+            if (!state || typeof state.val !== 'number') {
+                state = await this.getForeignStateAsync(`system.host.${this.host}.freemem`);
+                if (!state || typeof state.val !== 'number') {
+                    throw new Error(`Required free memory of ${requirements.freeMemory} MB, but was not able to determine free memory`);
+                }
+                else {
+                    memFree = state.val;
+                }
+            }
+            else {
+                memFree = state.val;
+            }
+            if (memFree < requirements.freeMemory) {
+                throw new Error(`Required free memory of ${requirements.freeMemory} MB, but only have ${memFree} MB left`);
+            }
+        }
     }
 }
 if (require.main !== module) {

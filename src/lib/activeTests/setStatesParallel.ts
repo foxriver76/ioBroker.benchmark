@@ -4,7 +4,7 @@ import {TestUtils} from '../testClass';
 export class Test extends TestUtils {
 
 	public constructor(adapter: AdapterInstance) {
-		super(adapter);
+		super(adapter, {freeMemory: 2000});
 	}
 
 	/**
