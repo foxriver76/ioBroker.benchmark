@@ -106,8 +106,7 @@ The alias contains a simple write function.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.5.0 (2022-01-01)
 * (foxriver76) we introduced `TestRequirements` which can define required memory, controller and node version
 
 ### 0.4.0 (2021-11-24)

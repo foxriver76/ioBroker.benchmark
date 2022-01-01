@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "news": {
+      "0.5.0": {
+        "en": "we introduced `TestRequirements` which can define required memory, controller and node version",
+        "de": "Wir haben `TestRequirements` eingeführt, die die erforderliche Speicher-, Controller- und Knotenversion definieren können",
+        "ru": "мы ввели TestRequirements, которые могут определять требуемую память, версию контроллера и узла.",
+        "pt": "introduzimos `TestRequirements`, que pode definir a memória necessária, o controlador e a versão do nó",
+        "nl": "we hebben `TestRequirements` geïntroduceerd die het vereiste geheugen, de controller en de knooppuntversie kunnen definiëren",
+        "fr": "nous avons introduit « TestRequirements » qui peut définir la mémoire requise, le contrôleur et la version du nœud",
+        "it": "abbiamo introdotto i `TestRequirements` che possono definire la memoria richiesta, il controller e la versione del nodo",
+        "es": "introdujimos `TestRequirements` que puede definir la memoria requerida, el controlador y la versión del nodo",
+        "pl": "wprowadziliśmy `TestRequirements`, które mogą określać wymaganą pamięć, wersję kontrolera i węzła",
+        "zh-cn": "我们引入了`TestRequirements`，它可以定义所需的内存、控制器和节点版本"
+      },
       "0.4.0": {
         "en": "we introduced some categories in the user interface\nwe switched to checkboxes to allow to execute a subset of all tests",
         "de": "wir haben einige Kategorien in der Benutzeroberfläche eingeführt\nwir haben auf Checkboxen umgestellt, um eine Teilmenge aller Tests ausführen zu können",
@@ -74,18 +86,6 @@
         "es": "simplificación interna",
         "pl": "wewnętrzne uproszczenie",
         "zh-cn": "内部简化"
-      },
-      "0.1.14": {
-        "en": "make cooldown dependent on test time (closes #4)\non last iteration of last test we do not need to cooldown",
-        "de": "Abklingzeit abhängig von Testzeit machen (schließt #4)\nbei der letzten Iteration des letzten Tests brauchen wir nicht abzukühlen",
-        "ru": "сделать перезарядку зависимой от времени теста (закрывает # 4)\nна последней итерации последнего теста нам не нужно перезаряжать",
-        "pt": "tornar o resfriamento dependente do tempo de teste (fecha # 4)\nna última iteração do último teste, não precisamos esfriar",
-        "nl": "afkoeltijd afhankelijk maken van testtijd (sluit #4)\nbij de laatste iteratie van de laatste test hoeven we niet af te koelen",
-        "fr": "rendre le temps de recharge dépendant de la durée du test (ferme #4)\nlors de la dernière itération du dernier test, nous n'avons pas besoin de refroidir",
-        "it": "rendi il cooldown dipendente dal tempo di test (chiude #4)\nall'ultima iterazione dell'ultimo test non è necessario il cooldown",
-        "es": "hacer que el enfriamiento dependa del tiempo de prueba (cierra el n. ° 4)\nen la última iteración de la última prueba, no necesitamos enfriar",
-        "pl": "uzależnić czas odnowienia od czasu testu (zamyka #4)\nw ostatniej iteracji ostatniego testu nie musimy się odnawiać",
-        "zh-cn": "使冷却时间取决于测试时间（关闭 #4）\n在上次测试的最后一次迭代中，我们不需要冷却"
       }
     },
     "title": "Benchmark",
