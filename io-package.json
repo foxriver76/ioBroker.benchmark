@@ -120,6 +120,7 @@
       "system",
       "benchmark"
     ],
+    "dataSource": "none",
     "license": "MIT",
     "platform": "Javascript/Node.js",
     "main": "build/main.js",
@@ -129,7 +130,7 @@
     "readme": "https://github.com/foxriver76/ioBroker.benchmark/blob/main/README.md",
     "loglevel": "info",
     "mode": "daemon",
-    "type": "hardware",
+    "type": "utility",
     "compact": false,
     "connectionType": "local",
     "messagebox": true,

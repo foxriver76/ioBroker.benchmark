@@ -42,8 +42,8 @@ interface SummaryState {
 class Benchmark extends utils.Adapter {
 	private activeTest: string;
 	private memStats: Record<string, number[]>;
-	private controllerMemStats: Record<string, number[]>
-	private controllerCpuStats: Record<string, number[]>
+	private controllerMemStats: Record<string, number[]>;
+	private controllerCpuStats: Record<string, number[]>;
 	private cpuStats: Record<string, number[]>;
 	private restartInstances: string[] | undefined;
 	private monitoringActive: boolean;
