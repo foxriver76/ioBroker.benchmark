@@ -106,8 +106,7 @@ The alias contains a simple write function.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.5.1 (2022-02-26)
 * (foxriver76) changed type in io-package to `utility`
 * (foxriver76) updated deps
 * (foxriver76) added `dataSource` to io-package

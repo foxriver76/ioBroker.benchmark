@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "news": {
+      "0.5.1": {
+        "en": "changed type in io-package to `utility`\nupdated deps\nadded `dataSource` to io-package",
+        "de": "Typ im io-Paket in „utility“ geändert\naktualisierte Abh\n`dataSource` zum io-Paket hinzugefügt",
+        "ru": "изменил тип в io-пакете на `utility`\nобновлено\nдобавлен `dataSource` в io-пакет",
+        "pt": "alterou o tipo no io-package para `utility`\ndeps atualizados\nadicionado `dataSource` ao pacote io",
+        "nl": "veranderde type in io-pakket naar `utility`\nbijgewerkte deps\n`dataSource` toegevoegd aan io-pakket",
+        "fr": "changement de type dans io-package en `utility`\ndescriptions mises à jour\najout de `dataSource` à io-package",
+        "it": "modificato il tipo in io-package in `utility`\ndisp. aggiornati\naggiunto `dataSource` al pacchetto io",
+        "es": "cambió el tipo en io-package a `utility`\ndepartamentos actualizados\nagregó `dataSource` al paquete io",
+        "pl": "zmieniono typ w io-package na `utility`\nzaktualizowane deps\ndodano `dataSource` do pakietu io",
+        "zh-cn": "将 io-package 中的类型更改为 `utility`\n更新的部门\n将 `dataSource` 添加到 io-package"
+      },
       "0.5.0": {
         "en": "we introduced `TestRequirements` which can define required memory, controller and node version",
         "de": "Wir haben `TestRequirements` eingeführt, die die erforderliche Speicher-, Controller- und Knotenversion definieren können",
@@ -74,18 +86,6 @@
         "es": "agregamos una prueba `setState` paralela para la evaluación del rendimiento multinúcleo (cierra el n. ° 5)",
         "pl": "dodaliśmy równoległy test `setState` do oceny wydajności wielordzeniowej (zamyka #5)",
         "zh-cn": "我们为多核性能评估添加了一个并行的 `setState` 测试（关闭 #5）"
-      },
-      "0.1.15": {
-        "en": "internal simplification",
-        "de": "interne Vereinfachung",
-        "ru": "внутреннее упрощение",
-        "pt": "simplificação interna",
-        "nl": "interne vereenvoudiging",
-        "fr": "simplification interne",
-        "it": "semplificazione interna",
-        "es": "simplificación interna",
-        "pl": "wewnętrzne uproszczenie",
-        "zh-cn": "内部简化"
       }
     },
     "title": "Benchmark",
