@@ -3,144 +3,144 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.testObjects = void 0;
 exports.testObjects = [
     {
-        '_id': 'timeMean',
-        'type': 'state',
-        'common': {
-            'name': 'Time Mean',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': 's'
+        _id: 'timeMean',
+        type: 'state',
+        common: {
+            name: 'Time Mean',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: 's'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'timeStd',
-        'type': 'state',
-        'common': {
-            'name': 'Time Standard Deviation',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': 's'
+        _id: 'timeStd',
+        type: 'state',
+        common: {
+            name: 'Time Standard Deviation',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: 's'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'cpuMean',
-        'type': 'state',
-        'common': {
-            'name': 'CPU Mean',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': '%'
+        _id: 'cpuMean',
+        type: 'state',
+        common: {
+            name: 'CPU Mean',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: '%'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'cpuStd',
-        'type': 'state',
-        'common': {
-            'name': 'CPU Standard Deviation',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': '%'
+        _id: 'cpuStd',
+        type: 'state',
+        common: {
+            name: 'CPU Standard Deviation',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: '%'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'memMean',
-        'type': 'state',
-        'common': {
-            'name': 'MEM Mean',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': 'MB'
+        _id: 'memMean',
+        type: 'state',
+        common: {
+            name: 'MEM Mean',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: 'MB'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'memStd',
-        'type': 'state',
-        'common': {
-            'name': 'MEM Standard Deviation',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': 'MB'
+        _id: 'memStd',
+        type: 'state',
+        common: {
+            name: 'MEM Standard Deviation',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: 'MB'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'eventLoopLagMean',
-        'type': 'state',
-        'common': {
-            'name': 'Event Loop Lag Mean',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': 'ms'
+        _id: 'eventLoopLagMean',
+        type: 'state',
+        common: {
+            name: 'Event Loop Lag Mean',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: 'ms'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'eventLoopLagStd',
-        'type': 'state',
-        'common': {
-            'name': 'Event Loop Lag Standard Deviation',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true,
-            'unit': 'ms'
+        _id: 'eventLoopLagStd',
+        type: 'state',
+        common: {
+            name: 'Event Loop Lag Standard Deviation',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true,
+            unit: 'ms'
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'summary',
-        'type': 'state',
-        'common': {
-            'name': 'Summary',
-            'role': 'state',
-            'type': 'object',
-            'write': false,
-            'read': true
+        _id: 'summary',
+        type: 'state',
+        common: {
+            name: 'Summary',
+            role: 'state',
+            type: 'object',
+            write: false,
+            read: true
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'actionsPerSecondMean',
-        'type': 'state',
-        'common': {
-            'name': 'Actions per Second Mean',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true
+        _id: 'actionsPerSecondMean',
+        type: 'state',
+        common: {
+            name: 'Actions per Second Mean',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true
         },
-        'native': {}
+        native: {}
     },
     {
-        '_id': 'actionsPerSecondStd',
-        'type': 'state',
-        'common': {
-            'name': 'Actions per Second Standard Deviation',
-            'role': 'state',
-            'type': 'number',
-            'write': false,
-            'read': true
+        _id: 'actionsPerSecondStd',
+        type: 'state',
+        common: {
+            name: 'Actions per Second Standard Deviation',
+            role: 'state',
+            type: 'number',
+            write: false,
+            read: true
         },
-        'native': {}
+        native: {}
     }
 ];
 //# sourceMappingURL=helper.js.map

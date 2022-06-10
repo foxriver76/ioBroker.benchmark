@@ -55,8 +55,8 @@ class TestUtils {
             // set objects locally
             for (let i = 0; i < n; i++) {
                 await this.adapter.setObjectAsync(`test.${prefix}${i}`, {
-                    'type': 'state',
-                    'common': {
+                    type: 'state',
+                    common: {
                         name: i.toString(),
                         read: true,
                         write: true,
@@ -81,8 +81,8 @@ class TestUtils {
         // set objects locally
         for (let i = 0; i < n; i++) {
             await this.adapter.setObjectAsync(`test.${prefix}${i}meta`, {
-                'type': 'meta',
-                'common': {
+                type: 'meta',
+                common: {
                     name: i.toString(),
                     type: 'meta.folder'
                 },
@@ -105,8 +105,8 @@ class TestUtils {
             // create object then alias locally
             for (let i = startIdx; i < startIdx + n; i++) {
                 await this.adapter.setObjectAsync(`test.${prefix}${i}`, {
-                    'type': 'state',
-                    'common': {
+                    type: 'state',
+                    common: {
                         name: i.toString(),
                         read: true,
                         write: true,
@@ -136,7 +136,14 @@ class TestUtils {
             }
         }
         else {
-            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', { cmd: 'setAlias', n, prefix, read, write, startIdx });
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {
+                cmd: 'setAlias',
+                n,
+                prefix,
+                read,
+                write,
+                startIdx
+            });
         }
     }
     /**
@@ -154,7 +161,12 @@ class TestUtils {
             }
         }
         else {
-            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', { cmd: 'set', n, prefix, startIdx });
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {
+                cmd: 'set',
+                n,
+                prefix,
+                startIdx
+            });
         }
     }
     /**
@@ -172,7 +184,12 @@ class TestUtils {
             }
         }
         else {
-            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', { cmd: 'setAlias', n, prefix, startIdx });
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {
+                cmd: 'setAlias',
+                n,
+                prefix,
+                startIdx
+            });
         }
     }
     /**
@@ -191,7 +208,12 @@ class TestUtils {
             }
         }
         else {
-            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', { cmd: 'del', n, prefix, startIdx });
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', {
+                cmd: 'del',
+                n,
+                prefix,
+                startIdx
+            });
         }
     }
     /**
@@ -241,7 +263,12 @@ class TestUtils {
             }
         }
         else {
-            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', { cmd: 'delAlias', n, prefix, startIdx });
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'objects', {
+                cmd: 'delAlias',
+                n,
+                prefix,
+                startIdx
+            });
         }
     }
     /**
@@ -274,7 +301,10 @@ class TestUtils {
      */
     async sendMessages(n, instanceNumber) {
         for (let i = 0; i < n; i++) {
-            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'testMessage', { ping: 'pong', pong: 'ping' });
+            await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'testMessage', {
+                ping: 'pong',
+                pong: 'ping'
+            });
         }
     }
     /**

@@ -106,7 +106,10 @@ class Benchmark extends utils.Adapter {
         if (this.config.isolatedRun) {
             this.restartInstances = [];
             this.log.info('Isolated run, stopping all instances');
-            const instancesObj = await this.getObjectViewAsync('system', 'instance', { startkey: '', endkey: '\u9999' });
+            const instancesObj = await this.getObjectViewAsync('system', 'instance', {
+                startkey: '',
+                endkey: '\u9999'
+            });
             for (const instance of instancesObj.rows) {
                 if (instance.id !== `system.adapter.${this.namespace}` && ((_b = (_a = instance.value) === null || _a === void 0 ? void 0 : _a.common) === null || _b === void 0 ? void 0 : _b.enabled)) {
                     // stop instances except own
@@ -338,13 +341,14 @@ class Benchmark extends utils.Adapter {
         // only secondary mode instances need to response to messages
         if (!this.config.secondaryMode) {
             if (obj.command === 'test') {
+                this.log.debug(`Using config from frontend: ${JSON.stringify(obj.message)}`);
+                this.config = obj.message;
                 // run all tests on test command - do not await, we want to respond to message
                 this.runTests(Object.keys(allTests_1.tests));
             }
-            else if (allTests_1.tests[obj.command]) {
-                this.runTests([obj.command]);
-            }
             else if (obj.command === 'selectedTests') {
+                this.log.debug(`Using config from frontend: ${JSON.stringify(obj.message)}`);
+                this.config = obj.message;
                 // find all activated tests
                 const selectedTests = [];
                 for (const [name, value] of Object.entries(this.config)) {
@@ -387,7 +391,10 @@ class Benchmark extends utils.Adapter {
                 this.log.info('Cleaning up objects');
                 await this.delForeignObjectAsync('alias.0.__benchmark', { recursive: true });
                 await this.delObjectAsync('test', { recursive: true });
-                const instancesObj = await this.getObjectViewAsync('system', 'instance', { startkey: 'system.adapter.benchmark.', endkey: 'system.adapter.benchmark.\u9999' });
+                const instancesObj = await this.getObjectViewAsync('system', 'instance', {
+                    startkey: 'system.adapter.benchmark.',
+                    endkey: 'system.adapter.benchmark.\u9999'
+                });
                 for (const instance of instancesObj.rows) {
                     const iobExecutable = require.resolve('iobroker.js-controller/iobroker.js');
                     if (!instance.id.endsWith(this.namespace)) {
@@ -410,8 +417,8 @@ class Benchmark extends utils.Adapter {
                         if (obj.message.cmd === 'set' && typeof obj.message.n === 'number') {
                             for (let i = 0; i < obj.message.n; i++) {
                                 await this.setObjectAsync(`test.${obj.message.prefix}${i}`, {
-                                    'type': 'state',
-                                    'common': {
+                                    type: 'state',
+                                    common: {
                                         name: i.toString(),
                                         read: true,
                                         write: true,
@@ -438,8 +445,8 @@ class Benchmark extends utils.Adapter {
                             // create object and then alias
                             for (let i = obj.message.startIdx; i < obj.message.startIdx + obj.message.n; i++) {
                                 await this.setObjectAsync(`test.${obj.message.prefix}${i}`, {
-                                    'type': 'state',
-                                    'common': {
+                                    type: 'state',
+                                    common: {
                                         name: i.toString(),
                                         read: true,
                                         write: true,
@@ -621,7 +628,7 @@ class Benchmark extends utils.Adapter {
         timeout.unref();
         function hrtime() {
             const t = process.hrtime();
-            return (t[0] * 1e3) + (t[1] / 1e6);
+            return t[0] * 1e3 + t[1] / 1e6;
         }
     }
     /**
@@ -629,7 +636,7 @@ class Benchmark extends utils.Adapter {
      * @private
      */
     round(number) {
-        return (Math.round(number * 100) / 100);
+        return Math.round(number * 100) / 100;
     }
     /**
      * Checks if the requirements are fullfilled, else throws

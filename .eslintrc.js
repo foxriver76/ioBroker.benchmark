@@ -8,9 +8,11 @@ module.exports = {
 	},
 	extends: [
 		'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+		'plugin:prettier/recommended'
 	],
 	plugins: [],
 	rules: {
+		/** prettier takes care
 		'indent': 'off',
 		'@typescript-eslint/indent': [
 			'error',
@@ -26,7 +28,7 @@ module.exports = {
 				'avoidEscape': true,
 				'allowTemplateLiterals': true
 			}
-		],
+		],*/
 		'@typescript-eslint/no-parameter-properties': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
 		'@typescript-eslint/no-use-before-define': [

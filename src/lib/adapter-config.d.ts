@@ -2,14 +2,14 @@
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
-	namespace ioBroker {
-		interface AdapterConfig {
-			iterations: number,
-			epochs: number;
-			secondaryMode: boolean;
-			isolatedRun: boolean;
-		}
-	}
+    namespace ioBroker {
+        interface AdapterConfig {
+            iterations: number;
+            epochs: number;
+            secondaryMode: boolean;
+            isolatedRun: boolean;
+        }
+    }
 }
 
 // this is required so the above AdapterConfig is found by TypeScript / type checking

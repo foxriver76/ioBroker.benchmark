@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "0.5.1",
+    "version": "1.0.0",
     "news": {
+      "1.0.0": {
+        "en": "the config is now applied directly from frontend without requiring to save first",
+        "de": "die config wird jetzt direkt vor dem frontend angewendet, ohne vorher zu speichern",
+        "ru": "конфиг теперь приложен сразу от фронтенда без требуя сохранить сперва",
+        "pt": "a configuração agora é aplicada diretamente do frontend sem precisar salvar primeiro",
+        "nl": "het korps is nu direct van de frontlinie aangevraagd zonder eerst te willen redden",
+        "fr": "la configuration est maintenant appliquée directement depuis le frontend sans devoir enregistrer le premier",
+        "it": "la configurazione è ora applicata direttamente da frontend senza dover salvare prima",
+        "es": "el config ahora se aplica directamente desde frontend sin necesidad de guardar primero",
+        "pl": "obecnie konfigurowany jest bezpośrednio od frontu, bez konieczności ratowania pierwszego pliku",
+        "zh-cn": "现在直接从前端开始实施封锁,无需首先拯救。"
+      },
       "0.5.1": {
         "en": "changed type in io-package to `utility`\nupdated deps\nadded `dataSource` to io-package",
         "de": "Typ im io-Paket in „utility“ geändert\naktualisierte Abh\n`dataSource` zum io-Paket hinzugefügt",
@@ -74,18 +86,6 @@
         "es": "agregamos tres pruebas `getObjectView`",
         "pl": "dodaliśmy trzy testy `getObjectView`",
         "zh-cn": "我们添加了三个 `getObjectView` 测试"
-      },
-      "0.2.0": {
-        "en": "we added a parallel `setState` test for multicore performance evaluation (closes #5)",
-        "de": "Wir haben einen parallelen `setState`-Test zur Multicore-Leistungsbewertung hinzugefügt (schließt #5)",
-        "ru": "мы добавили параллельный тест setState для оценки производительности многоядерных процессоров (закрывает №5)",
-        "pt": "adicionamos um teste `setState` paralelo para avaliação de desempenho multicore (fecha # 5)",
-        "nl": "we hebben een parallelle `setState`-test toegevoegd voor multicore-prestatie-evaluatie (sluit #5)",
-        "fr": "nous avons ajouté un test parallèle `setState` pour l'évaluation des performances multicœurs (ferme #5)",
-        "it": "abbiamo aggiunto un test parallelo `setState` per la valutazione delle prestazioni multicore (chiude il numero 5)",
-        "es": "agregamos una prueba `setState` paralela para la evaluación del rendimiento multinúcleo (cierra el n. ° 5)",
-        "pl": "dodaliśmy równoległy test `setState` do oceny wydajności wielordzeniowej (zamyka #5)",
-        "zh-cn": "我们为多核性能评估添加了一个并行的 `setState` 测试（关闭 #5）"
       }
     },
     "title": "Benchmark",
