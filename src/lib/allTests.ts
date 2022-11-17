@@ -15,6 +15,8 @@ import { Test as setStatesParallel } from './activeTests/setStatesParallel';
 import { Test as objectViewEqual } from './activeTests/objectViewEqual';
 import { Test as objectViewSmall } from './activeTests/objectViewSmall';
 import { Test as objectViewLarge } from './activeTests/objectViewLarge';
+import { Test as getStatesMulti } from './activeTests/getStatesMulti';
+import { Test as getStatesMultiAlias } from './activeTests/getStatesMultiAlias';
 import { TestUtils } from './testClass';
 
 export const tests: Record<string, new (...args: any[]) => TestUtils> = {
@@ -34,5 +36,7 @@ export const tests: Record<string, new (...args: any[]) => TestUtils> = {
     setStatesParallel,
     objectViewEqual,
     objectViewSmall,
-    objectViewLarge
+    objectViewLarge,
+    getStatesMulti,
+    getStatesMultiAlias
 };

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "news": {
+      "1.1.0": {
+        "en": "added `getStatesMulti` and `getStatesMultiAlias`",
+        "de": "getStatesMulti und getStatesMultiAlias",
+        "ru": "добавлено getStatesMulti и getStatesMultiAlias",
+        "pt": "adicionado getStatesMulti e getStatesMultiAlias",
+        "nl": "voegde toegevoegd aan States MultiAlias",
+        "fr": "a ajouté getStatesMulti et obtenirStatesMultiAlias",
+        "it": "aggiunto getStatesMulti e ottenereStatesMultiAlias",
+        "es": "agregado getStatesMulti y getStatesMultiAlias",
+        "pl": "dodała do StatesMulti i dodała StatesMultiAlias",
+        "uk": "додано getStatesMulti і getStatesMultiAlias",
+        "zh-cn": "加入国Multi和收购国家Multi Alias"
+      },
       "1.0.0": {
         "en": "the config is now applied directly from frontend without requiring to save first",
         "de": "die config wird jetzt direkt vor dem frontend angewendet, ohne vorher zu speichern",
@@ -74,18 +87,6 @@
         "es": "ahora embellecemos el archivo de resumen",
         "pl": "teraz upiększamy plik podsumowania",
         "zh-cn": "我们现在美化摘要文件"
-      },
-      "0.3.0": {
-        "en": "we added three `getObjectView` tests",
-        "de": "wir haben drei `getObjectView`-Tests hinzugefügt",
-        "ru": "мы добавили три теста getObjectView",
-        "pt": "adicionamos três testes `getObjectView`",
-        "nl": "we hebben drie `getObjectView`-tests toegevoegd",
-        "fr": "nous avons ajouté trois tests `getObjectView`",
-        "it": "abbiamo aggiunto tre test `getObjectView`",
-        "es": "agregamos tres pruebas `getObjectView`",
-        "pl": "dodaliśmy trzy testy `getObjectView`",
-        "zh-cn": "我们添加了三个 `getObjectView` 测试"
       }
     },
     "title": "Benchmark",

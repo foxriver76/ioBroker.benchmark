@@ -205,6 +205,30 @@
       "pl": "Uzyskaj stany za pomocą funkcji odczytu aliasów",
       "zh-cn": "使用别名读取功能获取状态"
     },
+    "getStatesMulti": {
+      "en": "Get multiple states",
+      "de": "Erhalten Sie mehrere Zustände",
+      "ru": "Получить несколько штатов",
+      "pt": "Obter vários estados",
+      "nl": "Krijg meerdere staten",
+      "fr": "Obtenez plusieurs états",
+      "it": "Ottieni più stati",
+      "es": "Obtener múltiples estados",
+      "pl": "Państwo wielokrotne",
+      "zh-cn": "多州"
+    },
+    "getStatesMultiAlias": {
+      "en": "Get multiple states with alias",
+      "de": "Erhalten Sie mehrere Zustände mit Alias",
+      "ru": "Получите несколько штатов с псевдонимами",
+      "pt": "Obter vários estados com alias",
+      "nl": "Haal meerdere staten met alias",
+      "fr": "Obtenez plusieurs états avec alias",
+      "it": "Ottieni più stati con alias",
+      "es": "Obtener múltiples estados con alias",
+      "pl": "Zajmuje się wieloma stanami z aliasem",
+      "zh-cn": "D. 格外多国家"
+    },
     "messages": {
       "en": "Messages",
       "de": "Nachrichten",
@@ -423,6 +447,14 @@
     "getStatesAliasRead": {
       "type": "checkbox",
       "label": "getStatesAliasRead"
+    },
+    "getStatesMulti": {
+      "type": "checkbox",
+      "label": "getStatesMulti"
+    },
+    "getStatesMultiAlias": {
+      "type": "checkbox",
+      "label": "getStatesMultiAlias"
     },
     "dividerObjects": {
       "type": "divider"

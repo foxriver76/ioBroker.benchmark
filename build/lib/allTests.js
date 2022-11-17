@@ -18,6 +18,8 @@ const setStatesParallel_1 = require("./activeTests/setStatesParallel");
 const objectViewEqual_1 = require("./activeTests/objectViewEqual");
 const objectViewSmall_1 = require("./activeTests/objectViewSmall");
 const objectViewLarge_1 = require("./activeTests/objectViewLarge");
+const getStatesMulti_1 = require("./activeTests/getStatesMulti");
+const getStatesMultiAlias_1 = require("./activeTests/getStatesMultiAlias");
 exports.tests = {
     setStates: setStates_1.Test,
     statesSubscription: statesSubscription_1.Test,
@@ -35,6 +37,8 @@ exports.tests = {
     setStatesParallel: setStatesParallel_1.Test,
     objectViewEqual: objectViewEqual_1.Test,
     objectViewSmall: objectViewSmall_1.Test,
-    objectViewLarge: objectViewLarge_1.Test
+    objectViewLarge: objectViewLarge_1.Test,
+    getStatesMulti: getStatesMulti_1.Test,
+    getStatesMultiAlias: getStatesMultiAlias_1.Test
 };
 //# sourceMappingURL=allTests.js.map
