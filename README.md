@@ -112,7 +112,7 @@ The alias contains a simple write function.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 1.1.2 (2022-12-30)
+### 1.1.3 (2022-12-30)
 * (foxriver76) fixed a bug, where `getStatesMultiAlias` did not remove alias objects
 
 ### 1.1.1 (2022-12-30)

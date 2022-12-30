@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "news": {
+      "1.1.3": {
+        "en": "fixed a bug, where `getStatesMultiAlias` did not remove alias objects",
+        "de": "behoben ein Bug, wo getStatesMultiAlias Alias-Objekte nicht entfernen",
+        "ru": "исправили ошибку, где getStatesMultiAlias не удалили псевдонимы объектов",
+        "pt": "corrigiu um bug, onde getStatesMultiAlias não removeu objetos de alias",
+        "nl": "een insect gerepareerd waar MultiAlias geen alias objecten verwijderde",
+        "fr": "correction d'un bug, où getStatesMultiAlias n'a pas enlevé des objets alias",
+        "it": "fisso un bug, dove getStatesMultiAlias non ha rimosso oggetti alias",
+        "es": "arregló un error, donde getStatesMultiAlias no quitó el alias objetos",
+        "pl": "uruchomiono trąb, w którym getStatesMultiAlias nie usunął aliasów",
+        "uk": "виправлено помилку, де getStatesMultiAlias не знімали об'єкти псевдонімів",
+        "zh-cn": "a 固定的玻璃,使国家Multi Alias不除其他物体之外。"
+      },
       "1.1.2": {
         "en": "fixed a bug, where `getStatesMultiAlias` did not remove alias objects",
         "de": "behoben ein Bug, wo getStatesMultiAlias Alias-Objekte nicht entfernen",
@@ -77,18 +90,6 @@
         "es": "introdujimos `TestRequirements` que puede definir la memoria requerida, el controlador y la versión del nodo",
         "pl": "wprowadziliśmy `TestRequirements`, które mogą określać wymaganą pamięć, wersję kontrolera i węzła",
         "zh-cn": "我们引入了`TestRequirements`，它可以定义所需的内存、控制器和节点版本"
-      },
-      "0.4.0": {
-        "en": "we introduced some categories in the user interface\nwe switched to checkboxes to allow to execute a subset of all tests",
-        "de": "wir haben einige Kategorien in der Benutzeroberfläche eingeführt\nwir haben auf Checkboxen umgestellt, um eine Teilmenge aller Tests ausführen zu können",
-        "ru": "мы ввели несколько категорий в пользовательский интерфейс\nмы перешли на флажки, чтобы разрешить выполнение подмножества всех тестов",
-        "pt": "introduzimos algumas categorias na interface do usuário\nmudamos as caixas de seleção para permitir a execução de um subconjunto de todos os testes",
-        "nl": "we hebben enkele categorieën in de gebruikersinterface geïntroduceerd\nwe zijn overgeschakeld naar selectievakjes om een subset van alle tests uit te voeren",
-        "fr": "nous avons introduit certaines catégories dans l'interface utilisateur\nnous sommes passés à des cases à cocher pour permettre d'exécuter un sous-ensemble de tous les tests",
-        "it": "abbiamo introdotto alcune categorie nell'interfaccia utente\nsiamo passati alle caselle di controllo per consentire l'esecuzione di un sottoinsieme di tutti i test",
-        "es": "introdujimos algunas categorías en la interfaz de usuario\ncambiamos a casillas de verificación para permitir ejecutar un subconjunto de todas las pruebas",
-        "pl": "wprowadziliśmy kilka kategorii w interfejsie użytkownika\nprzełączyliśmy się na pola wyboru, aby umożliwić wykonanie podzbioru wszystkich testów",
-        "zh-cn": "我们在用户界面中引入了一些类别\n我们切换到复选框以允许执行所有测试的子集"
       }
     },
     "title": "Benchmark",
