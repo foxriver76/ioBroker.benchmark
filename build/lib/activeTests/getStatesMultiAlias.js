@@ -11,7 +11,7 @@ class Test extends testClass_1.TestUtils {
      */
     async prepare() {
         // set objects and states
-        await this.addAliasObjects(this.adapter.config.iterations, 0);
+        await this.addAliasObjects(10000, 0);
         await this.addStates(10000, 0);
     }
     /**

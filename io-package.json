@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "news": {
+      "1.1.1": {
+        "en": "fixed a bug, where `getStatesMultiAlias` created wrong amount of objects",
+        "de": "einen Fehler behoben, wo getStatesMultiAlias falsche Anzahl von Objekten erstellt",
+        "ru": "исправили ошибку, где getStatesMultiAlias создал неправильный объем объектов",
+        "pt": "corrigiu um bug, onde getStatesMultiAlias criou a quantidade errada de objetos",
+        "nl": "een insect gerepareerd, waar SStatesMultiAlias foute hoeveelheden objecten creëerde",
+        "fr": "correction d'un bug, où getStatesMultiAlias a créé une mauvaise quantité d'objets",
+        "it": "fisso un bug, dove getStatesMultiAlias ha creato la quantità sbagliata di oggetti",
+        "es": "arregló un error, donde getStatesMultiAlias creó la cantidad equivocada de objetos",
+        "pl": "uruchomiono błędy, w których getStatesMultiAlias stworzył błędną ilość przedmiotów",
+        "uk": "виправлено помилку, де getStatesMultiAlias створив неправильну кількість об'єктів",
+        "zh-cn": "a 固定的玻璃,使国家Multi Alias制造了错误的物品。"
+      },
       "1.1.0": {
         "en": "added `getStatesMulti` and `getStatesMultiAlias`",
         "de": "getStatesMulti und getStatesMultiAlias",
@@ -75,18 +88,6 @@
         "es": "ahora también eliminamos instancias secundarias al limpiar",
         "pl": "teraz usuwamy również drugorzędne instancje podczas czyszczenia",
         "zh-cn": "我们现在还在清理时删除辅助实例"
-      },
-      "0.3.1": {
-        "en": "we now prettify the summary file",
-        "de": "Wir verschönern jetzt die Zusammenfassungsdatei",
-        "ru": "мы теперь преобразим итоговый файл",
-        "pt": "agora vamos embelezar o arquivo de resumo",
-        "nl": "we verfraaien nu het samenvattingsbestand",
-        "fr": "on embellit maintenant le fichier récapitulatif",
-        "it": "ora abbelliamo il file di riepilogo",
-        "es": "ahora embellecemos el archivo de resumen",
-        "pl": "teraz upiększamy plik podsumowania",
-        "zh-cn": "我们现在美化摘要文件"
       }
     },
     "title": "Benchmark",

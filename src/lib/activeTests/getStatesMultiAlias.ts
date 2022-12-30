@@ -11,7 +11,7 @@ export class Test extends TestUtils {
      */
     public async prepare(): Promise<void> {
         // set objects and states
-        await this.addAliasObjects(this.adapter.config.iterations, 0);
+        await this.addAliasObjects(10_000, 0);
         await this.addStates(10_000, 0);
     }
 
