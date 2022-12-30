@@ -51,6 +51,6 @@ export class Test extends TestUtils {
      */
     public async cleanUp(): Promise<void> {
         // delete objects and states
-        await this.delObjects(this.adapter.config.iterations, 0);
+        await this.delAliasObjects(this.adapter.config.iterations, 0);
     }
 }

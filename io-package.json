@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "news": {
+      "1.1.2": {
+        "en": "fixed a bug, where `getStatesMultiAlias` did not remove alias objects",
+        "de": "behoben ein Bug, wo getStatesMultiAlias Alias-Objekte nicht entfernen",
+        "ru": "исправили ошибку, где getStatesMultiAlias не удалили псевдонимы объектов",
+        "pt": "corrigiu um bug, onde getStatesMultiAlias não removeu objetos de alias",
+        "nl": "een insect gerepareerd waar MultiAlias geen alias objecten verwijderde",
+        "fr": "correction d'un bug, où getStatesMultiAlias n'a pas enlevé des objets alias",
+        "it": "fisso un bug, dove getStatesMultiAlias non ha rimosso oggetti alias",
+        "es": "arregló un error, donde getStatesMultiAlias no quitó el alias objetos",
+        "pl": "uruchomiono trąb, w którym getStatesMultiAlias nie usunął aliasów",
+        "uk": "виправлено помилку, де getStatesMultiAlias не знімали об'єкти псевдонімів",
+        "zh-cn": "a 固定的玻璃,使国家Multi Alias不除其他物体之外。"
+      },
       "1.1.1": {
         "en": "fixed a bug, where `getStatesMultiAlias` created wrong amount of objects",
         "de": "einen Fehler behoben, wo getStatesMultiAlias falsche Anzahl von Objekten erstellt",
@@ -76,18 +89,6 @@
         "es": "introdujimos algunas categorías en la interfaz de usuario\ncambiamos a casillas de verificación para permitir ejecutar un subconjunto de todas las pruebas",
         "pl": "wprowadziliśmy kilka kategorii w interfejsie użytkownika\nprzełączyliśmy się na pola wyboru, aby umożliwić wykonanie podzbioru wszystkich testów",
         "zh-cn": "我们在用户界面中引入了一些类别\n我们切换到复选框以允许执行所有测试的子集"
-      },
-      "0.3.2": {
-        "en": "we now also remove secondary instances on clean up",
-        "de": "Wir entfernen jetzt auch sekundäre Instanzen beim Aufräumen",
-        "ru": "теперь мы также удаляем вторичные экземпляры при очистке",
-        "pt": "agora também removemos instâncias secundárias na limpeza",
-        "nl": "we verwijderen nu ook secundaire instanties bij het opruimen",
-        "fr": "nous supprimons désormais également les instances secondaires lors du nettoyage",
-        "it": "ora rimuoviamo anche le istanze secondarie durante la pulizia",
-        "es": "ahora también eliminamos instancias secundarias al limpiar",
-        "pl": "teraz usuwamy również drugorzędne instancje podczas czyszczenia",
-        "zh-cn": "我们现在还在清理时删除辅助实例"
       }
     },
     "title": "Benchmark",

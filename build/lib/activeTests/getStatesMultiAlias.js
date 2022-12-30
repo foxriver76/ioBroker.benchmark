@@ -45,7 +45,7 @@ class Test extends testClass_1.TestUtils {
      */
     async cleanUp() {
         // delete objects and states
-        await this.delObjects(this.adapter.config.iterations, 0);
+        await this.delAliasObjects(this.adapter.config.iterations, 0);
     }
 }
 exports.Test = Test;
