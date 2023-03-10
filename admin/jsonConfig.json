@@ -76,7 +76,7 @@
     "setStates": {
       "en": "Set states",
       "de": "Zustände setzen",
-      "ru": "Установить состояния",
+      "ru": "Запись состояний",
       "pt": "Definir estados",
       "nl": "Statussen instellen",
       "fr": "Définir les états",
@@ -88,7 +88,7 @@
     "statesSubscription": {
       "en": "Subscribe states",
       "de": "Zustände abonnieren",
-      "ru": "Подписка состояния",
+      "ru": "Подписка на состояния",
       "pt": "Estados de inscrição",
       "nl": "Abonneer staten",
       "fr": "États d'abonnement",
@@ -100,7 +100,7 @@
     "statesDeletion": {
       "en": "Delete states",
       "de": "Zustände löschen",
-      "ru": "Удалить состояния",
+      "ru": "Удаление состояний",
       "pt": "Excluir estados",
       "nl": "Staten verwijderen",
       "fr": "Supprimer des états",
@@ -112,7 +112,7 @@
     "idle": {
       "en": "Idle",
       "de": "Leerlauf",
-      "ru": "Праздный",
+      "ru": "Холостой ход",
       "pt": "Ocioso",
       "nl": "Inactief",
       "fr": "Inactif",
@@ -172,7 +172,7 @@
     "getStates": {
       "en": "Get states",
       "de": "Zustände abrufen",
-      "ru": "Получить состояния",
+      "ru": "Читать состояния",
       "pt": "Obter estados",
       "nl": "Staten ophalen",
       "fr": "Obtenir les états",
@@ -184,7 +184,7 @@
     "getStatesAlias": {
       "en": "Get states with alias",
       "de": "Abrufen von Zuständen mit Alias",
-      "ru": "Получить состояния с псевдонимом",
+      "ru": "Читать состояния с псевдонимом",
       "pt": "Obter estados com alias",
       "nl": "Staten met alias ophalen",
       "fr": "Obtenir des états avec un alias",
@@ -196,7 +196,7 @@
     "getStatesAliasRead": {
       "en": "Get states with alias read function",
       "de": "Abrufen von Zuständen mit der Alias-Lesefunktion",
-      "ru": "Получить состояния с функцией чтения псевдонима",
+      "ru": "Читать состояния с функцией read псевдонима",
       "pt": "Obter estados com função de leitura de alias",
       "nl": "Statussen ophalen met alias leesfunctie",
       "fr": "Obtenir des états avec la fonction de lecture d'alias",
@@ -208,7 +208,7 @@
     "getStatesMulti": {
       "en": "Get multiple states",
       "de": "Erhalten Sie mehrere Zustände",
-      "ru": "Получить несколько штатов",
+      "ru": "Читать много состояний за раз",
       "pt": "Obter vários estados",
       "nl": "Krijg meerdere staten",
       "fr": "Obtenez plusieurs états",
@@ -220,7 +220,7 @@
     "getStatesMultiAlias": {
       "en": "Get multiple states with alias",
       "de": "Erhalten Sie mehrere Zustände mit Alias",
-      "ru": "Получите несколько штатов с псевдонимами",
+      "ru": "Читать много состояний за раз с псевдонимами",
       "pt": "Obter vários estados com alias",
       "nl": "Haal meerdere staten met alias",
       "fr": "Obtenez plusieurs états avec alias",
@@ -244,7 +244,7 @@
     "statesSubscriptionAlias": {
       "en": "Subscribe states with alias",
       "de": "Zustände mit Alias abonnieren",
-      "ru": "Состояния подписки с псевдонимом",
+      "ru": "Подписка на состояния с псевдонимом",
       "pt": "Subscrever estados com alias",
       "nl": "Abonneer staten met alias",
       "fr": "États d'abonnement avec alias",
@@ -256,7 +256,7 @@
     "statesSubscriptionAliasWrite": {
       "en": "Subscribe states with alias write function",
       "de": "Abonnieren von Zuständen mit der Alias-Schreibfunktion",
-      "ru": "Состояния подписки с функцией записи псевдонима",
+      "ru": "Подписка на состояния с функцией write псевдонима",
       "pt": "Subscrever estados com função de gravação de alias",
       "nl": "Abonneer staten met alias schrijffunctie",
       "fr": "États d'abonnement avec fonction d'écriture d'alias",
@@ -268,7 +268,7 @@
     "setStatesParallel": {
       "en": "Set states in parallel",
       "de": "Zustände parallel setzen",
-      "ru": "Установить состояния параллельно",
+      "ru": "Писать состояния параллельно",
       "pt": "Definir estados em paralelo",
       "nl": "Stel statussen parallel in",
       "fr": "Mettre des états en parallèle",
@@ -280,7 +280,7 @@
     "objectViewLarge": {
       "en": "object view large",
       "de": "Objektansicht groß",
-      "ru": "вид объекта большой",
+      "ru": "Большая выборка объектов",
       "pt": "visão do objeto grande",
       "nl": "objectweergave groot",
       "fr": "vue de l'objet grand",
@@ -292,7 +292,7 @@
     "objectViewEqual": {
       "en": "object view equal",
       "de": "Objektansicht gleich",
-      "ru": "вид объекта равный",
+      "ru": "Нормальная выборка объектов",
       "pt": "visão de objeto igual",
       "nl": "objectweergave gelijk",
       "fr": "vue objet égale",
@@ -304,7 +304,7 @@
     "objectViewSmall": {
       "en": "object view small",
       "de": "Objektansicht klein",
-      "ru": "вид объекта маленький",
+      "ru": "Маленькая выборка объектов",
       "pt": "visão de objeto pequena",
       "nl": "objectweergave klein",
       "fr": "vue de l'objet petit",
