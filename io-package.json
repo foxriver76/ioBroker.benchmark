@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "news": {
+      "1.2.0": {
+        "en": "added `controllerVersion` to results",
+        "de": "`controllerVersion` zu den Ergebnissen",
+        "ru": "добавлено \"контроллеры\" к результатам",
+        "pt": "adicionado `controllerVersion` aos resultados",
+        "nl": "toegevoegd aan resultaten",
+        "fr": "ajouté `controllerVersion` aux résultats",
+        "it": "aggiunto `controllerVersione` ai risultati",
+        "es": "añadido `controllerVersion` a resultados",
+        "pl": "dodany 'controllerVersion' do wyników",
+        "uk": "додано `controllerVersion` до результатів",
+        "zh-cn": "在结果中添加“控制器”"
+      },
       "1.1.4": {
         "en": "fixed cleanup after `getStatesMulti`",
         "de": "feste Reinigung nach getStatesMulti",
@@ -79,18 +92,6 @@
         "es": "el config ahora se aplica directamente desde frontend sin necesidad de guardar primero",
         "pl": "obecnie konfigurowany jest bezpośrednio od frontu, bez konieczności ratowania pierwszego pliku",
         "zh-cn": "现在直接从前端开始实施封锁,无需首先拯救。"
-      },
-      "0.5.1": {
-        "en": "changed type in io-package to `utility`\nupdated deps\nadded `dataSource` to io-package",
-        "de": "Typ im io-Paket in „utility“ geändert\naktualisierte Abh\n`dataSource` zum io-Paket hinzugefügt",
-        "ru": "изменил тип в io-пакете на `utility`\nобновлено\nдобавлен `dataSource` в io-пакет",
-        "pt": "alterou o tipo no io-package para `utility`\ndeps atualizados\nadicionado `dataSource` ao pacote io",
-        "nl": "veranderde type in io-pakket naar `utility`\nbijgewerkte deps\n`dataSource` toegevoegd aan io-pakket",
-        "fr": "changement de type dans io-package en `utility`\ndescriptions mises à jour\najout de `dataSource` à io-package",
-        "it": "modificato il tipo in io-package in `utility`\ndisp. aggiornati\naggiunto `dataSource` al pacchetto io",
-        "es": "cambió el tipo en io-package a `utility`\ndepartamentos actualizados\nagregó `dataSource` al paquete io",
-        "pl": "zmieniono typ w io-package na `utility`\nzaktualizowane deps\ndodano `dataSource` do pakietu io",
-        "zh-cn": "将 io-package 中的类型更改为 `utility`\n更新的部门\n将 `dataSource` 添加到 io-package"
       }
     },
     "title": "Benchmark",
