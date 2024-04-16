@@ -30,7 +30,6 @@ class Test extends testClass_1.TestUtils {
             ids.push(`alias.0.__benchmark.${i}`);
         }
         for (let i = 0; i < this.adapter.config.iterations; i++) {
-            // @ts-expect-error types are wrong
             await this.adapter.getForeignStatesAsync(ids);
         }
     }
@@ -41,7 +40,7 @@ class Test extends testClass_1.TestUtils {
         // states still there
     }
     /**
-     * Clean up the db, remove insatnces, etc.
+     * Clean up the db, remove instances, etc.
      */
     async cleanUp() {
         // delete objects and states

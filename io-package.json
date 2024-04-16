@@ -126,7 +126,6 @@
       "benchmark"
     ],
     "dataSource": "none",
-    "license": "MIT",
     "platform": "Javascript/Node.js",
     "main": "build/main.js",
     "icon": "benchmark.png",
@@ -147,7 +146,12 @@
         "admin": ">=5.0.0",
         "js-controller": ">=3.3.0"
       }
-    ]
+    ],
+    "tier": 3,
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    }
   },
   "native": {
     "iterations": 10000,

@@ -18,6 +18,7 @@ interface RequestedMonitoringEntry {
 }
 
 interface SummaryState {
+    controllerVersion?: string;
     secondaries?: Record<string, SummaryState>;
     controllerMemMean?: number;
     controllerMemStd?: number;
@@ -98,7 +99,7 @@ class Benchmark extends utils.Adapter {
 
             try {
                 const hostObj = await this.getForeignObjectAsync(`system.host.${this.host}`);
-                if (hostObj && hostObj.common && hostObj.common.installedVersion) {
+                if (hostObj?.common?.installedVersion) {
                     this.controllerVersion = hostObj.common.installedVersion;
                 } else {
                     this.log.error('Could not determine controller version');
@@ -110,11 +111,11 @@ class Benchmark extends utils.Adapter {
             this.log.info('Adapter started in secondary mode');
         }
 
-        const baseSettigns = (await this.sendToHostAsync(this.host, 'readBaseSettings', {})) as Record<string, any>;
+        const baseSettings = (await this.sendToHostAsync(this.host!, 'readBaseSettings', {})) as Record<string, any>;
 
-        if (baseSettigns?.config?.objects && baseSettigns?.config?.states) {
-            this.objectsDbType = baseSettigns.config.objects.type;
-            this.statesDbType = baseSettigns.config.states.type;
+        if (baseSettings?.config?.objects && baseSettings?.config?.states) {
+            this.objectsDbType = baseSettings.config.objects.type;
+            this.statesDbType = baseSettings.config.states.type;
         } else {
             this.log.error('Cannot determine DB type');
             this.terminate();
@@ -122,8 +123,7 @@ class Benchmark extends utils.Adapter {
     }
 
     /**
-     * Execute the tests for a non secondary adapter
-     * @private
+     * Execute the tests for a non-secondary adapter
      */
     private async runTests(selectedTests: string[]): Promise<void> {
         // stop all instances if isolated run
@@ -298,6 +298,7 @@ class Benchmark extends utils.Adapter {
             const controllerCpuStd = this.round(this.calcStd(this.controllerCpuStats[activeTestName]));
 
             const summaryState: SummaryState = {
+                controllerVersion: this.controllerVersion,
                 timeMean,
                 timeStd,
                 cpuMean,
@@ -730,16 +731,14 @@ class Benchmark extends utils.Adapter {
 
     /**
      * Round at two decimal places
-     * @private
      */
     private round(number: number): number {
         return Math.round(number * 100) / 100;
     }
 
     /**
-     * Checks if the requirements are fullfilled, else throws
+     * Checks if the requirements are fulfilled, else throws
      * @param requirements
-     * @private
      */
     private async checkRequirements(requirements: TestRequirements): Promise<void> {
         // check that controller version is satisfied

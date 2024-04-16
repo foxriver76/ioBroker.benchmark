@@ -52,7 +52,7 @@ class Benchmark extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
-        var _a, _b;
+        var _a, _b, _c;
         if (!this.config.secondaryMode) {
             // only main mode needs controller pid
             try {
@@ -72,7 +72,7 @@ class Benchmark extends utils.Adapter {
             }
             try {
                 const hostObj = await this.getForeignObjectAsync(`system.host.${this.host}`);
-                if (hostObj && hostObj.common && hostObj.common.installedVersion) {
+                if ((_a = hostObj === null || hostObj === void 0 ? void 0 : hostObj.common) === null || _a === void 0 ? void 0 : _a.installedVersion) {
                     this.controllerVersion = hostObj.common.installedVersion;
                 }
                 else {
@@ -86,10 +86,10 @@ class Benchmark extends utils.Adapter {
         else {
             this.log.info('Adapter started in secondary mode');
         }
-        const baseSettigns = (await this.sendToHostAsync(this.host, 'readBaseSettings', {}));
-        if (((_a = baseSettigns === null || baseSettigns === void 0 ? void 0 : baseSettigns.config) === null || _a === void 0 ? void 0 : _a.objects) && ((_b = baseSettigns === null || baseSettigns === void 0 ? void 0 : baseSettigns.config) === null || _b === void 0 ? void 0 : _b.states)) {
-            this.objectsDbType = baseSettigns.config.objects.type;
-            this.statesDbType = baseSettigns.config.states.type;
+        const baseSettings = (await this.sendToHostAsync(this.host, 'readBaseSettings', {}));
+        if (((_b = baseSettings === null || baseSettings === void 0 ? void 0 : baseSettings.config) === null || _b === void 0 ? void 0 : _b.objects) && ((_c = baseSettings === null || baseSettings === void 0 ? void 0 : baseSettings.config) === null || _c === void 0 ? void 0 : _c.states)) {
+            this.objectsDbType = baseSettings.config.objects.type;
+            this.statesDbType = baseSettings.config.states.type;
         }
         else {
             this.log.error('Cannot determine DB type');
@@ -97,8 +97,7 @@ class Benchmark extends utils.Adapter {
         }
     }
     /**
-     * Execute the tests for a non secondary adapter
-     * @private
+     * Execute the tests for a non-secondary adapter
      */
     async runTests(selectedTests) {
         var _a, _b;
@@ -243,6 +242,7 @@ class Benchmark extends utils.Adapter {
             const controllerCpuMean = this.round(this.calcMean(this.controllerCpuStats[activeTestName]));
             const controllerCpuStd = this.round(this.calcStd(this.controllerCpuStats[activeTestName]));
             const summaryState = {
+                controllerVersion: this.controllerVersion,
                 timeMean,
                 timeStd,
                 cpuMean,
@@ -633,15 +633,13 @@ class Benchmark extends utils.Adapter {
     }
     /**
      * Round at two decimal places
-     * @private
      */
     round(number) {
         return Math.round(number * 100) / 100;
     }
     /**
-     * Checks if the requirements are fullfilled, else throws
+     * Checks if the requirements are fulfilled, else throws
      * @param requirements
-     * @private
      */
     async checkRequirements(requirements) {
         // check that controller version is satisfied

@@ -34,7 +34,6 @@ export class Test extends TestUtils {
         }
 
         for (let i = 0; i < this.adapter.config.iterations; i++) {
-            // @ts-expect-error types are wrong
             await this.adapter.getForeignStatesAsync(ids);
         }
     }
@@ -47,7 +46,7 @@ export class Test extends TestUtils {
     }
 
     /**
-     * Clean up the db, remove insatnces, etc.
+     * Clean up the db, remove instances, etc.
      */
     public async cleanUp(): Promise<void> {
         // delete objects and states
