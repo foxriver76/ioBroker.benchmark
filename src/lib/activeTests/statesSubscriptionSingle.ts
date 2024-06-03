@@ -19,7 +19,7 @@ export class Test extends TestUtils {
         await this.addObjects(this.adapter.config.iterations, 0);
 
         for (let i = 1; i <= this.NO_SECONDARIES; i++) {
-            await this.subscribeStates(this.adapter.config.iterations, i);
+            await this.subscribeStates(this.adapter.config.iterations, i, 'benchmark.0.test.');
         }
     }
 

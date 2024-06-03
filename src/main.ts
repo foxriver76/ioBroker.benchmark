@@ -42,7 +42,7 @@ interface SummaryState {
 
 class Benchmark extends utils.Adapter {
     /** Base id for created states during test */
-    private BENCHMARK_STATE_BASE_ID = 'alias.0.__benchmark';
+    private BENCHMARK_ALIAS_BASE_ID = 'alias.0.__benchmark';
     private activeTest: string;
     private memStats: Record<string, number[]>;
     private controllerMemStats: Record<string, number[]>;
@@ -518,7 +518,7 @@ class Benchmark extends utils.Adapter {
                             for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
                                 // del alias first
                                 await this.delForeignObjectAsync(
-                                    `${this.BENCHMARK_STATE_BASE_ID}.${obj.message.prefix}${i}`
+                                    `${this.BENCHMARK_ALIAS_BASE_ID}.${obj.message.prefix}${i}`
                                 );
                                 await this.delObjectAsync(`test.${obj.message.prefix}${i}`);
                             }
@@ -538,7 +538,7 @@ class Benchmark extends utils.Adapter {
                                 });
 
                                 await this.setForeignObjectAsync(
-                                    `${this.BENCHMARK_STATE_BASE_ID}.${obj.message.prefix}${i}`,
+                                    `${this.BENCHMARK_ALIAS_BASE_ID}.${obj.message.prefix}${i}`,
                                     {
                                         type: 'state',
                                         common: {
@@ -572,13 +572,13 @@ class Benchmark extends utils.Adapter {
                         } else if (obj.message.cmd === 'setAlias' && typeof obj.message.n === 'number') {
                             for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
                                 await this.setForeignStateAsync(
-                                    `${this.BENCHMARK_STATE_BASE_ID}.${obj.message.prefix}${i}`,
+                                    `${this.BENCHMARK_ALIAS_BASE_ID}.${obj.message.prefix}${i}`,
                                     i
                                 );
                             }
                         } else if (obj.message.cmd === 'subscribe') {
                             for (let i = 0; i < obj.message.n; i++) {
-                                await this.subscribeForeignStatesAsync(obj.message.prefix + i);
+                                await this.subscribeForeignStatesAsync(`${obj.message.prefix}${i}`);
                             }
                         } else if (obj.message.cmd === 'waitForPublish') {
                             await new Promise<void>(resolve => {
