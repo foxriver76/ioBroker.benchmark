@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "benchmark",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "news": {
+      "1.3.0": {
+        "en": "added test `statesSubscriptionSingle`",
+        "de": "zusatztest `states Abonnements `",
+        "ru": "`состояния Подписка \"",
+        "pt": "adicionado teste `estados Subscrição \"",
+        "nl": "toegevoegde testtoestanden AbonnementSingle Wat",
+        "fr": "états d ' essai ajoutés AbonnementSimple \"",
+        "it": "test aggiunto `statos Abbonamento #",
+        "es": "añadida test `states SuscripciónSingle `",
+        "pl": "dodany test \"states SubscriptionSingle '",
+        "uk": "додано тест `states Підписка й",
+        "zh-cn": "添加测试“状态” 订阅单曲 [原件:英文]"
+      },
       "1.2.0": {
         "en": "added `controllerVersion` to results",
         "de": "`controllerVersion` zu den Ergebnissen",
@@ -80,18 +93,6 @@
         "pl": "dodała do StatesMulti i dodała StatesMultiAlias",
         "uk": "додано getStatesMulti і getStatesMultiAlias",
         "zh-cn": "加入国Multi和收购国家Multi Alias"
-      },
-      "1.0.0": {
-        "en": "the config is now applied directly from frontend without requiring to save first",
-        "de": "die config wird jetzt direkt vor dem frontend angewendet, ohne vorher zu speichern",
-        "ru": "конфиг теперь приложен сразу от фронтенда без требуя сохранить сперва",
-        "pt": "a configuração agora é aplicada diretamente do frontend sem precisar salvar primeiro",
-        "nl": "het korps is nu direct van de frontlinie aangevraagd zonder eerst te willen redden",
-        "fr": "la configuration est maintenant appliquée directement depuis le frontend sans devoir enregistrer le premier",
-        "it": "la configurazione è ora applicata direttamente da frontend senza dover salvare prima",
-        "es": "el config ahora se aplica directamente desde frontend sin necesidad de guardar primero",
-        "pl": "obecnie konfigurowany jest bezpośrednio od frontu, bez konieczności ratowania pierwszego pliku",
-        "zh-cn": "现在直接从前端开始实施封锁,无需首先拯救。"
       }
     },
     "title": "Benchmark",
