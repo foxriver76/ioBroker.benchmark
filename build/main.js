@@ -36,7 +36,7 @@ class Benchmark extends utils.Adapter {
             ...options,
             name: 'benchmark'
         });
-        /** Base id for created states during test */
+        /** Base id for created alias states during test */
         this.BENCHMARK_ALIAS_BASE_ID = 'alias.0.__benchmark';
         this.on('ready', this.onReady.bind(this));
         this.on('message', this.onMessage.bind(this));

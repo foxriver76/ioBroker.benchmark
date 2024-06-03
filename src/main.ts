@@ -41,7 +41,7 @@ interface SummaryState {
 }
 
 class Benchmark extends utils.Adapter {
-    /** Base id for created states during test */
+    /** Base id for created alias states during test */
     private BENCHMARK_ALIAS_BASE_ID = 'alias.0.__benchmark';
     private activeTest: string;
     private memStats: Record<string, number[]>;
