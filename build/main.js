@@ -36,6 +36,8 @@ class Benchmark extends utils.Adapter {
             ...options,
             name: 'benchmark'
         });
+        /** Base id for created alias states during test */
+        this.BENCHMARK_ALIAS_BASE_ID = 'alias.0.__benchmark';
         this.on('ready', this.onReady.bind(this));
         this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
@@ -437,7 +439,7 @@ class Benchmark extends utils.Adapter {
                         else if (obj.message.cmd === 'delAlias' && typeof obj.message.n === 'number') {
                             for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
                                 // del alias first
-                                await this.delForeignObjectAsync(`alias.0.__benchmark.${obj.message.prefix}${i}`);
+                                await this.delForeignObjectAsync(`${this.BENCHMARK_ALIAS_BASE_ID}.${obj.message.prefix}${i}`);
                                 await this.delObjectAsync(`test.${obj.message.prefix}${i}`);
                             }
                         }
@@ -455,7 +457,7 @@ class Benchmark extends utils.Adapter {
                                     },
                                     native: {}
                                 });
-                                await this.setForeignObjectAsync(`alias.0.__benchmark.${obj.message.prefix}${i}`, {
+                                await this.setForeignObjectAsync(`${this.BENCHMARK_ALIAS_BASE_ID}.${obj.message.prefix}${i}`, {
                                     type: 'state',
                                     common: {
                                         name: 'I am an alias',
@@ -488,8 +490,26 @@ class Benchmark extends utils.Adapter {
                         }
                         else if (obj.message.cmd === 'setAlias' && typeof obj.message.n === 'number') {
                             for (let i = obj.message.startIdx; i < obj.message.n + obj.message.startIdx; i++) {
-                                await this.setForeignStateAsync(`alias.0.__benchmark.${obj.message.prefix}${i}`, i);
+                                await this.setForeignStateAsync(`${this.BENCHMARK_ALIAS_BASE_ID}.${obj.message.prefix}${i}`, i);
                             }
+                        }
+                        else if (obj.message.cmd === 'subscribe') {
+                            for (let i = 0; i < obj.message.n; i++) {
+                                await this.subscribeForeignStatesAsync(`${obj.message.prefix}${i}`);
+                            }
+                        }
+                        else if (obj.message.cmd === 'waitForPublish') {
+                            await new Promise(resolve => {
+                                let counter = 0;
+                                const onStateChange = () => {
+                                    counter++;
+                                    if (counter === obj.message.n) {
+                                        resolve();
+                                        this.removeListener('stateChange', onStateChange);
+                                    }
+                                };
+                                this.on('stateChange', onStateChange);
+                            });
                         }
                     }
                     break;

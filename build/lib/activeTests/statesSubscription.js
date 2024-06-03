@@ -14,7 +14,7 @@ class Test extends testClass_1.TestUtils {
         this.adapter.log.info('Adding 4 instances');
         await this.addInstances(4);
         for (let i = 1; i <= 4; i++) {
-            // we need at least adapter.config.iterations states to fullfil our subscription
+            // we need at least adapter.config.iterations states to fulfill our subscription
             await this.addObjects(Math.ceil(this.adapter.config.iterations / 4), i);
         }
         // subscribe

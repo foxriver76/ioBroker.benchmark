@@ -17,11 +17,13 @@ import { Test as objectViewSmall } from './activeTests/objectViewSmall';
 import { Test as objectViewLarge } from './activeTests/objectViewLarge';
 import { Test as getStatesMulti } from './activeTests/getStatesMulti';
 import { Test as getStatesMultiAlias } from './activeTests/getStatesMultiAlias';
+import { Test as statesSubscriptionSingle } from './activeTests/statesSubscriptionSingle';
 import { TestUtils } from './testClass';
 
 export const tests: Record<string, new (...args: any[]) => TestUtils> = {
     setStates,
     statesSubscription,
+    statesSubscriptionSingle,
     statesSubscriptionAlias,
     statesSubscriptionAliasWrite,
     statesDeletion,

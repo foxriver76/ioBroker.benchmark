@@ -95,6 +95,28 @@ export abstract class TestUtils {
     }
 
     /**
+     * Subscribes n states at given instance, not implemented for primary
+     * This performs n subscribe calls at the secondary
+     *
+     * @param n number of states to subscribe
+     * @param instanceNumber the instance number of the secondary
+     * @param prefix - prefix for ids
+     */
+    public async subscribeStates(n: number, instanceNumber: number, prefix = ''): Promise<void> {
+        await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', { cmd: 'subscribe', n, prefix });
+    }
+
+    /**
+     * Wait until n publishes have been counted at the given secondary
+     *
+     * @param n number of states to subscribe
+     * @param instanceNumber the instance number of the secondary
+     */
+    public async waitForStatePublish(n: number, instanceNumber: number): Promise<void> {
+        await this.adapter.sendToAsync(`benchmark.${instanceNumber}`, 'states', { cmd: 'waitForPublish', n });
+    }
+
+    /**
      * Add meta Objects at controller instance
      *
      * @param n - number of objects to be added
@@ -226,7 +248,7 @@ export abstract class TestUtils {
     }
 
     /**
-     * Delete staes at given instance
+     * Delete states at given instance
      *
      * @param n - number of states to be deleted
      * @param instanceNumber - number of the benchmark instance to delete states from

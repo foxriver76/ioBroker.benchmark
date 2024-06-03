@@ -20,9 +20,11 @@ const objectViewSmall_1 = require("./activeTests/objectViewSmall");
 const objectViewLarge_1 = require("./activeTests/objectViewLarge");
 const getStatesMulti_1 = require("./activeTests/getStatesMulti");
 const getStatesMultiAlias_1 = require("./activeTests/getStatesMultiAlias");
+const statesSubscriptionSingle_1 = require("./activeTests/statesSubscriptionSingle");
 exports.tests = {
     setStates: setStates_1.Test,
     statesSubscription: statesSubscription_1.Test,
+    statesSubscriptionSingle: statesSubscriptionSingle_1.Test,
     statesSubscriptionAlias: statesSubscriptionAlias_1.Test,
     statesSubscriptionAliasWrite: statesSubscriptionAliasWrite_1.Test,
     statesDeletion: statesDeletion_1.Test,
