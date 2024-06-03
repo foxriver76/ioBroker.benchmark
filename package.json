@@ -17,7 +17,7 @@
     "url": "git@github.com:foxriver76/ioBroker.benchmark.git"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.1.1",
+    "@iobroker/adapter-core": "^3.1.5",
     "@types/pidusage": "^2.0.2",
     "pidusage": "^3.0.0",
     "promisify-child-process": "^4.1.1",

@@ -97,6 +97,19 @@
       "pl": "Subskrybuj stany",
       "zh-cn": "订阅状态"
     },
+    "statesSubscriptionSingle": {
+      "en": "Single state subscription",
+      "de": "Einzelne Zustände abonnieren",
+      "ru": "Одно государство подписка",
+      "pt": "Assinatura do Estado",
+      "nl": "Een staatsabonnement",
+      "fr": "Abonnement État unique",
+      "it": "Abbonamento singolo Stato",
+      "es": "Suscripción de estado único",
+      "pl": "Subskrypcja jednego państwa",
+      "uk": "Односторонній підпис",
+      "zh-cn": "单一状态订阅"
+    },
     "statesDeletion": {
       "en": "Delete states",
       "de": "Zustände löschen",
@@ -415,6 +428,10 @@
     "statesSubscription": {
       "type": "checkbox",
       "label": "statesSubscription"
+    },
+    "statesSubscriptionSingle": {
+      "type": "checkbox",
+      "label": "statesSubscriptionSingle"
     },
     "statesSubscriptionAlias": {
       "type": "checkbox",
