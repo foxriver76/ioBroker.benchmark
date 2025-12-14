@@ -129,7 +129,6 @@
     ],
     "dataSource": "none",
     "platform": "Javascript/Node.js",
-    "main": "build/main.js",
     "icon": "benchmark.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/foxriver76/ioBroker.benchmark/main/admin/benchmark.png",
