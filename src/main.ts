@@ -4,7 +4,7 @@ import { TestRequirements } from './lib/testClass';
 import pidusage from 'pidusage';
 import { testObjects } from './lib/helper';
 import { tests as allTests } from './lib/allTests';
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 import 'source-map-support/register';
 import { exec as execAsync } from 'promisify-child-process';
 
