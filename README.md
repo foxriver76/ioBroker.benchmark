@@ -215,6 +215,8 @@ Ten secondaries each subscribe on the same `iterations` states. Instead of using
 ### 0.0.1 (2021-09-20)
 * (foxriver76) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
